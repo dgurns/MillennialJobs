@@ -7,6 +7,8 @@ import admin from 'firebase-admin';
 
 import store from './store';
 import firebaseConfig from './firebase/firebase_config';
+import serviceAccount from './firebase/service_account.json';
+
 import TitleScreen from './screens/TitleScreen';
 import InterestsScreen from './screens/InterestsScreen';
 import SignUpScreen from './screens/SignUpScreen';
@@ -18,6 +20,11 @@ import ProfileScreen from './screens/ProfileScreen';
 class App extends Component {
   componentDidMount() {
     firebase.initializeApp(firebaseConfig);
+
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount),
+      databaseURL: 'https://one-time-password-27281.firebaseio.com'
+    });
   }
 
   render() {
