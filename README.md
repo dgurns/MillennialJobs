@@ -1,4 +1,6 @@
-# MillennialJobs
-App to help millennials retrain for new careers.
+# F'ed
+Helping millennials re-train for new careers using online courses.
 
-Read about my initial ideas for the app, see design screens, and follow along as I build it: [Medium](https://medium.com/@dgurns/fed-follow-along-as-i-build-a-new-app-for-millennials-b51825f4500a)
+A React Native app for iOS and Android.
+
+Read about my initial ideas for the app and see wireframes/design: [Medium](https://medium.com/@dgurns/fed-follow-along-as-i-build-a-new-app-for-millennials-b51825f4500a)
