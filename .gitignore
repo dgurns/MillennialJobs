@@ -3,7 +3,7 @@
 .DS_Store
 
 # React Native project
-firebase_config.js
+/src/firebase/firebase_config.js
 
 # Xcode
 #
