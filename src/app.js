@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
 import { TabNavigator } from 'react-navigation';
 import firebase from 'firebase';
+import admin from 'firebase-admin';
 
 import store from './store';
 import firebaseConfig from './firebase/firebase_config';
