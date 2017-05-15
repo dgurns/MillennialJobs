@@ -7,6 +7,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "firebase": "^3.9.0",
+    "firebase-admin": "^4.2.1",
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0",
     "react-navigation": "^1.0.0-beta.9",

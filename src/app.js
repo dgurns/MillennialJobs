@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { View, Platform, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
 import { TabNavigator } from 'react-navigation';
+import firebase from 'firebase';
 
 import store from './store';
+import firebaseConfig from './firebase/firebase_config';
 import TitleScreen from './screens/TitleScreen';
 import InterestsScreen from './screens/InterestsScreen';
 import SignUpScreen from './screens/SignUpScreen';
@@ -13,6 +15,10 @@ import CoursesScreen from './screens/CoursesScreen';
 import ProfileScreen from './screens/ProfileScreen';
 
 class App extends Component {
+  componentDidMount() {
+    firebase.initializeApp(firebaseConfig);
+  }
+
   render() {
     const MainNavigator = TabNavigator({
         title: { screen: TitleScreen },
@@ -33,7 +39,7 @@ class App extends Component {
         }
       }, {
         navigationOptions: {
-          tabBarVisible: false
+          //tabBarVisible: false
         },
         lazy: true
       });
@@ -50,10 +56,7 @@ class App extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#ccc',
-    justifyContent: 'center',
-    marginTop: (Platform.OS === 'android') ? 24 : 0
+    flex: 1
   },
 });
 

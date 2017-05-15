@@ -2,6 +2,9 @@
 #
 .DS_Store
 
+# React Native project
+/firebase/firebase_config.js
+
 # Xcode
 #
 build/
