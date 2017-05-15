@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
 import { TabNavigator } from 'react-navigation';
-import firebase from 'firebase';
-import admin from 'firebase-admin';
+import * as firebase from 'firebase';
 
 import store from './store';
-import firebaseConfig from './firebase/firebase_config';
-import serviceAccount from './firebase/service_account.json';
+import { firebaseConfig } from './firebase/firebase_config';
 
 import TitleScreen from './screens/TitleScreen';
 import InterestsScreen from './screens/InterestsScreen';
@@ -20,11 +18,6 @@ import ProfileScreen from './screens/ProfileScreen';
 class App extends Component {
   componentDidMount() {
     firebase.initializeApp(firebaseConfig);
-
-    admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount),
-      databaseURL: 'https://one-time-password-27281.firebaseio.com'
-    });
   }
 
   render() {

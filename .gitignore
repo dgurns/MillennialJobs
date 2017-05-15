@@ -4,7 +4,6 @@
 
 # React Native project
 /src/firebase/firebase_config.js
-/src/firebase/service_account.json
 
 # Xcode
 #
