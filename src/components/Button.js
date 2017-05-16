@@ -12,11 +12,11 @@ class Button extends Component {
 
   addButtonStyle() {
     const large = this.props.size === 'large';
-    
+
     return {
       padding: large ? 20 : 7,
       paddingRight: large ? 70 : 18,
-      paddingLeft: large ? 70 : 18
+      paddingLeft: large ? 70 : 18,
     };
   }
 
@@ -28,13 +28,13 @@ class Button extends Component {
 
   render() {
     return (
-      <View style={styles.buttonContainerStyle}>
+      <View style={styles.buttonContainer}>
         <TouchableOpacity
-          style={[styles.buttonStyle, this.addButtonStyle(), this.props.buttonStyle]}
+          style={[styles.button, this.addButtonStyle(), this.props.buttonStyle]}
           onPress={this.props.onPress}
         >
           <Text
-            style={[styles.buttonTextStyle, this.addButtonTextStyle()]}
+            style={[styles.buttonText, this.addButtonTextStyle()]}
           >
             {this.props.buttonText}
           </Text>
@@ -45,10 +45,10 @@ class Button extends Component {
 }
 
 const styles = StyleSheet.create({
-  buttonContainerStyle: {
+  buttonContainer: {
     flex: 1
   },
-  buttonStyle: {
+  button: {
     backgroundColor: constants.greenColor,
     borderColor: constants.darkGrayColor,
     borderWidth: 1,
@@ -56,8 +56,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     position: 'absolute'
   },
-  buttonTextStyle: {
-    color: constants.blackColor
+  buttonText: {
+    color: constants.blackColor,
+    textAlign: 'center'
   }
 });
 
