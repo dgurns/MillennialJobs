@@ -22,7 +22,7 @@ class Button extends Component {
 
   addButtonTextStyle() {
     return {
-      fontSize: (this.props.size === 'large') ? constants.titleFontSize : constants.bodyFontSize,
+      fontSize: (this.props.size === 'large') ? constants.TITLE_FONT_SIZE : constants.BODY_FONT_SIZE,
     };
   }
 
@@ -49,15 +49,15 @@ const styles = StyleSheet.create({
     flex: 1
   },
   button: {
-    backgroundColor: constants.greenColor,
-    borderColor: constants.darkGrayColor,
+    backgroundColor: constants.GREEN_COLOR,
+    borderColor: constants.DARK_GRAY_COLOR,
     borderWidth: 1,
     borderRadius: 8,
     alignSelf: 'center',
     position: 'absolute'
   },
   buttonText: {
-    color: constants.blackColor,
+    color: constants.BLACK_COLOR,
     textAlign: 'center'
   }
 });
