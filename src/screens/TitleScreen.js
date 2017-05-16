@@ -41,7 +41,7 @@ class TitleScreen extends Component {
             buttonText='Why not'
           />
         </View>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={loginContainer}
           onPress={() => this.props.navigation.navigate('logIn')}
         >
@@ -72,9 +72,12 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: constants.TITLE_FONT_SIZE,
     color: constants.WHITE_COLOR,
+    flex: 1,
+    position: 'absolute',
+    bottom: 200,
+    left: 0,
+    right: 0,
     textAlign: 'center',
-    marginTop: 120,
-    marginBottom: 25,
     zIndex: 50,
     backgroundColor: 'transparent'
   },
@@ -88,7 +91,12 @@ const styles = StyleSheet.create({
     opacity: 0.41
   },
   button: {
-    zIndex: 50
+    zIndex: 50,
+    position: 'absolute',
+    flex: 1,
+    left: 0,
+    right: 0,
+    bottom: 170
   },
   loginContainer: {
     position: 'absolute',
