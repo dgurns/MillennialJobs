@@ -23,9 +23,9 @@ class App extends Component {
   render() {
     const MainNavigator = TabNavigator({
         title: { screen: TitleScreen },
+        logIn: { screen: LogInScreen },
         interests: { screen: InterestsScreen },
         signUp: { screen: SignUpScreen },
-        logIn: { screen: LogInScreen },
         main: {
           screen: TabNavigator({
             feed: { screen: FeedScreen },
@@ -40,8 +40,9 @@ class App extends Component {
         }
       }, {
         navigationOptions: {
-          tabBarVisible: false
+          tabBarVisible: false,
         },
+        //animationEnabled: true,
         lazy: true
       });
 

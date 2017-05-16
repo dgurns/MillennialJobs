@@ -36,12 +36,15 @@ class TitleScreen extends Component {
         <Text style={subtitle}>Welcome. {'\n'}Let{'\''}s get you a job.</Text>
         <View style={button}>
           <Button
-            onPress={() => {}}
+            onPress={() => this.props.navigation.navigate('interests')}
             size='large'
             buttonText='Why not'
           />
         </View>
-        <TouchableOpacity style={loginContainer}>
+        <TouchableOpacity 
+          style={loginContainer}
+          onPress={() => this.props.navigation.navigate('logIn')}
+        >
           <Text style={loginText}>Already have an account? </Text>
           <Text style={loginButton}>Log in</Text>
         </TouchableOpacity>
@@ -54,7 +57,8 @@ const styles = StyleSheet.create({
   viewContainer: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: constants.BLACK_COLOR
+    backgroundColor: constants.BLACK_COLOR,
+    overflow: 'hidden'
   },
   title: {
     fontFamily: constants.TITLE_FONT_FAMILY,
