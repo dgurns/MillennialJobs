@@ -1,0 +1,27 @@
+[
+  {
+    "id": 0,
+    "interestName": "Mobile Apps",
+    "udemySubcategory": "Mobile Apps"
+  },
+  {
+    "id": 1,
+    "interestName": "Web Development",
+    "udemySubcategory": "Web Development"
+  },
+  {
+    "id": 2,
+    "interestName": "Marketing",
+    "udemySubcategory": "Digital Marketing"
+  },
+  {
+    "id": 3,
+    "interestName": "Photography",
+    "udemySubcategory": "Photography Fundamentals"
+  },
+  {
+    "id": 4,
+    "interestName": "Sales",
+    "udemySubcategory": "Sales"
+  }
+]

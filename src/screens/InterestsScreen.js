@@ -1,10 +1,22 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
+
 import * as constants from '../constants';
 import Button from '../components/Button';
 import RadioButton from '../components/RadioButton';
 
 class InterestsScreen extends Component {
+  renderInterests() {
+    const interests = this.props.interests.map(interest =>
+        <RadioButton
+          labelText={interest.interestName}
+          selected={false}
+        />
+    );
+    return interests;
+  }
+
   render() {
     const { title, interestsListContainer, button } = styles;
 
@@ -14,18 +26,7 @@ class InterestsScreen extends Component {
           What are you interested in?
         </Text>
         <View style={interestsListContainer}>
-          <RadioButton
-            labelText='Development'
-            selected={false}
-          />
-          <RadioButton
-            labelText='Construction'
-            selected
-          />
-          <RadioButton
-            labelText='Photography'
-            selected={false}
-          />
+          {this.renderInterests()}
         </View>
         <View style={button}>
           <Button
@@ -61,4 +62,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default InterestsScreen;
+function mapStateToProps({ interests }) {
+  return { interests };
+}
+
+export default connect(mapStateToProps)(InterestsScreen);
