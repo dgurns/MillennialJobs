@@ -3,15 +3,68 @@ import {
   View,
   StyleSheet,
   Text,
+  Image,
   TextInput,
   TouchableOpacity
 } from 'react-native';
+import ImagePicker from 'react-native-image-picker';
 
 import * as constants from '../constants';
 import Header from '../components/Header';
 import Button from '../components/Button';
 
 class SignUpScreen extends Component {
+  state = {
+    username: '',
+    password: '',
+    profilePhotoUri: ''
+  };
+
+  showImagePicker = () => {
+    const imageOptions = {
+      title: 'Choose a photo',
+      storageOptions: {
+        skipBackup: true,
+        path: 'images'
+      }
+    };
+
+    ImagePicker.showImagePicker(imageOptions, (response) => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        const source = { uri: response.uri };
+
+        this.setState({
+          profilePhotoUri: source.uri
+        });
+      }
+    });
+  }
+
+  renderProfilePhoto() {
+    const photoUri = this.state.profilePhotoUri;
+    const { profilePhoto, addPhotoCircle, plusSign } = styles;
+
+    if (photoUri !== '') {
+      return (
+        <Image
+          style={profilePhoto}
+          source={{ uri: photoUri }}
+          resizeMode='cover'
+        />
+      );
+    }
+
+    return (
+      <View style={addPhotoCircle}>
+        <Text style={plusSign}>+</Text>
+      </View>
+    );
+  }
+
   render() {
     const {
       title,
@@ -19,9 +72,7 @@ class SignUpScreen extends Component {
       signUpFormContainer,
       inputField,
       addPhotoContainer,
-      addPhotoText,
-      addPhotoCircle,
-      plusSign
+      addPhotoText
     } = styles;
 
     return (
@@ -39,24 +90,32 @@ class SignUpScreen extends Component {
             placeholder="Pick a username"
             placeholderTextColor={constants.LIGHT_GRAY_COLOR}
             selectionColor={constants.GREEN_COLOR}
+            onChangeText={text => this.setState({ username: text })}
+            value={this.state.username}
+            autoCapitalize="none"
           />
           <TextInput
             style={inputField}
             placeholder="Password"
             placeholderTextColor={constants.LIGHT_GRAY_COLOR}
             selectionColor={constants.GREEN_COLOR}
+            autoCapitalize="none"
+            onChangeText={text => this.setState({ password: text })}
+            value={this.state.password}
             secureTextEntry
           />
         </View>
-        <TouchableOpacity style={addPhotoContainer}>
+        <TouchableOpacity
+          style={addPhotoContainer}
+          onPress={this.showImagePicker}
+        >
           <Text style={addPhotoText}>Add a profile pic</Text>
-          <View style={addPhotoCircle}>
-            <Text style={plusSign}>+</Text>
-          </View>
+          {this.renderProfilePhoto()}
         </TouchableOpacity>
         <View style={button}>
           <Button
             buttonText="Let's go"
+            onPress={() => console.log(this.state)}
           />
         </View>
       </View>
@@ -115,6 +174,13 @@ const styles = StyleSheet.create({
     color: constants.LIGHT_GRAY_COLOR,
     backgroundColor: 'transparent',
     lineHeight: 80
+  },
+  profilePhoto: {
+    width: 65,
+    height: 65,
+    borderRadius: 33,
+    borderColor: constants.LIGHT_GRAY_COLOR,
+    borderWidth: 1,
   },
   button: {
     zIndex: 50,

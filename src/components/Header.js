@@ -17,8 +17,7 @@ class Header extends Component {
 
   renderLogo() {
     const { title } = styles;
-    const { BLACK_COLOR, WHITE_COLOR } = constants;
-    const { mode } = this.props;
+    const { BLACK_COLOR } = constants;
 
     return (
       <TouchableOpacity
