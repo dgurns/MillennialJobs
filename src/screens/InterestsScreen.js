@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import { connect } from 'react-redux';
 
 import * as constants from '../constants';
@@ -9,6 +9,17 @@ import Button from '../components/Button';
 import RadioButton from '../components/RadioButton';
 
 class InterestsScreen extends Component {
+  onSubmitPressed = () => {
+    if (this.props.currentUser.interestName === '') {
+      Alert.alert(
+        'Oops',
+        'Please pick an interest'
+      );
+      return;
+    }
+    this.props.navigation.navigate('signUp');
+  }
+
   renderInterests() {
     const { interests, currentUser } = this.props;
 
@@ -38,7 +49,7 @@ class InterestsScreen extends Component {
         <View style={button}>
           <Button
             buttonText='Yes'
-            onPress={() => this.props.navigation.navigate('signUp')}
+            onPress={this.onSubmitPressed}
           />
         </View>
       </View>
@@ -53,13 +64,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingLeft: 20,
     paddingRight: 20,
-    marginTop: 50
+    marginTop: 30
   },
   interestsListContainer: {
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    padding: 50
+    padding: 50,
+    paddingTop: 30
   },
   button: {
     zIndex: 50,
@@ -67,7 +79,7 @@ const styles = StyleSheet.create({
     flex: 1,
     left: 0,
     right: 0,
-    bottom: 120
+    bottom: 110
   }
 });
 
