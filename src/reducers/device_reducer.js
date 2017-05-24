@@ -1,4 +1,4 @@
-import { SET_DEVICE_DIMENSIONS } from '../actions/types';
+import { DEVICE_DIMENSIONS_SET } from '../actions/types';
 
 const INITIAL_STATE = {
   screenWidth: 0,
@@ -7,7 +7,7 @@ const INITIAL_STATE = {
 
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
-    case SET_DEVICE_DIMENSIONS:
+    case DEVICE_DIMENSIONS_SET:
       return {
         ...state,
         screenWidth: action.payload.screenWidth,
