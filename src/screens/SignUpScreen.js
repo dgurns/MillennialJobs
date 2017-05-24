@@ -26,7 +26,10 @@ class SignUpScreen extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <Header mode="onboarding" />
+        <Header
+          mode="main"
+          onPressLogo={() => this.props.navigation.navigate('title')}
+        />
         <Text style={title}>
           Let{'\''}s introduce you to the community of F{'\''}ed millennials
         </Text>

@@ -1,15 +1,41 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, StatusBar } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  StatusBar,
+  TouchableOpacity
+} from 'react-native';
 import * as constants from '../constants';
 
 class Header extends Component {
   static defaultProps = {
-    mode: 'onboarding' // 'onboarding' 'main'
+    mode: 'onboarding', // 'onboarding' 'main'
+    onPressLogo: () => {}
+  }
+
+  renderLogo() {
+    const { title } = styles;
+    const { BLACK_COLOR, WHITE_COLOR } = constants;
+    const { mode } = this.props;
+
+    return (
+      <TouchableOpacity
+        onPress={this.props.onPressLogo}
+      >
+        <Text
+          style={[title, { color: BLACK_COLOR }]}
+        >
+          F{'\''}ed
+        </Text>
+      </TouchableOpacity>
+    );
   }
 
   render() {
-    const { header, contentContainer, title, backgroundImage } = styles;
-    const { BLACK_COLOR, WHITE_COLOR } = constants;
+    const { header, contentContainer, backgroundImage } = styles;
+    const { BLACK_COLOR } = constants;
     const { mode } = this.props;
 
     return (
@@ -25,11 +51,7 @@ class Header extends Component {
           resizeMode='cover'
         />
         <View style={contentContainer}>
-          <Text
-            style={[title, mode === 'onboarding' ? { color: WHITE_COLOR } : { color: BLACK_COLOR }]}
-          >
-            F{'\''}ed
-          </Text>
+          {this.renderLogo()}
         </View>
       </View>
     );
@@ -61,10 +83,8 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: constants.TITLE_FONT_FAMILY,
     fontSize: 37,
-    color: constants.WHITE_COLOR,
     flex: 1,
-    padding: 10,
-    paddingLeft: 5
+    padding: 5,
   }
 });
 

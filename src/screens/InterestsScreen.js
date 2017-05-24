@@ -39,7 +39,10 @@ class InterestsScreen extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <Header mode='onboarding' />
+        <Header
+          mode='main'
+          onPressLogo={() => this.props.navigation.navigate('title')}
+        />
         <Text style={title}>
           What are you interested in?
         </Text>
