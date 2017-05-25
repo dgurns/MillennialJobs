@@ -7,11 +7,25 @@ import {
   StatusBar,
   TouchableOpacity
 } from 'react-native';
+import * as firebase from 'firebase';
 
 import * as constants from '../constants';
 import Button from '../components/Button';
 
 class TitleScreen extends Component {
+  componentWillMount() {
+    this.checkForLoggedInUser();
+  }
+
+  checkForLoggedInUser() {
+    firebase.auth().currentUser.then((user) => {
+      if (user) {
+        console.log(user);
+        this.props.navigation.navigate('main');
+      }
+    }).catch((error) => console.log(error));
+  }
+
   render() {
     const {
       viewContainer,

@@ -5,10 +5,13 @@ import {
   Text,
   Image,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
+import { connect } from 'react-redux';
 
+import * as actions from '../actions';
 import * as constants from '../constants';
 import Header from '../components/Header';
 import Button from '../components/Button';
@@ -19,6 +22,22 @@ class SignUpScreen extends Component {
     password: '',
     profilePhotoUri: ''
   };
+
+  onSubmitPressed = () => {
+    const { username, password, profilePhotoUri } = this.state;
+
+    if (username === '' || password === '' || profilePhotoUri === '') {
+      const errorMessage = 'Please fill out all the fields and add a photo';
+
+      Alert.alert(
+        'Oops',
+        errorMessage
+      );
+      return;
+    }
+
+    this.props.signUpUser({ username, password, profilePhotoUri });
+  }
 
   showImagePicker = () => {
     const imageOptions = {
@@ -115,7 +134,7 @@ class SignUpScreen extends Component {
         <View style={button}>
           <Button
             buttonText="Let's go"
-            onPress={() => console.log(this.state)}
+            onPress={this.onSubmitPressed}
           />
         </View>
       </View>
@@ -192,4 +211,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default SignUpScreen;
+export default connect(null, actions)(SignUpScreen);

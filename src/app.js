@@ -11,13 +11,23 @@ import TitleScreen from './screens/TitleScreen';
 import InterestsScreen from './screens/InterestsScreen';
 import SignUpScreen from './screens/SignUpScreen';
 import LogInScreen from './screens/LogInScreen';
+import HowToScreen from './screens/HowToScreen';
 import FeedScreen from './screens/FeedScreen';
 import CoursesScreen from './screens/CoursesScreen';
 import ProfileScreen from './screens/ProfileScreen';
 
 class App extends Component {
-  componentDidMount() {
-    firebase.initializeApp(firebaseConfig);
+  async componentWillMount() {
+    await firebase.initializeApp(firebaseConfig);
+
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        console.log('user is signed in');
+        //console.log(user);
+      } else {
+        console.log('no user signed in');
+      }
+    });
   }
 
   render() {
@@ -26,6 +36,7 @@ class App extends Component {
         logIn: { screen: LogInScreen },
         interests: { screen: InterestsScreen },
         signUp: { screen: SignUpScreen },
+        howTo: { screen: HowToScreen },
         main: {
           screen: TabNavigator({
             feed: { screen: FeedScreen },
@@ -43,7 +54,7 @@ class App extends Component {
           tabBarVisible: false,
         },
         //animationEnabled: true,
-        lazy: true
+        lazy: true,
       });
 
     return (
