@@ -4,7 +4,8 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  Alert
+  Alert,
+  ActivityIndicator
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -18,6 +19,10 @@ class LogInScreen extends Component {
     username: '',
     password: ''
   };
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+  }
 
   onSubmitPressed = () => {
     const { username, password } = this.state;
@@ -33,6 +38,20 @@ class LogInScreen extends Component {
     }
 
     this.props.logInUser({ username, password });
+  }
+
+  renderSubmitButton() {
+    if (this.props.authLoading) {
+      return (
+        <ActivityIndicator size="large" style={{ top: 55 }} />
+      );
+    }
+    return (
+      <Button
+        buttonText="Let's go"
+        onPress={this.onSubmitPressed}
+      />
+    );
   }
 
   render() {
@@ -74,10 +93,7 @@ class LogInScreen extends Component {
           />
         </View>
         <View style={button}>
-          <Button
-            buttonText="Let's go"
-            onPress={this.onSubmitPressed}
-          />
+          {this.renderSubmitButton()}
         </View>
       </View>
     );
@@ -118,4 +134,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect(null, actions)(LogInScreen);
+function mapStateToProps({ currentUser }) {
+  return {
+    authLoading: currentUser.authLoading
+  };
+}
+
+export default connect(mapStateToProps, actions)(LogInScreen);

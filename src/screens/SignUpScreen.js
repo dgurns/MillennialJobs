@@ -6,7 +6,8 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
-  Alert
+  Alert,
+  ActivityIndicator
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import { connect } from 'react-redux';
@@ -20,7 +21,8 @@ class SignUpScreen extends Component {
   state = {
     username: '',
     password: '',
-    profilePhotoUri: ''
+    profilePhotoUri: '',
+    photoLoading: false
   };
 
   onSubmitPressed = () => {
@@ -48,16 +50,25 @@ class SignUpScreen extends Component {
       }
     };
 
+    this.setState({
+      photoLoading: true
+    });
+
     ImagePicker.showImagePicker(imageOptions, (response) => {
       if (response.didCancel) {
-        console.log('User cancelled image picker');
+        this.setState({
+          photoLoading: false
+        });
       } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
+        this.setState({
+          photoLoading: false
+        });
       } else {
         const source = { uri: response.uri };
 
         this.setState({
-          profilePhotoUri: source.uri
+          profilePhotoUri: source.uri,
+          photoLoading: false
         });
       }
     });
@@ -65,9 +76,9 @@ class SignUpScreen extends Component {
 
   renderProfilePhoto() {
     const photoUri = this.state.profilePhotoUri;
-    const { profilePhoto, addPhotoCircle, plusSign } = styles;
+    const { profilePhoto, addPhotoCircle, plusSign, photoLoading } = styles;
 
-    if (photoUri !== '') {
+    if (photoUri !== '' && !this.state.photoLoading) {
       return (
         <Image
           style={profilePhoto}
@@ -75,12 +86,30 @@ class SignUpScreen extends Component {
           resizeMode='cover'
         />
       );
+    } else if (photoUri === '' && this.state.photoLoading) {
+      return (
+        <ActivityIndicator size="large" style={photoLoading} />
+      );
     }
 
     return (
       <View style={addPhotoCircle}>
         <Text style={plusSign}>+</Text>
       </View>
+    );
+  }
+
+  renderSubmitButton() {
+    if (this.props.authLoading) {
+      return (
+        <ActivityIndicator size="large" style={{ top: 55 }} />
+      );
+    }
+    return (
+      <Button
+        buttonText="Let's go"
+        onPress={this.onSubmitPressed}
+      />
     );
   }
 
@@ -132,10 +161,7 @@ class SignUpScreen extends Component {
           {this.renderProfilePhoto()}
         </TouchableOpacity>
         <View style={button}>
-          <Button
-            buttonText="Let's go"
-            onPress={this.onSubmitPressed}
-          />
+          {this.renderSubmitButton()}
         </View>
       </View>
     );
@@ -201,6 +227,10 @@ const styles = StyleSheet.create({
     borderColor: constants.LIGHT_GRAY_COLOR,
     borderWidth: 1,
   },
+  photoLoading: {
+    marginLeft: 16,
+    marginRight: 13
+  },
   button: {
     zIndex: 50,
     position: 'absolute',
@@ -211,4 +241,11 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect(null, actions)(SignUpScreen);
+function mapStateToProps({ currentUser }) {
+  return {
+    interestName: currentUser.interestName,
+    authLoading: currentUser.authLoading
+  };
+}
+
+export default connect(mapStateToProps, actions)(SignUpScreen);

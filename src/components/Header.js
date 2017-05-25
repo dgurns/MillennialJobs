@@ -45,7 +45,7 @@ class Header extends Component {
           barStyle={mode === 'onboarding' ? 'light-content' : 'dark-content'}
         />
         <Image
-          source={mode === 'onboarding' ? require('../images/money.jpg') : ''}
+          source={mode === 'onboarding' ? require('../images/money.jpg') : null}
           style={backgroundImage}
           resizeMode='cover'
         />
