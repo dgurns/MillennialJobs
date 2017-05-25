@@ -1,7 +1,7 @@
-import { Alert, Platform } from 'react-native';
+import { Alert } from 'react-native';
 import * as firebase from 'firebase';
-import RNFetchBlob from 'react-native-fetch-blob';
 import * as types from './types';
+import * as helpers from '../helpers';
 
 export const selectInterest = (interest) => {
   return { type: types.INTEREST_SELECTED, payload: interest };
@@ -64,61 +64,23 @@ export const signUpUser = ({
     });
   });
 
-  // And get ready to upload the profile photo to Firebase storage
-  const Blob = RNFetchBlob.polyfill.Blob;
-  const fs = RNFetchBlob.fs;
-  window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
-  window.Blob = Blob
-
-  const uploadImage = (inputUri, mime = 'application/octet-stream') => {
-    return new Promise((resolve, reject) => {
-      dispatch({
-        type: PHOTO_UPLOAD_ATTEMPTED
-      });
-      const uploadUri = Platform.OS === 'ios' ? inputUri.replace('file://', '') : inputUri;
-      let uploadBlob = null;
-      const storageRef = firebase.storage().ref();
-      const imageStorageRef = storageRef.child(`profilePhotos/${uid}/profilePhoto.jpg`);
-
-      fs.readFile(uploadUri, 'base64')
-        .then((data) => {
-          return Blob.build(data, { type: `${mime};BASE64` });
-        })
-        .then((blob) => {
-          uploadBlob = blob;
-          return imageStorageRef.put(blob, { contentType: mime });
-        })
-        .then(() => {
-          uploadBlob.close();
-          return imageStorageRef.getDownloadURL();
-        })
-        .then((url) => {
-          resolve(url);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  };
-
   // Upload profile image and then save the download URL to Firebase database
-  uploadImage(profilePhotoUri)
-    .then((url) => {
-      firebase.database().ref(`users/${uid}`).update({
-        profilePhotoUrl: url
-      })
-      .then(() => {
-        dispatch({
-          type: PHOTO_UPLOAD_SUCCESSFUL
-        });
-      })
-      .catch((error) => console.log(error));
-    })
-    .catch(() => {
-      dispatch({
-        type: PHOTO_UPLOAD_FAILED
-      });
+  dispatch({
+    type: PHOTO_UPLOAD_ATTEMPTED
+  });
+  try {
+    let photoDownloadUrl = await helpers.uploadImage(profilePhotoUri, uid);
+    await firebase.database().ref(`users/${uid}`).update({
+      profilePhotoUrl: photoDownloadUrl
     });
+    dispatch({
+      type: PHOTO_UPLOAD_SUCCESSFUL
+    });
+  } catch (error) {
+    dispatch({
+      type: PHOTO_UPLOAD_FAILED
+    });
+  }
 
   dispatch({
     type: SIGN_UP_SUCCESSFUL
