@@ -14,16 +14,11 @@ import Button from '../components/Button';
 
 class TitleScreen extends Component {
   componentWillMount() {
-    this.checkForLoggedInUser();
-  }
-
-  checkForLoggedInUser() {
-    firebase.auth().currentUser.then((user) => {
+    firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        console.log(user);
         this.props.navigation.navigate('main');
       }
-    }).catch((error) => console.log(error));
+    });
   }
 
   render() {

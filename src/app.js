@@ -17,17 +17,8 @@ import CoursesScreen from './screens/CoursesScreen';
 import ProfileScreen from './screens/ProfileScreen';
 
 class App extends Component {
-  async componentWillMount() {
-    await firebase.initializeApp(firebaseConfig);
-
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        console.log('user is signed in');
-        //console.log(user);
-      } else {
-        console.log('no user signed in');
-      }
-    });
+  componentWillMount() {
+    firebase.initializeApp(firebaseConfig);
   }
 
   render() {
