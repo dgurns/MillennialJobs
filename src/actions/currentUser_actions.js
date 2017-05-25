@@ -6,7 +6,9 @@ export const selectInterest = (interest) => {
   return { type: types.INTEREST_SELECTED, payload: interest };
 };
 
-export const signUpUser = ({ username, password, profilePhotoUri }) => async dispatch => {
+export const signUpUser = ({
+  username, password, profilePhotoUri, interestName
+}) => async dispatch => {
   const email = `${username}@yourowndomain.com`;
   const { SIGN_UP_ATTEMPTED, SIGN_UP_SUCCESSFUL, SIGN_UP_FAILED } = types;
 
@@ -14,7 +16,7 @@ export const signUpUser = ({ username, password, profilePhotoUri }) => async dis
     type: SIGN_UP_ATTEMPTED
   });
 
-  await firebase.auth().createUserWithEmailAndPassword(email, password).catch((error) => {
+  let signedUpUser = await firebase.auth().createUserWithEmailAndPassword(email, password).catch((error) => {
     let errorMessage = 'Please try again.';
     if (error.code === 'auth/email-already-in-use') {
       errorMessage = 'This username is already taken. Please choose a different one.';
@@ -32,10 +34,27 @@ export const signUpUser = ({ username, password, profilePhotoUri }) => async dis
     dispatch({
       type: SIGN_UP_FAILED
     });
+    return;
   });
 
-  // Need to also save the profile picture on Firebase,
-  // and associate the chosen interest with the new user.
+  // Upload the profile photo to Firebase
+
+  // Then save the user meta info to Firebase
+  const uid = signedUpUser.uid;
+
+  await firebase.database().ref(`users/${uid}`).set({
+    interestName
+  }).catch(() => {
+    firebase.auth().currentUser.delete().then(() => {
+      Alert.alert(
+        'Oops',
+        'There was an issue with your internet connection. Please sign up again.'
+      );
+    });
+    dispatch({
+      type: SIGN_UP_FAILED
+    });
+  });
 
   dispatch({
     type: SIGN_UP_SUCCESSFUL

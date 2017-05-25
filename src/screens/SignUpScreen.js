@@ -27,6 +27,7 @@ class SignUpScreen extends Component {
 
   onSubmitPressed = () => {
     const { username, password, profilePhotoUri } = this.state;
+    const { interestName } = this.props;
 
     if (username === '' || password === '' || profilePhotoUri === '') {
       const errorMessage = 'Please fill out all the fields and add a photo';
@@ -38,7 +39,7 @@ class SignUpScreen extends Component {
       return;
     }
 
-    this.props.signUpUser({ username, password, profilePhotoUri });
+    this.props.signUpUser({ username, password, profilePhotoUri, interestName });
   }
 
   showImagePicker = () => {
@@ -78,24 +79,23 @@ class SignUpScreen extends Component {
     const photoUri = this.state.profilePhotoUri;
     const { profilePhoto, addPhotoCircle, plusSign, photoLoading } = styles;
 
-    if (photoUri !== '' && !this.state.photoLoading) {
+    if (photoUri === '' && !this.state.photoLoading) {
       return (
-        <Image
-          style={profilePhoto}
-          source={{ uri: photoUri }}
-          resizeMode='cover'
-        />
+        <View style={addPhotoCircle}>
+          <Text style={plusSign}>+</Text>
+        </View>
       );
-    } else if (photoUri === '' && this.state.photoLoading) {
+    } else if (this.state.photoLoading) {
       return (
         <ActivityIndicator size="large" style={photoLoading} />
       );
     }
-
     return (
-      <View style={addPhotoCircle}>
-        <Text style={plusSign}>+</Text>
-      </View>
+      <Image
+        style={profilePhoto}
+        source={{ uri: photoUri }}
+        resizeMode='cover'
+      />
     );
   }
 
