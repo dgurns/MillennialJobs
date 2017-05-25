@@ -16,7 +16,9 @@ class TitleScreen extends Component {
   componentWillMount() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.props.navigation.navigate('main');
+        this.props.navigation.navigate('feed');
+      } else {
+        this.props.navigation.navigate('title');
       }
     });
   }
