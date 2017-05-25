@@ -11,7 +11,14 @@ export const signUpUser = ({
   username, password, profilePhotoUri, interestName
 }) => async dispatch => {
   const email = `${username}@yourowndomain.com`;
-  const { SIGN_UP_ATTEMPTED, SIGN_UP_SUCCESSFUL, SIGN_UP_FAILED } = types;
+  const {
+    SIGN_UP_ATTEMPTED,
+    SIGN_UP_SUCCESSFUL,
+    SIGN_UP_FAILED,
+    PHOTO_UPLOAD_ATTEMPTED,
+    PHOTO_UPLOAD_SUCCESSFUL,
+    PHOTO_UPLOAD_FAILED
+  } = types;
 
   dispatch({
     type: SIGN_UP_ATTEMPTED
@@ -43,7 +50,8 @@ export const signUpUser = ({
   const uid = signedUpUser.uid;
 
   await firebase.database().ref(`users/${uid}`).set({
-    interestName
+    interestName,
+    profilePhotoUrl: ''
   }).catch(() => {
     firebase.auth().currentUser.delete().then(() => {
       Alert.alert(
@@ -56,9 +64,7 @@ export const signUpUser = ({
     });
   });
 
-  console.log(`uid: ${uid}`);
-
-  // And start uploading the profile photo to Firebase storage
+  // And get ready to upload the profile photo to Firebase storage
   const Blob = RNFetchBlob.polyfill.Blob;
   const fs = RNFetchBlob.fs;
   window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
@@ -66,6 +72,9 @@ export const signUpUser = ({
 
   const uploadImage = (inputUri, mime = 'application/octet-stream') => {
     return new Promise((resolve, reject) => {
+      dispatch({
+        type: PHOTO_UPLOAD_ATTEMPTED
+      });
       const uploadUri = Platform.OS === 'ios' ? inputUri.replace('file://', '') : inputUri;
       let uploadBlob = null;
       const storageRef = firebase.storage().ref();
@@ -92,9 +101,24 @@ export const signUpUser = ({
     });
   };
 
+  // Upload profile image and then save the download URL to Firebase database
   uploadImage(profilePhotoUri)
-    .then((url) => console.log(url))
-    .catch((error) => console.log(error));
+    .then((url) => {
+      firebase.database().ref(`users/${uid}`).update({
+        profilePhotoUrl: url
+      })
+      .then(() => {
+        dispatch({
+          type: PHOTO_UPLOAD_SUCCESSFUL
+        });
+      })
+      .catch((error) => console.log(error));
+    })
+    .catch(() => {
+      dispatch({
+        type: PHOTO_UPLOAD_FAILED
+      });
+    });
 
   dispatch({
     type: SIGN_UP_SUCCESSFUL

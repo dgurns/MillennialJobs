@@ -2,7 +2,8 @@ import * as types from '../actions/types';
 
 const INITIAL_STATE = {
   interestName: '',
-  authLoading: false
+  authLoading: false,
+  photoUploading: false
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -41,6 +42,21 @@ export default function (state = INITIAL_STATE, action) {
       return {
         ...state,
         authLoading: false
+      };
+    case types.PHOTO_UPLOAD_ATTEMPTED:
+      return {
+        ...state,
+        photoUploading: true
+      };
+    case types.PHOTO_UPLOAD_SUCCESSFUL:
+      return {
+        ...state,
+        photoUploading: false
+      };
+    case types.PHOTO_UPLOAD_FAILED:
+      return {
+        ...state,
+        photoUploading: false
       };
     default:
       return state;
