@@ -19,6 +19,7 @@ class TitleScreen extends Component {
     // Eventually, do this check within a splash screen, and then proceed
     firebase.auth().onAuthStateChanged((user) => {
       this.props.refreshUserState();
+      console.log('someone\'s login status just changed');
 
       if (user) {
         // Send a logInUser action and save uid and profilePhotoUrl to Redux state

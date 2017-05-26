@@ -53,7 +53,8 @@ export default function (state = INITIAL_STATE, action) {
     case types.PHOTO_UPLOAD_SUCCESSFUL:
       return {
         ...state,
-        photoUploading: false
+        photoUploading: false,
+        profilePhotoUrl: action.payload
       };
     case types.PHOTO_UPLOAD_FAILED:
       return {

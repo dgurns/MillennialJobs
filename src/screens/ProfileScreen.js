@@ -1,19 +1,11 @@
 import React, { Component } from 'react';
-import { View, Image, StyleSheet, Text } from 'react-native';
+import { View, Image, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import * as firebase from 'firebase';
 
 import Button from '../components/Button';
 
 class ProfileScreen extends Component {
-  getUsername() {
-    const user = firebase.auth().currentUser;
-    if (user) {
-      return user.email;
-    }
-    return;
-  }
-
   logOut = () => {
     firebase.auth().signOut();
   }
@@ -22,20 +14,16 @@ class ProfileScreen extends Component {
     return (
       <View
         style={{ flex: 1 }}
-        key={this.props.profilePhotoUrl}
+        key={this.props.uid}
       >
         <Image
           style={styles.profilePhoto}
           source={{ uri: this.props.profilePhotoUrl }}
-          key={this.props.profilePhotoUrl}
         />
         <Button
           onPress={this.logOut}
           buttonText="Log out"
         />
-        <Text>
-          This user is {this.getUsername()}
-        </Text>
       </View>
     );
   }
@@ -51,7 +39,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps({ currentUser }) {
   return {
-    profilePhotoUrl: currentUser.profilePhotoUrl
+    profilePhotoUrl: currentUser.profilePhotoUrl,
+    uid: currentUser.uid
   };
 }
 

@@ -74,7 +74,8 @@ export const signUpUser = ({
       profilePhotoUrl: photoDownloadUrl
     });
     dispatch({
-      type: PHOTO_UPLOAD_SUCCESSFUL
+      type: PHOTO_UPLOAD_SUCCESSFUL,
+      payload: photoDownloadUrl
     });
   } catch (error) {
     dispatch({
@@ -122,13 +123,15 @@ export const logInUser = ({ username, password }) => async dispatch => {
 };
 
 export const refreshUserState = () => async dispatch => {
+  console.log('running refreshUserState');
+
   const userState = {
     uid: '',
     profilePhotoUrl: '',
     interestName: ''
   };
 
-  const currentUser = firebase.auth().currentUser;
+  let currentUser = await firebase.auth().currentUser;
 
   if (currentUser) {
     const uid = currentUser.uid;
