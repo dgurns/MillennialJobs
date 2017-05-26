@@ -48,7 +48,11 @@ class SignUpScreen extends Component {
       storageOptions: {
         skipBackup: true,
         path: 'images'
-      }
+      },
+      allowsEditing: true,
+      maxWidth: 200,
+      maxHeight: 200,
+      quality: 0.8
     };
 
     this.setState({

@@ -10,7 +10,7 @@
     "firebase": "3.9.0",
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0",
-    "react-native-fetch-blob": "^0.10.5",
+    "react-native-fetch-blob": "0.10.5",
     "react-native-image-picker": "0.26.3",
     "react-navigation": "1.0.0-beta.10",
     "react-redux": "5.0.4",
