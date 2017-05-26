@@ -2,6 +2,8 @@ import * as types from '../actions/types';
 
 const INITIAL_STATE = {
   interestName: '',
+  uid: '',
+  profilePhotoUrl: '',
   authLoading: false,
   photoUploading: false
 };
@@ -57,6 +59,13 @@ export default function (state = INITIAL_STATE, action) {
       return {
         ...state,
         photoUploading: false
+      };
+    case types.USER_STATE_REFRESHED:
+      return {
+        ...state,
+        uid: action.payload.uid,
+        profilePhotoUrl: action.payload.profilePhotoUrl,
+        interestName: action.payload.interestName
       };
     default:
       return state;

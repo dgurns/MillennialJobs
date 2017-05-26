@@ -120,3 +120,36 @@ export const logInUser = ({ username, password }) => async dispatch => {
     type: LOG_IN_SUCCESSFUL
   });
 };
+
+export const refreshUserState = () => async dispatch => {
+  const userState = {
+    uid: '',
+    profilePhotoUrl: '',
+    interestName: ''
+  };
+
+  const currentUser = firebase.auth().currentUser;
+
+  if (currentUser) {
+    const uid = currentUser.uid;
+    userState.uid = uid;
+
+    const databaseRef = firebase.database().ref(`users/${uid}`);
+    await databaseRef.once('value').then(snapshot => {
+      const profilePhotoUrl = snapshot.val().profilePhotoUrl;
+      const interestName = snapshot.val().interestName;
+      userState.profilePhotoUrl = profilePhotoUrl;
+      userState.interestName = interestName;
+    });
+
+    dispatch({
+      type: types.USER_STATE_REFRESHED,
+      payload: userState
+    });
+  } else {
+    dispatch({
+      type: types.USER_STATE_REFRESHED,
+      payload: userState
+    });
+  }
+};

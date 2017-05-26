@@ -1,27 +1,17 @@
 import React, { Component } from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet, Text } from 'react-native';
+import { connect } from 'react-redux';
 import * as firebase from 'firebase';
+
 import Button from '../components/Button';
 
 class ProfileScreen extends Component {
-  state = {
-    profilePhotoUrl: ''
-  }
-
-  componentWillMount() {
-    this.getProfilePhotoUrl();
-  }
-
-  async getProfilePhotoUrl() {
-    let currentUserUid = await firebase.auth().currentUser.uid;
-    console.log(currentUserUid);
-    const databaseRef = firebase.database().ref(`users/${currentUserUid}`);
-    await databaseRef.once('value').then(snapshot => {
-      const profilePhotoUrl = snapshot.val().profilePhotoUrl;
-      this.setState({
-        profilePhotoUrl
-      });
-    });
+  getUsername() {
+    const user = firebase.auth().currentUser;
+    if (user) {
+      return user.email;
+    }
+    return;
   }
 
   logOut = () => {
@@ -30,15 +20,22 @@ class ProfileScreen extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View
+        style={{ flex: 1 }}
+        key={this.props.profilePhotoUrl}
+      >
         <Image
           style={styles.profilePhoto}
-          source={{ uri: this.state.profilePhotoUrl }}
+          source={{ uri: this.props.profilePhotoUrl }}
+          key={this.props.profilePhotoUrl}
         />
         <Button
           onPress={this.logOut}
           buttonText="Log out"
         />
+        <Text>
+          This user is {this.getUsername()}
+        </Text>
       </View>
     );
   }
@@ -52,4 +49,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ProfileScreen;
+function mapStateToProps({ currentUser }) {
+  return {
+    profilePhotoUrl: currentUser.profilePhotoUrl
+  };
+}
+
+export default connect(mapStateToProps)(ProfileScreen);

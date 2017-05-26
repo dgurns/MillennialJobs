@@ -16,3 +16,5 @@ export const LOG_IN_FAILED = 'log_in_failed';
 export const PHOTO_UPLOAD_ATTEMPTED = 'photo_upload_attempted';
 export const PHOTO_UPLOAD_SUCCESSFUL = 'photo_upload_successful';
 export const PHOTO_UPLOAD_FAILED = 'photo_upload_failed';
+
+export const USER_STATE_REFRESHED = 'user_state_refreshed';

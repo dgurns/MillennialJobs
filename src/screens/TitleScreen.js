@@ -8,16 +8,23 @@ import {
   TouchableOpacity
 } from 'react-native';
 import * as firebase from 'firebase';
+import { connect } from 'react-redux';
 
+import * as actions from '../actions';
 import * as constants from '../constants';
 import Button from '../components/Button';
 
 class TitleScreen extends Component {
   componentWillMount() {
+    // Eventually, do this check within a splash screen, and then proceed
     firebase.auth().onAuthStateChanged((user) => {
+      this.props.refreshUserState();
+
       if (user) {
+        // Send a logInUser action and save uid and profilePhotoUrl to Redux state
         this.props.navigation.navigate('feed');
       } else {
+        // Send a logOutUser action and clear currentUser in Redux state
         this.props.navigation.navigate('title');
       }
     });
@@ -130,4 +137,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default TitleScreen;
+export default connect(null, actions)(TitleScreen);
