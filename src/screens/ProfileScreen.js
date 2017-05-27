@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import * as firebase from 'firebase';
 
-import * as constants from '../constants';
 import Button from '../components/Button';
 import ProfileIcon from '../icons/ProfileIcon';
 import ScreenContainer from '../components/ScreenContainer';
+import ProfilePhoto from '../components/ProfilePhoto';
 
 class ProfileScreen extends Component {
   static navigationOptions = {
@@ -30,10 +30,14 @@ class ProfileScreen extends Component {
           style={{ flex: 1 }}
           key={this.props.uid}
         >
-          <Image
+          <View
             style={styles.profilePhoto}
-            source={{ uri: this.props.profilePhotoUrl }}
-          />
+          >
+            <ProfilePhoto
+              size="large"
+              photoUid={this.props.uid}
+            />
+          </View>
           <Button
             onPress={this.logOut}
             buttonText="Log out"
@@ -46,11 +50,6 @@ class ProfileScreen extends Component {
 
 const styles = StyleSheet.create({
   profilePhoto: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-    borderWidth: 1,
-    borderColor: constants.DARK_GRAY_COLOR,
     alignSelf: 'center',
     marginTop: 30,
     marginBottom: 20
