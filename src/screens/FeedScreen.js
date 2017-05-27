@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
+
 import FeedIcon from '../icons/FeedIcon';
+import ScreenContainer from '../components/ScreenContainer';
 
 class FeedScreen extends Component {
   static navigationOptions = {
@@ -13,7 +15,11 @@ class FeedScreen extends Component {
 
   render() {
     return (
-      <View />
+      <ScreenContainer
+        navigation={this.props.navigation}
+      >
+        <View />
+      </ScreenContainer>
     );
   }
 }

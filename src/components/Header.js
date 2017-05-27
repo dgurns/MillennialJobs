@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  Image,
   StatusBar,
   TouchableOpacity
 } from 'react-native';
@@ -11,7 +10,7 @@ import * as constants from '../constants';
 
 class Header extends Component {
   static defaultProps = {
-    mode: 'onboarding', // 'onboarding' 'main'
+    mode: 'onboarding', // 'onboarding', 'main'
     onPressLogo: () => {}
   }
 
@@ -32,25 +31,45 @@ class Header extends Component {
     );
   }
 
+  renderMillennialsSaved() {
+    const {
+      millennialsSavedContainer,
+      counterBox,
+      counterText,
+      counterLabelText
+    } = styles;
+    if (this.props.mode === 'onboarding') {
+      return;
+    }
+    return (
+      <View style={millennialsSavedContainer}>
+        <View style={counterBox}>
+          <Text style={counterText}>2</Text>
+        </View>
+        <View style={counterBox}>
+          <Text style={counterText}>1</Text>
+        </View>
+        <Text style={counterLabelText}>millennials saved</Text>
+      </View>
+    );
+  }
+
   render() {
-    const { header, contentContainer, backgroundImage } = styles;
-    const { BLACK_COLOR } = constants;
-    const { mode } = this.props;
+    const {
+      header,
+      contentContainer
+    } = styles;
 
     return (
       <View
-        style={[header, mode === 'onboarding' ? { backgroundColor: BLACK_COLOR } : { backgroundColor: 'transparent' }]}
+        style={header}
       >
         <StatusBar
-          barStyle={mode === 'onboarding' ? 'light-content' : 'dark-content'}
-        />
-        <Image
-          source={mode === 'onboarding' ? require('../images/money.jpg') : null}
-          style={backgroundImage}
-          resizeMode='cover'
+          barStyle={'dark-content'}
         />
         <View style={contentContainer}>
           {this.renderLogo()}
+          {this.renderMillennialsSaved()}
         </View>
       </View>
     );
@@ -62,7 +81,6 @@ const styles = StyleSheet.create({
     height: 60,
     paddingTop: 15,
     overflow: 'hidden',
-    backgroundColor: constants.BLACK_COLOR
   },
   backgroundImage: {
     position: 'absolute',
@@ -84,6 +102,31 @@ const styles = StyleSheet.create({
     fontSize: 37,
     flex: 1,
     padding: 5,
+  },
+  millennialsSavedContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    paddingTop: 6
+  },
+  counterBox: {
+    height: 33,
+    width: 26,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: constants.DARK_GRAY_COLOR,
+    marginRight: -1
+  },
+  counterText: {
+    fontSize: constants.TITLE_FONT_SIZE,
+    color: constants.BLACK_COLOR
+  },
+  counterLabelText: {
+    fontSize: constants.BODY_FONT_SIZE,
+    color: constants.BLACK_COLOR,
+    marginLeft: 10,
+    marginRight: 7
   }
 });
 

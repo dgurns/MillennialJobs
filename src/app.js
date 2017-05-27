@@ -40,7 +40,8 @@ class App extends Component {
               showLabel: false,
               showIcon: true,
               activeTintColor: constants.GREEN_COLOR,
-              inactiveTintColor: constants.BLACK_COLOR
+              inactiveTintColor: constants.BLACK_COLOR,
+              style: styles.tabBar
             }
           })
         }
@@ -66,6 +67,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
+  tabBar: {
+    backgroundColor: '#D8D8D8',
+    borderTopColor: constants.LIGHT_GRAY_COLOR,
+    borderTopWidth: 1,
+    height: 60
+  }
 });
 
 export default App;

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
+
 import CoursesIcon from '../icons/CoursesIcon';
+import ScreenContainer from '../components/ScreenContainer';
 
 class CoursesScreen extends Component {
   static navigationOptions = {
@@ -13,7 +15,11 @@ class CoursesScreen extends Component {
 
   render() {
     return (
-      <View />
+      <ScreenContainer
+        navigation={this.props.navigation}
+      >
+        <View />
+      </ScreenContainer>
     );
   }
 }
