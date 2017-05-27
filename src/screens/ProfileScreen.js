@@ -4,8 +4,17 @@ import { connect } from 'react-redux';
 import * as firebase from 'firebase';
 
 import Button from '../components/Button';
+import ProfileIcon from '../icons/ProfileIcon';
 
 class ProfileScreen extends Component {
+  static navigationOptions = {
+    tabBarIcon: ({ tintColor }) => (
+      <ProfileIcon
+        color={tintColor}
+      />
+    )
+  }
+
   logOut = () => {
     firebase.auth().signOut();
   }

@@ -6,6 +6,7 @@ import * as firebase from 'firebase';
 
 import store from './store';
 import { firebaseConfig } from './firebase/firebase_config';
+import * as constants from './constants';
 
 import TitleScreen from './screens/TitleScreen';
 import InterestsScreen from './screens/InterestsScreen';
@@ -36,7 +37,10 @@ class App extends Component {
           }, {
             tabBarPosition: 'bottom',
             tabBarOptions: {
-              labelStyle: { fontSize: 12 }
+              showLabel: false,
+              showIcon: true,
+              activeTintColor: constants.GREEN_COLOR,
+              inactiveTintColor: constants.BLACK_COLOR
             }
           })
         }
