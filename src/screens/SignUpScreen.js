@@ -144,6 +144,7 @@ class SignUpScreen extends Component {
             selectionColor={constants.GREEN_COLOR}
             onChangeText={text => this.setState({ username: text })}
             value={this.state.username}
+            returnKeyType="done"
             autoCapitalize="none"
           />
           <TextInput
@@ -154,6 +155,7 @@ class SignUpScreen extends Component {
             autoCapitalize="none"
             onChangeText={text => this.setState({ password: text })}
             value={this.state.password}
+            returnKeyType="done"
             secureTextEntry
           />
         </View>
