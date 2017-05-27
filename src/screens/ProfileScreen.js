@@ -31,7 +31,7 @@ class ProfileScreen extends Component {
   }
 
   logOut = () => {
-    firebase.auth().signOut();
+    this.props.logOutUser();
   }
 
   showImagePicker = () => {

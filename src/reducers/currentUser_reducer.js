@@ -74,6 +74,15 @@ export default function (state = INITIAL_STATE, action) {
         profilePhotoUrl: action.payload.profilePhotoUrl,
         interestName: action.payload.interestName
       };
+    case types.LOG_OUT_SUCCESSFUL:
+      return {
+        interestName: '',
+        uid: '',
+        profilePhotoUrl: '',
+        hasOnboarded: false,
+        authLoading: false,
+        photoUploading: false
+      };
     default:
       return state;
   }

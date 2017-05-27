@@ -42,17 +42,35 @@ class HowToScreen extends Component {
             <View style={howToIcon}>
               <CoursesIcon />
             </View>
-            <Text style={howToLabel}>
+            <Text style={[howToLabel, { marginTop: 11 }]}>
               Take a course
             </Text>
           </View>
-          
+
           <View style={howToBlock}>
             <View style={howToIcon}>
               <FeedIcon />
             </View>
             <Text style={howToLabel}>
               Share your progress with other F{'\''}ed millennials
+            </Text>
+          </View>
+
+          <View style={howToBlock}>
+            <View style={howToIcon}>
+              <CheckmarkIcon />
+            </View>
+            <Text style={howToLabel}>
+              When you get a job, check <Text style={greenText}>"I'm good"</Text>
+            </Text>
+          </View>
+
+          <View style={howToBlock}>
+            <View style={howToIcon}>
+              <ThumbsUpIcon />
+            </View>
+            <Text style={howToLabel}>
+              Another millennial saved.
             </Text>
           </View>
         </View>
@@ -80,13 +98,13 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    padding: 50,
+    padding: 40,
     paddingTop: 30
   },
   howToBlock: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    marginBottom: 20
+    marginBottom: 30
   },
   howToIcon: {
     width: 50,
@@ -97,7 +115,7 @@ const styles = StyleSheet.create({
     fontSize: constants.BODY_FONT_SIZE,
     color: constants.BLACK_COLOR,
     textAlign: 'left',
-    marginTop: 8
+    marginTop: 7
   },
   greenText: {
     color: constants.GREEN_COLOR

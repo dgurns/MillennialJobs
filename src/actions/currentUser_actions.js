@@ -168,3 +168,11 @@ export const updateOnboardingStatus = (uid, hasOnboarded) => {
     payload: hasOnboarded
   };
 };
+
+export const logOutUser = () => {
+  console.log('logging out');
+  firebase.auth().signOut();
+  return {
+    type: types.LOG_OUT_SUCCESSFUL
+  };
+};
