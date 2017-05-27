@@ -22,18 +22,22 @@ class TitleScreen extends Component {
       this.props.refreshUserState();
 
       if (user) {
-        helpers.checkIfOnboarded(user.uid)
-          .then((hasOnboarded) => {
-            this.props.updateOnboardingStatus(user.uid, hasOnboarded);
+        if (this.props.currentUserhasOnboarded) {
+          this.props.navigation.navigate('feed');
+        } else {
+          helpers.checkIfOnboarded(user.uid)
+            .then((hasOnboarded) => {
+              this.props.updateOnboardingStatus(user.uid, hasOnboarded);
 
-            if (!hasOnboarded) {
-              this.props.navigation.navigate('howTo');
-            } else {
-              this.props.navigation.navigate('feed');
-            }
-          }).catch(error => {
-            console.log(error);
-          });
+              if (!hasOnboarded) {
+                this.props.navigation.navigate('howTo');
+              } else {
+                this.props.navigation.navigate('feed');
+              }
+            }).catch(error => {
+              console.log(error);
+            });
+        }
       } else {
         this.props.navigation.navigate('title');
       }
@@ -147,4 +151,11 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect(null, actions)(TitleScreen);
+function mapStateToProps({ currentUser }) {
+  return {
+    uid: currentUser.uid,
+    currentUserhasOnboarded: currentUser.hasOnboarded
+  };
+}
+
+export default connect(mapStateToProps, actions)(TitleScreen);

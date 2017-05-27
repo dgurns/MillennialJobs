@@ -18,7 +18,15 @@ class HowToScreen extends Component {
   }
 
   render() {
-    const { title, howToContainer, button } = styles;
+    const {
+      title,
+      howToContainer,
+      howToBlock,
+      howToIcon,
+      howToLabel,
+      greenText,
+      button
+    } = styles;
 
     return (
       <View style={{ flex: 1 }}>
@@ -28,8 +36,25 @@ class HowToScreen extends Component {
         <Text style={title}>
           Here{'\'s'} how it works:
         </Text>
-        <View style={howToContainer}>
 
+        <View style={howToContainer}>
+          <View style={howToBlock}>
+            <View style={howToIcon}>
+              <CoursesIcon />
+            </View>
+            <Text style={howToLabel}>
+              Take a course
+            </Text>
+          </View>
+          
+          <View style={howToBlock}>
+            <View style={howToIcon}>
+              <FeedIcon />
+            </View>
+            <Text style={howToLabel}>
+              Share your progress with other F{'\''}ed millennials
+            </Text>
+          </View>
         </View>
         <View style={button}>
           <Button
@@ -57,6 +82,25 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     padding: 50,
     paddingTop: 30
+  },
+  howToBlock: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    marginBottom: 20
+  },
+  howToIcon: {
+    width: 50,
+    marginRight: 10
+  },
+  howToLabel: {
+    flex: 1,
+    fontSize: constants.BODY_FONT_SIZE,
+    color: constants.BLACK_COLOR,
+    textAlign: 'left',
+    marginTop: 8
+  },
+  greenText: {
+    color: constants.GREEN_COLOR
   },
   button: {
     zIndex: 50,
