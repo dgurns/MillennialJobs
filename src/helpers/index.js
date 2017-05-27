@@ -41,3 +41,16 @@ export const uploadImage = (imageUri, uid, mime = 'application/octet-stream') =>
       });
   });
 };
+
+export const checkIfOnboarded = async (uid) => {
+  return new Promise((resolve, reject) => {
+    const databaseRef = firebase.database().ref(`users/${uid}`);
+
+    databaseRef.once('value').then(snapshot => {
+      const hasOnboarded = snapshot.val().hasOnboarded;
+      resolve(hasOnboarded);
+    }).catch(error => {
+      reject(error);
+    });
+  });
+};

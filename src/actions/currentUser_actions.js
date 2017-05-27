@@ -51,7 +51,8 @@ export const signUpUser = ({
 
   await firebase.database().ref(`users/${uid}`).set({
     interestName,
-    profilePhotoUrl: ''
+    profilePhotoUrl: '',
+    hasOnboarded: false
   }).catch(() => {
     firebase.auth().currentUser.delete().then(() => {
       Alert.alert(
@@ -125,7 +126,8 @@ export const refreshUserState = () => async dispatch => {
   const userState = {
     uid: '',
     profilePhotoUrl: '',
-    interestName: ''
+    interestName: '',
+    hasOnboarded: false
   };
 
   let currentUser = await firebase.auth().currentUser;
@@ -138,8 +140,10 @@ export const refreshUserState = () => async dispatch => {
     await databaseRef.once('value').then(snapshot => {
       const profilePhotoUrl = snapshot.val().profilePhotoUrl;
       const interestName = snapshot.val().interestName;
+      const hasOnboarded = snapshot.val().hasOnboarded;
       userState.profilePhotoUrl = profilePhotoUrl;
       userState.interestName = interestName;
+      userState.hasOnboarded = hasOnboarded;
     });
 
     dispatch({
@@ -152,4 +156,15 @@ export const refreshUserState = () => async dispatch => {
       payload: userState
     });
   }
+};
+
+export const updateOnboardingStatus = (uid, hasOnboarded) => {
+  const databaseRef = firebase.database().ref(`users/${uid}`);
+  databaseRef.update({
+    hasOnboarded
+  });
+  return {
+    type: types.ONBOARDING_STATUS_RETRIEVED,
+    payload: hasOnboarded
+  };
 };

@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   interestName: '',
   uid: '',
   profilePhotoUrl: '',
+  hasOnboarded: false,
   authLoading: false,
   photoUploading: false
 };
@@ -60,6 +61,11 @@ export default function (state = INITIAL_STATE, action) {
       return {
         ...state,
         photoUploading: false
+      };
+    case types.ONBOARDING_STATUS_RETRIEVED:
+      return {
+        ...state,
+        hasOnboarded: action.payload
       };
     case types.USER_STATE_REFRESHED:
       return {

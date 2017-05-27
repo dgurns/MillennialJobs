@@ -11,6 +11,7 @@ import * as firebase from 'firebase';
 import { connect } from 'react-redux';
 
 import * as actions from '../actions';
+import * as helpers from '../helpers';
 import * as constants from '../constants';
 import Button from '../components/Button';
 
@@ -19,13 +20,21 @@ class TitleScreen extends Component {
     // Eventually, do this check within a splash screen, and then proceed
     firebase.auth().onAuthStateChanged((user) => {
       this.props.refreshUserState();
-      console.log('someone\'s login status just changed');
 
       if (user) {
-        // Send a logInUser action and save uid and profilePhotoUrl to Redux state
-        this.props.navigation.navigate('feed');
+        helpers.checkIfOnboarded(user.uid)
+          .then((hasOnboarded) => {
+            this.props.updateOnboardingStatus(user.uid, hasOnboarded);
+
+            if (!hasOnboarded) {
+              this.props.navigation.navigate('howTo');
+            } else {
+              this.props.navigation.navigate('feed');
+            }
+          }).catch(error => {
+            console.log(error);
+          });
       } else {
-        // Send a logOutUser action and clear currentUser in Redux state
         this.props.navigation.navigate('title');
       }
     });
