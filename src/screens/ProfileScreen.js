@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import * as firebase from 'firebase';
 
@@ -33,10 +33,14 @@ class ProfileScreen extends Component {
           <View
             style={styles.profilePhoto}
           >
-            <ProfilePhoto
-              size="large"
-              photoUid={this.props.uid}
-            />
+            <TouchableOpacity
+              onPress={() => {}}
+            >
+              <ProfilePhoto
+                size="large"
+                photoUid={this.props.uid}
+              />
+            </TouchableOpacity>
           </View>
           <Button
             onPress={this.logOut}
