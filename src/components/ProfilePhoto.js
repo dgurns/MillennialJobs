@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import Svg, { Path } from 'react-native-svg';
 import * as firebase from 'firebase';
@@ -13,7 +13,8 @@ class ProfilePhoto extends Component {
   }
 
   state = {
-    photoUrl: ''
+    photoUrl: '',
+    photoLoading: false
   }
 
   componentWillMount() {
@@ -23,13 +24,15 @@ class ProfilePhoto extends Component {
   setProfilePhotoUrl() {
     if (this.props.photoUid === this.props.uid) {
       this.setState({
-        photoUrl: this.props.profilePhotoUrl
+        photoUrl: this.props.profilePhotoUrl,
+        photoLoading: true
       });
     } else {
       const databaseRef = firebase.database().ref(`users/${this.props.photoUid}`);
       databaseRef.once('value').then(snapshot => {
         this.setState({
-          photoUrl: snapshot.val().profilePhotoUrl
+          photoUrl: snapshot.val().profilePhotoUrl,
+          photoLoading: true
         });
       });
     }
@@ -50,6 +53,19 @@ class ProfilePhoto extends Component {
       height: small,
       width: small,
       borderRadius: small / 2
+    };
+  }
+
+  customizeActivityIndicatorOffset() {
+    if (this.props.size === 'large') {
+      return {
+        top: 73,
+        left: 73
+      };
+    }
+    return {
+      top: 11,
+      left: 11
     };
   }
 
@@ -90,6 +106,11 @@ class ProfilePhoto extends Component {
           d="M0 0h24v24H0z"
           fill="none"
         />
+        <ActivityIndicator
+          size={this.props.size === 'large' ? 'large' : 'small'}
+          style={[styles.activityIndicator, this.customizeActivityIndicatorOffset()]}
+          animating={this.state.photoLoading}
+        />
       </Svg>
     );
   }
@@ -100,6 +121,8 @@ class ProfilePhoto extends Component {
         <Image
           style={[styles.profilePhoto, this.customizePhotoDimensions()]}
           source={{ uri: this.state.photoUrl }}
+          onLoadEnd={() => this.setState({ photoLoading: false })}
+          key={this.state.photoUrl}
         />
         {this.renderDefaultProfilePhoto()}
       </View>
@@ -118,6 +141,10 @@ const styles = StyleSheet.create({
   defaultProfilePhoto: {
     position: 'absolute',
     zIndex: 50
+  },
+  activityIndicator: {
+    position: 'absolute',
+    zIndex: 60
   }
 });
 

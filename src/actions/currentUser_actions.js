@@ -70,9 +70,6 @@ export const signUpUser = ({
   });
   try {
     let photoDownloadUrl = await helpers.uploadImage(profilePhotoUri, uid);
-    await firebase.database().ref(`users/${uid}`).update({
-      profilePhotoUrl: photoDownloadUrl
-    });
     dispatch({
       type: PHOTO_UPLOAD_SUCCESSFUL,
       payload: photoDownloadUrl

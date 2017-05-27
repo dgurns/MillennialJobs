@@ -12,6 +12,7 @@ export const uploadImage = (imageUri, uid, mime = 'application/octet-stream') =>
     const uploadUri = Platform.OS === 'ios' ? imageUri.replace('file://', '') : imageUri;
     let uploadBlob = null;
     const storageRef = firebase.storage().ref();
+    const databaseRef = firebase.database().ref(`users/${uid}`);
     const imageStorageRef = storageRef.child(`profilePhotos/${uid}/profilePhoto.jpg`);
 
     fs.readFile(uploadUri, 'base64')
@@ -22,9 +23,15 @@ export const uploadImage = (imageUri, uid, mime = 'application/octet-stream') =>
         uploadBlob = blob;
         return imageStorageRef.put(blob, { contentType: mime });
       })
-      .then(() => {
+      .then(async () => {
         uploadBlob.close();
-        return imageStorageRef.getDownloadURL();
+        let downloadUrl = await imageStorageRef.getDownloadURL();
+
+        databaseRef.update({
+          profilePhotoUrl: downloadUrl
+        });
+
+        return downloadUrl;
       })
       .then((url) => {
         resolve(url);
