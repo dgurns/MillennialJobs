@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     height: 35,
     marginRight: 10,
     borderWidth: 1,
-    borderColor: constants.DARK_GRAY_COLOR
+    borderColor: constants.DARK_GRAY_COLOR,
   },
   title: {
     flex: 1,
