@@ -4,9 +4,7 @@ import * as types from './types';
 import * as helpers from '../helpers';
 
 export const refreshDataState = (filterType) => {
-  if (filterType === 'udemy_subcategories') {
-    // Pull Udemy subcategories and save them to Redux state
-  } else if (filterType === 'posts') {
+  if (filterType === 'posts') {
     // Pull posts from Firebase and save them to Redux state
   }
 };

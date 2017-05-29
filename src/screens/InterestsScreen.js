@@ -21,14 +21,14 @@ class InterestsScreen extends Component {
   }
 
   renderInterests() {
-    const { interests, currentUser } = this.props;
+    const { primarySubcategories, currentUser } = this.props;
 
-    const interestsJsx = interests.map(interest =>
+    const interestsJsx = primarySubcategories.map(subcategory =>
       <RadioButton
-        labelText={interest.interestName}
-        selected={(interest.udemySubcategory === currentUser.interestName)}
-        onPress={() => this.props.selectInterest(interest.udemySubcategory)}
-        key={interest.udemySubcategory}
+        labelText={subcategory.interestName}
+        selected={(subcategory.udemySubcategory === currentUser.interestName)}
+        onPress={() => this.props.selectInterest(subcategory.udemySubcategory)}
+        key={subcategory.udemySubcategory}
       />
     );
     return interestsJsx;
@@ -86,8 +86,11 @@ const styles = StyleSheet.create({
   }
 });
 
-function mapStateToProps({ interests, currentUser }) {
-  return { interests, currentUser };
+function mapStateToProps({ data, currentUser }) {
+  return {
+    primarySubcategories: data.primarySubcategories,
+    currentUser
+  };
 }
 
 export default connect(mapStateToProps, actions)(InterestsScreen);

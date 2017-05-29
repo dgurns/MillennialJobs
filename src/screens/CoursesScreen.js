@@ -21,7 +21,8 @@ class CoursesScreen extends Component {
         key={this.props.interestName}
       >
         <Picker
-          primaryOptionList={this.props.interests}
+          primaryOptionList={this.props.primarySubcategories}
+          secondaryOptionList={this.props.secondarySubcategories}
           selected={this.props.interestName}
         />
       </ScreenContainer>
@@ -29,10 +30,11 @@ class CoursesScreen extends Component {
   }
 }
 
-function mapStateToProps({ interests, currentUser }) {
+function mapStateToProps({ data, currentUser }) {
   return {
     interestName: currentUser.interestName,
-    interests
+    primarySubcategories: data.primarySubcategories,
+    secondarySubcategories: data.secondarySubcategories
   };
 }
 
