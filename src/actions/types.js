@@ -24,5 +24,7 @@ export const USER_STATE_REFRESHED = 'user_state_refreshed';
 export const ONBOARDING_STATUS_RETRIEVED = 'onboarding_status_retrieved';
 
 // data reducer
-export const UDEMY_SUBCATEGORIES_REFRESHED = 'udemy_subcategories_refreshed';
-export const POSTS_REFRESHED = 'posts_refreshed';
+export const FETCH_COURSES_ATTEMPTED = 'fetch_courses_attempted';
+export const FETCH_COURSES_SUCCESSFUL = 'fetch_courses_successful';
+export const FETCH_COURSES_FAILED = 'fetch_courses_failed';
+export const COURSES_CLEARED = 'courses_cleared';

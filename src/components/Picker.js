@@ -8,8 +8,10 @@ import {
   ScrollView,
   ListView
 } from 'react-native';
+import { connect } from 'react-redux';
 
 import * as constants from '../constants';
+import * as actions from '../actions';
 import DownArrowIcon from '../icons/DownArrowIcon';
 import CloseIcon from '../icons/CloseIcon';
 
@@ -17,8 +19,7 @@ class Picker extends Component {
   static defaultProps = {
     primaryOptionList: [],
     secondaryOptionList: [],
-    selected: '',
-    onSelect: () => {}
+    selected: ''
   }
 
   constructor(props) {
@@ -29,7 +30,6 @@ class Picker extends Component {
     });
 
     this.state = {
-      selected: this.props.selected,
       modalVisible: false,
       primaryDataSource: ds.cloneWithRows(this.props.primaryOptionList),
       secondaryDataSource: ds.cloneWithRows(this.props.secondaryOptionList)
@@ -50,9 +50,10 @@ class Picker extends Component {
 
   selectRow = (rowId) => {
     this.setState({
-      selected: rowId,
       modalVisible: false
     });
+
+    this.props.selectInterest(rowId);
   }
 
   renderRow(rowId) {
@@ -115,7 +116,7 @@ class Picker extends Component {
         style={picker}
         onPress={this.showModal}
       >
-        <Text style={label}>{this.state.selected}</Text>
+        <Text style={label}>{this.props.selected}</Text>
         <View style={downArrow}>
           <DownArrowIcon
             color={constants.LIGHT_GRAY_COLOR}
@@ -194,7 +195,8 @@ const styles = StyleSheet.create({
   listViewHeader: {
     fontSize: constants.DETAIL_FONT_SIZE,
     color: constants.LIGHT_GRAY_COLOR,
-    paddingBottom: 7
+    paddingBottom: 8,
+    fontWeight: 'bold'
   },
   listViewRow: {
     flexDirection: 'row',
@@ -208,4 +210,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Picker;
+export default connect(null, actions)(Picker);
