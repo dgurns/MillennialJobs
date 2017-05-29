@@ -27,7 +27,7 @@ class ModalView extends Component {
       >
         <TouchableOpacity
           style={closeIcon}
-          onPress={this.onClose}
+          onPress={this.props.onClose}
         >
           <CloseIcon
             color={constants.LIGHT_GRAY_COLOR}

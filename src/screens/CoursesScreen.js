@@ -5,6 +5,7 @@ import * as actions from '../actions';
 import Picker from '../components/Picker';
 import CoursesIcon from '../icons/CoursesIcon';
 import ScreenContainer from '../components/ScreenContainer';
+import Course from '../components/Course';
 
 class CoursesScreen extends Component {
   static navigationOptions = {
@@ -44,7 +45,9 @@ class CoursesScreen extends Component {
           primaryOptionList={primarySubcategories}
           secondaryOptionList={secondarySubcategories}
           selected={interestName}
+          style={{ marginBottom: 20 }}
         />
+        <Course />
       </ScreenContainer>
     );
   }

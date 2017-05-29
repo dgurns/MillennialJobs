@@ -17,7 +17,8 @@ class Picker extends Component {
   static defaultProps = {
     primaryOptionList: [],
     secondaryOptionList: [],
-    selected: ''
+    selected: '',
+    style: {}
   }
 
   constructor(props) {
@@ -108,7 +109,7 @@ class Picker extends Component {
 
     return (
       <TouchableOpacity
-        style={picker}
+        style={[picker, this.props.style]}
         onPress={this.showModal}
       >
         <Text style={label}>{this.props.selected}</Text>
