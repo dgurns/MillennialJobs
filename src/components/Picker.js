@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
-  Modal,
   StyleSheet,
   TouchableOpacity,
-  ScrollView,
   ListView
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -13,7 +11,7 @@ import { connect } from 'react-redux';
 import * as constants from '../constants';
 import * as actions from '../actions';
 import DownArrowIcon from '../icons/DownArrowIcon';
-import CloseIcon from '../icons/CloseIcon';
+import ModalView from './ModalView';
 
 class Picker extends Component {
   static defaultProps = {
@@ -105,10 +103,7 @@ class Picker extends Component {
     const {
       picker,
       label,
-      downArrow,
-      modal,
-      closeIcon,
-      modalScrollView
+      downArrow
     } = styles;
 
     return (
@@ -124,26 +119,13 @@ class Picker extends Component {
           />
         </View>
 
-        <Modal
-          animationType="slide"
-          transparent={false}
+        <ModalView
           visible={this.state.modalVisible}
-          style={modal}
+          onClose={this.hideModal}
         >
-          <TouchableOpacity
-            style={closeIcon}
-            onPress={this.hideModal}
-          >
-            <CloseIcon
-              color={constants.LIGHT_GRAY_COLOR}
-              size="large"
-            />
-          </TouchableOpacity>
-          <ScrollView style={modalScrollView}>
             {this.renderPrimaryOptionList()}
             {this.renderSecondaryOptionList()}
-          </ScrollView>
-        </Modal>
+        </ModalView>
       </TouchableOpacity>
     );
   }
@@ -170,20 +152,6 @@ const styles = StyleSheet.create({
   },
   downArrow: {
     marginRight: 'auto'
-  },
-  modal: {
-    flex: 1
-  },
-  closeIcon: {
-    position: 'absolute',
-    top: 25,
-    right: 5
-  },
-  modalScrollView: {
-    flex: 1,
-    marginTop: 70,
-    paddingLeft: 25,
-    paddingRight: 25
   },
   listView: {
     flex: 1,

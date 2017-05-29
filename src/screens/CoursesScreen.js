@@ -55,7 +55,8 @@ function mapStateToProps({ data, currentUser }) {
     interestName: currentUser.interestName,
     primarySubcategories: data.primarySubcategories,
     secondarySubcategories: data.secondarySubcategories,
-    courses: data.courses
+    courses: data.courses,
+    coursesLoading: data.coursesLoading
   };
 }
 
