@@ -31,7 +31,8 @@ class Picker extends Component {
     this.state = {
       selected: this.props.selected,
       modalVisible: false,
-      primaryOptionDataSource: ds.cloneWithRows(this.props.primaryOptionList)
+      primaryDataSource: ds.cloneWithRows(this.props.primaryOptionList),
+      secondaryDataSource: ds.cloneWithRows(this.props.secondaryOptionList)
     };
   }
 
@@ -73,9 +74,27 @@ class Picker extends Component {
     return (
       <ListView
         contentContainerStyle={styles.listView}
-        dataSource={this.state.primaryOptionDataSource}
+        dataSource={this.state.primaryDataSource}
         renderRow={(rowData) =>
           this.renderRow(rowData.udemySubcategory)
+        }
+        renderHeader={() =>
+          <Text style={styles.listViewHeader}>POPULAR</Text>
+        }
+      />
+    );
+  }
+
+  renderSecondaryOptionList() {
+    return (
+      <ListView
+        contentContainerStyle={styles.listView}
+        dataSource={this.state.secondaryDataSource}
+        renderRow={(rowData) =>
+          this.renderRow(rowData.udemySubcategory)
+        }
+        renderHeader={() =>
+          <Text style={styles.listViewHeader}>A TO Z</Text>
         }
       />
     );
@@ -121,6 +140,7 @@ class Picker extends Component {
           </TouchableOpacity>
           <ScrollView style={modalScrollView}>
             {this.renderPrimaryOptionList()}
+            {this.renderSecondaryOptionList()}
           </ScrollView>
         </Modal>
       </TouchableOpacity>
@@ -168,12 +188,19 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
+    marginBottom: 50
+  },
+  listViewHeader: {
+    fontSize: constants.DETAIL_FONT_SIZE,
+    color: constants.LIGHT_GRAY_COLOR,
+    paddingBottom: 7
   },
   listViewRow: {
     flexDirection: 'row',
     paddingTop: 8,
-    paddingBottom: 8
+    paddingBottom: 8,
+    minWidth: 0
   },
   listviewRowTitle: {
     color: constants.LIGHT_GRAY_COLOR,

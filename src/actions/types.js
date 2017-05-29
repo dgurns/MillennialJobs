@@ -22,3 +22,7 @@ export const PHOTO_UPLOAD_FAILED = 'photo_upload_failed';
 export const USER_STATE_REFRESHED = 'user_state_refreshed';
 
 export const ONBOARDING_STATUS_RETRIEVED = 'onboarding_status_retrieved';
+
+// data reducer
+export const UDEMY_SUBCATEGORIES_REFRESHED = 'udemy_subcategories_refreshed';
+export const POSTS_REFRESHED = 'posts_refreshed';

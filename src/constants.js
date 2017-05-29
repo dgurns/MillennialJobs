@@ -9,6 +9,7 @@ export const WHITE_COLOR = '#FFF';
 // Fonts
 export const TITLE_FONT_SIZE = 26;
 export const BODY_FONT_SIZE = 20;
+export const DETAIL_FONT_SIZE = 14;
 export const TITLE_FONT_FAMILY = 'Bangers';
 
 // Icons
