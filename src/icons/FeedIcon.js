@@ -10,10 +10,12 @@ class FeedIcon extends Component {
   }
 
   getSize() {
-    if (this.props.size === 'large') {
-      return constants.PRIMARY_ICON_SIZE;
+    if (!isNaN(this.props.size)) {
+      return `${this.props.size}`;
+    } else if (this.props.size === 'small') {
+      return constants.SECONDARY_ICON_SIZE;
     }
-    return constants.SECONDARY_ICON_SIZE;
+    return constants.PRIMARY_ICON_SIZE;
   }
 
   render() {

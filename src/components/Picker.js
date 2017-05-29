@@ -9,6 +9,7 @@ import {
 
 import * as constants from '../constants';
 import DownArrowIcon from '../icons/DownArrowIcon';
+import CloseIcon from '../icons/CloseIcon';
 
 class Picker extends Component {
   static defaultProps = {
@@ -18,18 +19,54 @@ class Picker extends Component {
   }
 
   state = {
-    selected: ''
+    selected: '',
+    modalVisible: false
+  }
+
+  hideModal = () => {
+    this.setState({
+      modalVisible: false
+    });
+  }
+
+  showModal = () => {
+    this.setState({
+      modalVisible: true
+    });
   }
 
   render() {
-    const { picker, label, downArrow } = styles;
+    const { picker, label, downArrow, modal, closeIcon } = styles;
 
     return (
-      <TouchableOpacity style={picker}>
+      <TouchableOpacity
+        style={picker}
+        onPress={this.showModal}
+      >
         <Text style={label}>Web Development</Text>
         <View style={downArrow}>
-          <DownArrowIcon color={constants.LIGHT_GRAY_COLOR} size="small" />
+          <DownArrowIcon
+            color={constants.LIGHT_GRAY_COLOR}
+            size="small"
+          />
         </View>
+
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+          style={modal}
+        >
+          <TouchableOpacity 
+            style={closeIcon}
+            onPress={this.hideModal}
+          >
+            <CloseIcon
+              color={constants.LIGHT_GRAY_COLOR}
+              size="large"
+            />
+          </TouchableOpacity>
+        </Modal>
       </TouchableOpacity>
     );
   }
@@ -56,6 +93,14 @@ const styles = StyleSheet.create({
   },
   downArrow: {
     marginRight: 'auto'
+  },
+  modal: {
+    flex: 1
+  },
+  closeIcon: {
+    position: 'absolute',
+    top: 25,
+    right: 5
   }
 });
 
