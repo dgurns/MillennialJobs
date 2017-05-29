@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { connect } from 'react-redux';
 
 import Picker from '../components/Picker';
 import CoursesIcon from '../icons/CoursesIcon';
@@ -18,11 +18,22 @@ class CoursesScreen extends Component {
     return (
       <ScreenContainer
         navigation={this.props.navigation}
+        key={this.props.interestName}
       >
-        <Picker />
+        <Picker
+          primaryOptionList={this.props.interests}
+          selected={this.props.interestName}
+        />
       </ScreenContainer>
     );
   }
 }
 
-export default CoursesScreen;
+function mapStateToProps({ interests, currentUser }) {
+  return {
+    interestName: currentUser.interestName,
+    interests
+  };
+}
+
+export default connect(mapStateToProps)(CoursesScreen);

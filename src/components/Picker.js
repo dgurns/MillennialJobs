@@ -4,7 +4,9 @@ import {
   Text,
   Modal,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView,
+  ListView
 } from 'react-native';
 
 import * as constants from '../constants';
@@ -15,12 +17,22 @@ class Picker extends Component {
   static defaultProps = {
     primaryOptionList: [],
     secondaryOptionList: [],
-    selected: ''
+    selected: '',
+    onSelect: () => {}
   }
 
-  state = {
-    selected: '',
-    modalVisible: false
+  constructor(props) {
+    super(props);
+
+    const ds = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1 !== r2
+    });
+
+    this.state = {
+      selected: this.props.selected,
+      modalVisible: false,
+      primaryOptionDataSource: ds.cloneWithRows(this.props.primaryOptionList)
+    };
   }
 
   hideModal = () => {
@@ -35,15 +47,56 @@ class Picker extends Component {
     });
   }
 
+  selectRow = (rowId) => {
+    this.setState({
+      selected: rowId,
+      modalVisible: false
+    });
+  }
+
+  renderRow(rowId) {
+    const { listViewRow, listviewRowTitle } = styles;
+
+    return (
+      <TouchableOpacity
+        style={listViewRow}
+        onPress={() => this.selectRow(rowId)}
+      >
+        <Text style={listviewRowTitle}>
+          {rowId}
+        </Text>
+      </TouchableOpacity>
+    );
+  }
+
+  renderPrimaryOptionList() {
+    return (
+      <ListView
+        contentContainerStyle={styles.listView}
+        dataSource={this.state.primaryOptionDataSource}
+        renderRow={(rowData) =>
+          this.renderRow(rowData.udemySubcategory)
+        }
+      />
+    );
+  }
+
   render() {
-    const { picker, label, downArrow, modal, closeIcon } = styles;
+    const {
+      picker,
+      label,
+      downArrow,
+      modal,
+      closeIcon,
+      modalScrollView
+    } = styles;
 
     return (
       <TouchableOpacity
         style={picker}
         onPress={this.showModal}
       >
-        <Text style={label}>Web Development</Text>
+        <Text style={label}>{this.state.selected}</Text>
         <View style={downArrow}>
           <DownArrowIcon
             color={constants.LIGHT_GRAY_COLOR}
@@ -57,7 +110,7 @@ class Picker extends Component {
           visible={this.state.modalVisible}
           style={modal}
         >
-          <TouchableOpacity 
+          <TouchableOpacity
             style={closeIcon}
             onPress={this.hideModal}
           >
@@ -66,6 +119,9 @@ class Picker extends Component {
               size="large"
             />
           </TouchableOpacity>
+          <ScrollView style={modalScrollView}>
+            {this.renderPrimaryOptionList()}
+          </ScrollView>
         </Modal>
       </TouchableOpacity>
     );
@@ -101,6 +157,27 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 25,
     right: 5
+  },
+  modalScrollView: {
+    flex: 1,
+    marginTop: 70,
+    paddingLeft: 25,
+    paddingRight: 25
+  },
+  listView: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start'
+  },
+  listViewRow: {
+    flexDirection: 'row',
+    paddingTop: 8,
+    paddingBottom: 8
+  },
+  listviewRowTitle: {
+    color: constants.LIGHT_GRAY_COLOR,
+    fontSize: constants.BODY_FONT_SIZE,
   }
 });
 
