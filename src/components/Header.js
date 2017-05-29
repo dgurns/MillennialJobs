@@ -11,7 +11,8 @@ import * as constants from '../constants';
 class Header extends Component {
   static defaultProps = {
     mode: 'onboarding', // 'onboarding', 'main'
-    onPressLogo: () => {}
+    onPressLogo: () => {},
+    style: {}
   }
 
   renderLogo() {
@@ -62,7 +63,7 @@ class Header extends Component {
 
     return (
       <View
-        style={header}
+        style={[header, this.props.style]}
       >
         <StatusBar
           barStyle={'dark-content'}

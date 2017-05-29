@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 
+import Picker from '../components/Picker';
 import CoursesIcon from '../icons/CoursesIcon';
 import ScreenContainer from '../components/ScreenContainer';
 
@@ -18,7 +19,7 @@ class CoursesScreen extends Component {
       <ScreenContainer
         navigation={this.props.navigation}
       >
-        <View />
+        <Picker />
       </ScreenContainer>
     );
   }

@@ -16,7 +16,9 @@ class ScreenContainer extends Component {
         <View style={styles.statusBarBackground} />
         <ScrollView style={styles.scrollView}>
           <Header mode='main' />
-          {this.props.children}
+          <View style={styles.mainContainer}>
+            {this.props.children}
+          </View>
         </ScrollView>
       </View>
     );
@@ -35,6 +37,10 @@ const styles = StyleSheet.create({
     height: 20,
     backgroundColor: constants.WHITE_COLOR,
     zIndex: 200
+  },
+  mainContainer: {
+    padding: 25,
+    paddingTop: 20
   }
 });
 
