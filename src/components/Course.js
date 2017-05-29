@@ -30,7 +30,8 @@ class Course extends Component {
         <View style={imageTitleContainer}>
           <Image
             style={image}
-            source={{ uri: 'https://udemy-images.udemy.com/course/50x50/1172996_0241_5.jpg' }}
+            source={{ uri: 'http://udemy-images.udemy.com/course/50x50/1172996_0241_5.jpg' }}
+            resizeMode="contain"
           />
           <Text style={title}>
             Advanced React Native
@@ -38,7 +39,7 @@ class Course extends Component {
         </View>
         <Text style={description}>
           Master the advanced topics of React Native: Animations, Maps,
-          Notifications, Navigation and More!
+          Notifications, Navigation and More stuff going to the right!
         </Text>
         <View style={ratingButtonContainer}>
           <Text style={rating}>
@@ -68,15 +69,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flex: 1,
     justifyContent: 'flex-start',
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
+    marginBottom: 13
   },
   image: {
-    width: 50,
-    height: 50
+    width: 35,
+    height: 35,
+    marginRight: 10,
+    borderWidth: 1,
+    borderColor: constants.DARK_GRAY_COLOR
   },
   title: {
     flex: 1,
     minWidth: 0,
+    paddingTop: 5,
     color: constants.BLACK_COLOR,
     fontWeight: 'bold',
     fontSize: constants.BODY_FONT_SIZE
@@ -84,14 +90,14 @@ const styles = StyleSheet.create({
   description: {
     fontSize: constants.BODY_FONT_SIZE,
     color: constants.BLACK_COLOR,
-    marginBottom: 10
+    marginBottom: 12
   },
   ratingButtonContainer: {
     flexDirection: 'row',
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingBottom: 9
+    paddingBottom: 7
   },
   rating: {
     flex: 1,
