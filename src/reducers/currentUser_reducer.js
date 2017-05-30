@@ -6,6 +6,7 @@ const INITIAL_STATE = {
   username: '',
   profilePhotoUrl: '',
   hasOnboarded: false,
+  isGood: false,
   authLoading: false,
   photoUploading: false
 };
@@ -74,7 +75,13 @@ export default function (state = INITIAL_STATE, action) {
         uid: action.payload.uid,
         username: action.payload.username,
         profilePhotoUrl: action.payload.profilePhotoUrl,
-        interestName: action.payload.interestName
+        interestName: action.payload.interestName,
+        isGood: action.payload.isGood
+      };
+    case types.IS_GOOD_STATUS_UPDATED:
+      return {
+        ...state,
+        isGood: action.payload
       };
     case types.LOG_OUT_SUCCESSFUL:
       return state;

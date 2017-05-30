@@ -52,7 +52,8 @@ export const signUpUser = ({
   await firebase.database().ref(`users/${uid}`).set({
     interestName,
     profilePhotoUrl: '',
-    hasOnboarded: false
+    hasOnboarded: false,
+    isGood: false
   }).catch(() => {
     firebase.auth().currentUser.delete().then(() => {
       Alert.alert(
@@ -128,7 +129,8 @@ export const refreshUserState = () => async dispatch => {
     username: '',
     profilePhotoUrl: '',
     interestName: '',
-    hasOnboarded: false
+    hasOnboarded: false,
+    isGood: false
   };
 
   let currentUser = await firebase.auth().currentUser;
@@ -145,10 +147,12 @@ export const refreshUserState = () => async dispatch => {
       const profilePhotoUrl = snapshot.val().profilePhotoUrl;
       const interestName = snapshot.val().interestName;
       const hasOnboarded = snapshot.val().hasOnboarded;
+      const isGood = snapshot.val().isGood;
       userState.profilePhotoUrl = profilePhotoUrl;
       userState.interestName = interestName;
       userState.hasOnboarded = hasOnboarded;
       userState.username = username;
+      userState.isGood = isGood;
     });
 
     dispatch({
@@ -180,4 +184,31 @@ export const logOutUser = () => {
   return {
     type: types.LOG_OUT_SUCCESSFUL
   };
+};
+
+export const toggleGoodStatus = () => async dispatch => {
+  let currentUser = await firebase.auth().currentUser;
+
+  if (currentUser) {
+    const uid = currentUser.uid;
+
+    const databaseRef = firebase.database().ref(`users/${uid}`);
+
+    try {
+      let isCurrentlyGood = await databaseRef.once('value').then(snapshot => {
+        return snapshot.val().isGood;
+      });
+      console.log(`currently isGood: ${isCurrentlyGood}`);
+      await databaseRef.update({
+        isGood: !isCurrentlyGood
+      });
+
+      dispatch({
+        type: types.IS_GOOD_STATUS_UPDATED,
+        payload: !isCurrentlyGood
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 };

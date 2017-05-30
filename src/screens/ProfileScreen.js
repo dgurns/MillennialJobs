@@ -97,6 +97,22 @@ class ProfileScreen extends Component {
     );
   }
 
+  toggleGoodStatus = () => {
+    let alertMessage = 'Crap... out of a job and ready to learn something new?';
+    if (!this.props.isGood) {
+      alertMessage = 'If you\'ve got a job and are ready to be a success story, click Yes.';
+    }
+    // Alert will have to be customized for Android
+    Alert.alert(
+      'You sure?',
+      alertMessage,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Yes', onPress: () => this.props.toggleGoodStatus() },
+      ],
+    );
+  }
+
   render() {
     const {
       profilePhoto,
@@ -131,8 +147,8 @@ class ProfileScreen extends Component {
             </Text>
             <RadioButton
               labelText="I'm good!"
-              selected={false}
-              onPress={() => {}}
+              selected={this.props.isGood}
+              onPress={this.toggleGoodStatus}
               style={goodRadioButton}
             />
           </View>
@@ -168,6 +184,7 @@ const styles = StyleSheet.create({
   },
   goodContainer: {
     flexDirection: 'row',
+    minWidth: 0,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 30
@@ -186,7 +203,8 @@ function mapStateToProps({ currentUser }) {
   return {
     profilePhotoUrl: currentUser.profilePhotoUrl,
     uid: currentUser.uid,
-    username: currentUser.username
+    username: currentUser.username,
+    isGood: currentUser.isGood
   };
 }
 

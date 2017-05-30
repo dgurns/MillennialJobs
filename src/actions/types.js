@@ -23,6 +23,8 @@ export const USER_STATE_REFRESHED = 'user_state_refreshed';
 
 export const ONBOARDING_STATUS_RETRIEVED = 'onboarding_status_retrieved';
 
+export const IS_GOOD_STATUS_UPDATED = 'is_good_status_updated';
+
 // data reducer
 export const FETCH_COURSES_ATTEMPTED = 'fetch_courses_attempted';
 export const FETCH_COURSES_SUCCESSFUL = 'fetch_courses_successful';
