@@ -55,10 +55,6 @@ export const secondarySubcategories = [
     udemySubcategory: 'Commercial Photography'
   },
   {
-    interestName: 'Content Marketing ',
-    udemySubcategory: 'Content Marketing '
-  },
-  {
     interestName: 'Data & Analytics',
     udemySubcategory: 'Data & Analytics'
   },

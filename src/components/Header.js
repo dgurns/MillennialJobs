@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
     fontSize: 37,
     flex: 1,
     padding: 5,
+    marginLeft: 2
   },
   millennialsSavedContainer: {
     flexDirection: 'row',

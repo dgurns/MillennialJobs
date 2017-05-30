@@ -42,7 +42,8 @@ class App extends Component {
               activeTintColor: constants.GREEN_COLOR,
               inactiveTintColor: constants.BLACK_COLOR,
               style: styles.tabBar
-            }
+            },
+            lazy: true
           })
         }
       }, {

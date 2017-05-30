@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { ListView, StyleSheet } from 'react-native';
+import { ListView, StyleSheet, ActivityIndicator, Text } from 'react-native';
 import { connect } from 'react-redux';
 
 import * as actions from '../actions';
+import * as constants from '../constants';
 import Picker from '../components/Picker';
 import CoursesIcon from '../icons/CoursesIcon';
 import ScreenContainer from '../components/ScreenContainer';
@@ -23,13 +24,9 @@ class CoursesScreen extends Component {
     this.ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
-
-    this.state = {
-      coursesDataSource: this.ds.cloneWithRows(this.props.courses)
-    };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.clearCourses();
     this.props.fetchCourses(this.props.interestName, 1);
   }
@@ -39,10 +36,26 @@ class CoursesScreen extends Component {
       this.props.clearCourses();
       this.props.fetchCourses(nextProps.interestName, 1);
     }
+  }
 
-    this.setState({
-      coursesDataSource: this.ds.cloneWithRows(nextProps.courses)
-    });
+  renderListView() {
+    if (this.props.coursesLoading) {
+      return <ActivityIndicator size="large" style={{ marginTop: 20 }} />;
+    } else if (!this.props.coursesLoading && this.props.courses.length === 0) {
+      return (
+        <Text style={styles.noCoursesText}>
+          No courses in that category! Guess nobody is getting saved through
+          {' '}{this.props.interestName} - it{'\''}s probably for the best.
+        </Text>
+      );
+    }
+    return (
+      <ListView
+        dataSource={this.ds.cloneWithRows(this.props.courses)}
+        renderRow={(rowData) => this.renderRow(rowData)}
+        contentContainerStyle={styles.listView}
+      />
+    );
   }
 
   renderRow(rowData) {
@@ -53,6 +66,7 @@ class CoursesScreen extends Component {
     const {
       navigation,
       interestName,
+      coursesLoading,
       primarySubcategories,
       secondarySubcategories
     } = this.props;
@@ -60,7 +74,7 @@ class CoursesScreen extends Component {
     return (
       <ScreenContainer
         navigation={navigation}
-        key={interestName}
+        key={coursesLoading}
       >
         <Picker
           primaryOptionList={primarySubcategories}
@@ -68,11 +82,7 @@ class CoursesScreen extends Component {
           selected={interestName}
           style={styles.picker}
         />
-        <ListView
-          dataSource={this.state.coursesDataSource}
-          renderRow={(rowData) => this.renderRow(rowData)}
-          contentContainerStyle={styles.listView}
-        />
+        {this.renderListView()}
       </ScreenContainer>
     );
   }
@@ -84,6 +94,11 @@ const styles = StyleSheet.create({
   },
   listView: {
     flex: 1
+  },
+  noCoursesText: {
+    fontSize: constants.BODY_FONT_SIZE,
+    color: constants.DARK_GRAY_COLOR,
+    padding: 10
   }
 });
 

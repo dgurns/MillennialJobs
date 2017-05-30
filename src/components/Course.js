@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import {
+  ActivityIndicator,
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Linking
+} from 'react-native';
 
 import * as constants from '../constants';
 import * as helpers from '../helpers';
@@ -13,10 +20,11 @@ class Course extends Component {
 
   state = {
     courseName: '',
-    imageUri: '',
+    imageUri: 'https://static.swappa.com/static/icons/no_profile_50.png',
     courseUrl: '',
     courseDescription: '',
-    courseRating: ''
+    courseRating: '',
+    loading: false
   }
 
   componentDidMount() {
@@ -24,25 +32,37 @@ class Course extends Component {
   }
 
   loadCourseDetails = async () => {
-    let courseDetails = await helpers.fetchCourseDetails(this.props.id);
-    const { title, url, headline, avg_rating, image_50x50 } = courseDetails;
-
-    const fullUrl = `${constants.UDEMY_ROOT_URL}${url}`;
-    const cleanedRating = avg_rating.toFixed(1);
-    const cleanedImageUri = image_50x50.replace('https', 'http');
-
     this.setState({
-      courseName: title,
-      imageUri: cleanedImageUri,
-      courseUrl: fullUrl,
-      courseDescription: headline,
-      courseRating: cleanedRating
+      loading: true
     });
+
+    try {
+      let courseDetails = await helpers.fetchCourseDetails(this.props.id);
+      const { title, url, headline, avg_rating, image_50x50 } = courseDetails;
+
+      const fullUrl = `${constants.UDEMY_ROOT_URL}${url}`;
+      const cleanedRating = avg_rating.toFixed(1);
+      const cleanedImageUri = image_50x50.replace('https', 'http');
+
+      this.setState({
+        courseName: title,
+        imageUri: cleanedImageUri,
+        courseUrl: fullUrl,
+        courseDescription: headline,
+        courseRating: cleanedRating,
+        loading: false
+      });
+    } catch (error) {
+      console.log(error);
+
+      this.setState({
+        loading: false
+      });
+    }
   }
 
-  render() {
+  renderCourse() {
     const {
-      container,
       imageTitleContainer,
       image,
       title,
@@ -60,8 +80,16 @@ class Course extends Component {
       courseRating
     } = this.state;
 
+    if (this.state.loading) {
+      return (
+        <ActivityIndicator
+          style={{ marginTop: 80, marginBottom: 80 }}
+          size="large"
+        />
+      );
+    }
     return (
-      <View style={[container, this.props.style]}>
+      <View>
         <View style={imageTitleContainer}>
           <Image
             style={image}
@@ -82,11 +110,19 @@ class Course extends Component {
           <View style={button}>
             <Button
               size="small"
-              onPress={() => {}}
+              onPress={() => Linking.openURL(courseUrl)}
               buttonText="Go"
             />
           </View>
         </View>
+      </View>
+    );
+  }
+
+  render() {
+    return (
+      <View style={[styles.container, this.props.style]}>
+        {this.renderCourse()}
       </View>
     );
   }
