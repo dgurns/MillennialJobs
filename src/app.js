@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   tabBar: {
-    backgroundColor: constants.VERY_LIGHT_GRAY_COLOR,
+    backgroundColor: '#D8D8D8',
     borderTopColor: constants.LIGHT_GRAY_COLOR,
     borderTopWidth: 1,
     height: 60

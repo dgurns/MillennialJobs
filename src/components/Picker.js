@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     padding: 15,
     paddingTop: 10,
     paddingBottom: 10,
-    backgroundColor: '#F6F6F6'
+    backgroundColor: constants.VERY_LIGHT_GRAY_COLOR
   },
   label: {
     flex: 1,

@@ -18,6 +18,7 @@ import RadioButton from '../components/RadioButton';
 import ProfileIcon from '../icons/ProfileIcon';
 import ScreenContainer from '../components/ScreenContainer';
 import ProfilePhoto from '../components/ProfilePhoto';
+import Course from '../components/Course';
 
 class ProfileScreen extends Component {
   static navigationOptions = {
@@ -80,6 +81,22 @@ class ProfileScreen extends Component {
     });
   }
 
+  toggleGoodStatus = () => {
+    let alertMessage = 'Crap... out of a job and ready to learn something new?';
+    if (!this.props.isGood) {
+      alertMessage = 'If you\'ve got a job and are ready to be a success story, click Yes.';
+    }
+    // Alert will have to be customized for Android
+    Alert.alert(
+      'You sure?',
+      alertMessage,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Yes', onPress: () => this.props.toggleGoodStatus() },
+      ],
+    );
+  }
+
   renderProfilePhoto() {
     if (this.state.photoLoading) {
       return (
@@ -97,29 +114,17 @@ class ProfileScreen extends Component {
     );
   }
 
-  toggleGoodStatus = () => {
-    let alertMessage = 'Crap... out of a job and ready to learn something new?';
-    if (!this.props.isGood) {
-      alertMessage = 'If you\'ve got a job and are ready to be a success story, click Yes.';
-    }
-    // Alert will have to be customized for Android
-    Alert.alert(
-      'You sure?',
-      alertMessage,
-      [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'Yes', onPress: () => this.props.toggleGoodStatus() },
-      ],
-    );
-  }
-
   render() {
     const {
       profilePhoto,
       goodContainer,
       username,
       goodLabel,
-      goodRadioButton
+      goodRadioButton,
+      coursesContainer,
+      addCourse,
+      addLabel,
+      coursesLabel
     } = styles;
 
     return (
@@ -151,6 +156,18 @@ class ProfileScreen extends Component {
               onPress={this.toggleGoodStatus}
               style={goodRadioButton}
             />
+          </View>
+          <View style={coursesContainer}>
+            <Text style={coursesLabel}>
+              Your courses:
+            </Text>
+            <TouchableOpacity
+              style={addCourse}
+              onPress={() => {}}
+            >
+              <Text style={addLabel}>+</Text>
+            </TouchableOpacity>
+            <Course id="1172996" />
           </View>
           <Button
             onPress={this.logOut}
@@ -187,7 +204,7 @@ const styles = StyleSheet.create({
     minWidth: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 30
+    marginBottom: 10
   },
   goodLabel: {
     color: constants.LIGHT_GRAY_COLOR,
@@ -196,6 +213,33 @@ const styles = StyleSheet.create({
   goodRadioButton: {
     marginLeft: 20,
     paddingTop: 20
+  },
+  coursesContainer: {
+    flex: 1,
+    paddingBottom: 30
+  },
+  addCourse: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: constants.LIGHT_GRAY_COLOR,
+    backgroundColor: constants.VERY_LIGHT_GRAY_COLOR,
+    height: 70,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20
+  },
+  addLabel: {
+    fontSize: 76,
+    color: constants.LIGHT_GRAY_COLOR,
+    backgroundColor: 'transparent',
+    lineHeight: 80
+  },
+  coursesLabel: {
+    flex: 1,
+    color: constants.LIGHT_GRAY_COLOR,
+    fontSize: constants.BODY_FONT_SIZE,
+    marginBottom: 20,
+    textAlign: 'center'
   }
 });
 
