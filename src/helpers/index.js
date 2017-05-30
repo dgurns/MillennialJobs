@@ -1,6 +1,10 @@
 import { Platform } from 'react-native';
 import RNFetchBlob from 'react-native-fetch-blob';
 import * as firebase from 'firebase';
+import axios from 'axios';
+
+import { udemyConfig } from '../udemy/udemy_config';
+import * as constants from '../constants';
 
 const Blob = RNFetchBlob.polyfill.Blob;
 const fs = RNFetchBlob.fs;
@@ -52,5 +56,33 @@ export const checkIfOnboarded = async (uid) => {
     }).catch(error => {
       reject(error);
     });
+  });
+};
+
+export const fetchCourseDetails = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const buildCourseDetailsUrl = () => {
+        return (
+          `${constants.UDEMY_API_ROOT_URL}/${id}?fields[course]=title,headline,avg_rating,image_50x50,url`
+        );
+      };
+      const url = buildCourseDetailsUrl(id);
+
+      let resultsObject = await axios({
+        method: 'get',
+        url,
+        auth: {
+          username: udemyConfig.clientId,
+          password: udemyConfig.clientSecret
+        }
+      });
+      const results = resultsObject.data;
+
+      resolve(results);
+    } catch (error) {
+      console.log(error.response);
+      reject(error);
+    }
   });
 };

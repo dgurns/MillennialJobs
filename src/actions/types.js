@@ -28,3 +28,7 @@ export const FETCH_COURSES_ATTEMPTED = 'fetch_courses_attempted';
 export const FETCH_COURSES_SUCCESSFUL = 'fetch_courses_successful';
 export const FETCH_COURSES_FAILED = 'fetch_courses_failed';
 export const COURSES_CLEARED = 'courses_cleared';
+
+export const FETCH_COURSE_DETAILS_ATTEMPTED = 'fetch_course_details_attempted';
+export const FETCH_COURSE_DETAILS_SUCCESSFUL = 'fetch_course_details_successful';
+export const FETCH_COURSE_DETAILS_FAILED = 'fetch_course_details_failed';

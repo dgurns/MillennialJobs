@@ -21,4 +21,5 @@ export const LARGE_PROFILE_PHOTO_SIZE = 150;
 export const SMALL_PROFILE_PHOTO_SIZE = 35;
 
 // Data and APIs
-export const UDEMY_API_ROOT_URL = 'https://www.udemy.com/api-2.0/courses/?';
+export const UDEMY_ROOT_URL = 'https://www.udemy.com';
+export const UDEMY_API_ROOT_URL = 'https://www.udemy.com/api-2.0/courses';

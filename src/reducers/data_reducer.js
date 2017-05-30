@@ -5,7 +5,8 @@ const INITIAL_STATE = {
   primarySubcategories,
   secondarySubcategories,
   courses: [],
-  coursesLoading: false
+  coursesLoading: false,
+  courseDetails: []
 };
 
 export default function (state = INITIAL_STATE, action) {

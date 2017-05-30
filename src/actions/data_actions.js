@@ -13,7 +13,7 @@ const buildCoursesUrl = (subcategory, page) => {
       ordering: 'most_reviewed'
   };
   const query = qs.stringify(queryParams);
-  return `${constants.UDEMY_API_ROOT_URL}${query}`;
+  return `${constants.UDEMY_API_ROOT_URL}/?${query}`;
 };
 
 export const fetchCourses = (subcategory, page) => async dispatch => {

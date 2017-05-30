@@ -2,15 +2,42 @@ import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 
 import * as constants from '../constants';
+import * as helpers from '../helpers';
 import Button from './Button';
 
 class Course extends Component {
   static defaultProps = {
+    id: null,
+    style: {}
+  }
+
+  state = {
+    courseName: '',
     imageUri: '',
-    title: '',
-    description: '',
-    rating: '',
-    url: ''
+    courseUrl: '',
+    courseDescription: '',
+    courseRating: ''
+  }
+
+  componentWillMount() {
+    this.loadCourseDetails();
+  }
+
+  loadCourseDetails = async () => {
+    let courseDetails = await helpers.fetchCourseDetails(this.props.id);
+    const { title, url, headline, avg_rating, image_50x50 } = courseDetails;
+
+    const fullUrl = `${constants.UDEMY_ROOT_URL}${url}`;
+    const cleanedRating = avg_rating.toFixed(1);
+    const cleanedImageUri = image_50x50.replace('https', 'http');
+
+    this.setState({
+      courseName: title,
+      imageUri: cleanedImageUri,
+      courseUrl: fullUrl,
+      courseDescription: headline,
+      courseRating: cleanedRating
+    });
   }
 
   render() {
@@ -25,25 +52,32 @@ class Course extends Component {
       button
     } = styles;
 
+    const {
+      courseName,
+      imageUri,
+      courseUrl,
+      courseDescription,
+      courseRating
+    } = this.state;
+
     return (
-      <View style={container}>
+      <View style={[container, this.props.style]}>
         <View style={imageTitleContainer}>
           <Image
             style={image}
-            source={{ uri: 'http://udemy-images.udemy.com/course/50x50/1172996_0241_5.jpg' }}
+            source={{ uri: imageUri }}
             resizeMode="contain"
           />
           <Text style={title}>
-            Advanced React Native
+            {courseName}
           </Text>
         </View>
         <Text style={description}>
-          Master the advanced topics of React Native: Animations, Maps,
-          Notifications, Navigation and More stuff going to the right!
+          {courseDescription}
         </Text>
         <View style={ratingButtonContainer}>
           <Text style={rating}>
-            4.7 stars
+            {courseRating} stars
           </Text>
           <View style={button}>
             <Button
@@ -63,6 +97,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: constants.LIGHT_GRAY_COLOR,
     padding: 15,
+    paddingTop: 18,
     flexDirection: 'column'
   },
   imageTitleContainer: {
@@ -75,14 +110,14 @@ const styles = StyleSheet.create({
   image: {
     width: 35,
     height: 35,
-    marginRight: 10,
+    marginRight: 15,
     borderWidth: 1,
     borderColor: constants.DARK_GRAY_COLOR,
   },
   title: {
     flex: 1,
     minWidth: 0,
-    paddingTop: 5,
+    marginTop: -5,
     color: constants.BLACK_COLOR,
     fontWeight: 'bold',
     fontSize: constants.BODY_FONT_SIZE

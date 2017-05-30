@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { ActivityIndicator, ListView, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 
 import * as actions from '../actions';
+import * as helpers from '../helpers';
+import * as constants from '../constants';
 import Picker from '../components/Picker';
 import CoursesIcon from '../icons/CoursesIcon';
 import ScreenContainer from '../components/ScreenContainer';
@@ -16,6 +19,18 @@ class CoursesScreen extends Component {
     )
   }
 
+  constructor(props) {
+    super(props);
+
+    this.ds = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1 !== r2
+    });
+
+    this.state = {
+      coursesDataSource: this.ds.cloneWithRows(this.props.courses)
+    };
+  }
+
   componentWillMount() {
     this.props.clearCourses();
     this.props.fetchCourses(this.props.interestName, 1);
@@ -26,6 +41,14 @@ class CoursesScreen extends Component {
       this.props.clearCourses();
       this.props.fetchCourses(nextProps.interestName, 1);
     }
+
+    this.setState({
+      coursesDataSource: this.ds.cloneWithRows(nextProps.courses)
+    });
+  }
+
+  renderRow(rowData) {
+    return <Course id={rowData.id} style={{ marginBottom: 20 }} />;
   }
 
   render() {
@@ -47,11 +70,21 @@ class CoursesScreen extends Component {
           selected={interestName}
           style={{ marginBottom: 20 }}
         />
-        <Course />
+        <ListView
+          dataSource={this.state.coursesDataSource}
+          renderRow={(rowData) => this.renderRow(rowData)}
+          contentContainerStyle={styles.listView}
+        />
       </ScreenContainer>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  listView: {
+    flex: 1
+  }
+});
 
 function mapStateToProps({ data, currentUser }) {
   return {
