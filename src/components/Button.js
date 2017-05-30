@@ -17,6 +17,7 @@ class Button extends Component {
       padding: large ? 20 : 7,
       paddingRight: large ? 70 : 18,
       paddingLeft: large ? 70 : 18,
+      alignSelf: large ? 'center' : 'flex-end'
     };
   }
 
@@ -53,7 +54,6 @@ const styles = StyleSheet.create({
     borderColor: constants.DARK_GRAY_COLOR,
     borderWidth: 1,
     borderRadius: 8,
-    alignSelf: 'center',
     position: 'absolute'
   },
   buttonText: {

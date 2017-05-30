@@ -16,7 +16,9 @@ import Button from './Button';
 class Course extends Component {
   static defaultProps = {
     id: null,
-    style: {}
+    style: {},
+    buttonText: 'Go',
+    onPress: null
   }
 
   state = {
@@ -30,6 +32,11 @@ class Course extends Component {
 
   componentDidMount() {
     this.loadCourseDetails();
+  }
+
+  onPress = () => {
+    console.log('pressed!');
+    Linking.openURL(this.state.courseUrl);
   }
 
   loadCourseDetails = async () => {
@@ -76,7 +83,6 @@ class Course extends Component {
     const {
       courseName,
       imageUri,
-      courseUrl,
       courseDescription,
       courseRating
     } = this.state;
@@ -92,7 +98,7 @@ class Course extends Component {
     return (
       <View>
         <TouchableWithoutFeedback
-          onPress={() => Linking.openURL(courseUrl)}
+          onPress={this.props.onPress ? this.props.onPress : this.onPress}
         >
           <View style={imageTitleContainer}>
             <Image
@@ -115,8 +121,8 @@ class Course extends Component {
           <View style={button}>
             <Button
               size="small"
-              onPress={() => Linking.openURL(courseUrl)}
-              buttonText="Go"
+              onPress={this.props.onPress ? this.props.onPress : this.onPress}
+              buttonText={this.props.buttonText}
             />
           </View>
         </View>
@@ -171,18 +177,19 @@ const styles = StyleSheet.create({
   ratingButtonContainer: {
     flexDirection: 'row',
     flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    paddingBottom: 7
+    paddingBottom: 7,
   },
   rating: {
-    flex: 1,
+    width: 100,
     color: constants.LIGHT_GRAY_COLOR,
     fontSize: constants.BODY_FONT_SIZE,
     paddingTop: 8
   },
   button: {
-    width: 65,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-start',
   }
 });
 
