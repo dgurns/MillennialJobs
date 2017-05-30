@@ -40,7 +40,8 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     padding: 25,
-    paddingTop: 20
+    paddingTop: 20,
+    paddingBottom: 100
   }
 });
 
