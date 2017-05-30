@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
   },
   listViewHeader: {
     fontSize: constants.DETAIL_FONT_SIZE,
-    color: constants.LIGHT_GRAY_COLOR,
+    color: constants.DARK_GRAY_COLOR,
     paddingBottom: 8,
     fontWeight: 'bold'
   },
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     minWidth: 0
   },
   listviewRowTitle: {
-    color: constants.LIGHT_GRAY_COLOR,
+    color: constants.DARK_GRAY_COLOR,
     fontSize: constants.BODY_FONT_SIZE,
   }
 });

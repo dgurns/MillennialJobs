@@ -43,7 +43,8 @@ class App extends Component {
               inactiveTintColor: constants.BLACK_COLOR,
               style: styles.tabBar
             },
-            lazy: true
+            lazy: true,
+            swipeEnabled: true
           })
         }
       }, {
