@@ -44,7 +44,7 @@ class ModalView extends Component {
 
 const styles = StyleSheet.create({
   modal: {
-    flex: 1
+    flex: 1,
   },
   closeIcon: {
     position: 'absolute',

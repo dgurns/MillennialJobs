@@ -19,7 +19,7 @@ class Course extends Component {
     courseRating: ''
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.loadCourseDetails();
   }
 

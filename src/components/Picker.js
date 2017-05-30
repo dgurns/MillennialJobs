@@ -134,7 +134,6 @@ class Picker extends Component {
 
 const styles = StyleSheet.create({
   picker: {
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',

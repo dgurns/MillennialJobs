@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, ListView, StyleSheet } from 'react-native';
+import { ListView, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 
 import * as actions from '../actions';
-import * as helpers from '../helpers';
-import * as constants from '../constants';
 import Picker from '../components/Picker';
 import CoursesIcon from '../icons/CoursesIcon';
 import ScreenContainer from '../components/ScreenContainer';
@@ -68,7 +66,7 @@ class CoursesScreen extends Component {
           primaryOptionList={primarySubcategories}
           secondaryOptionList={secondarySubcategories}
           selected={interestName}
-          style={{ marginBottom: 20 }}
+          style={styles.picker}
         />
         <ListView
           dataSource={this.state.coursesDataSource}
@@ -81,6 +79,9 @@ class CoursesScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  picker: {
+    marginBottom: 20
+  },
   listView: {
     flex: 1
   }
