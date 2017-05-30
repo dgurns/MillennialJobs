@@ -5,7 +5,8 @@ import {
   Text,
   Image,
   StyleSheet,
-  Linking
+  Linking,
+  TouchableWithoutFeedback
 } from 'react-native';
 
 import * as constants from '../constants';
@@ -90,16 +91,20 @@ class Course extends Component {
     }
     return (
       <View>
-        <View style={imageTitleContainer}>
-          <Image
-            style={image}
-            source={{ uri: imageUri }}
-            resizeMode="contain"
-          />
-          <Text style={title}>
-            {courseName}
-          </Text>
-        </View>
+        <TouchableWithoutFeedback
+          onPress={() => Linking.openURL(courseUrl)}
+        >
+          <View style={imageTitleContainer}>
+            <Image
+              style={image}
+              source={{ uri: imageUri }}
+              resizeMode="contain"
+            />
+            <Text style={title}>
+              {courseName}
+            </Text>
+          </View>
+        </TouchableWithoutFeedback>
         <Text style={description}>
           {courseDescription}
         </Text>
