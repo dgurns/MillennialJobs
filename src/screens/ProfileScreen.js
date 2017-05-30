@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import {
   View,
+  Text,
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
   Alert
 } from 'react-native';
 import { connect } from 'react-redux';
-import * as firebase from 'firebase';
 import ImagePicker from 'react-native-image-picker';
 
 import * as helpers from '../helpers';
 import * as actions from '../actions';
+import * as constants from '../constants';
 import Button from '../components/Button';
+import RadioButton from '../components/RadioButton';
 import ProfileIcon from '../icons/ProfileIcon';
 import ScreenContainer from '../components/ScreenContainer';
 import ProfilePhoto from '../components/ProfilePhoto';
@@ -96,6 +98,14 @@ class ProfileScreen extends Component {
   }
 
   render() {
+    const {
+      profilePhoto,
+      goodContainer,
+      username,
+      goodLabel,
+      goodRadioButton
+    } = styles;
+
     return (
       <ScreenContainer
         navigation={this.props.navigation}
@@ -105,7 +115,7 @@ class ProfileScreen extends Component {
           key={this.props.uid}
         >
           <View
-            style={styles.profilePhoto}
+            style={profilePhoto}
           >
             <TouchableOpacity
               onPress={this.showImagePicker}
@@ -113,6 +123,18 @@ class ProfileScreen extends Component {
             >
               {this.renderProfilePhoto()}
             </TouchableOpacity>
+          </View>
+          <Text style={username}>{this.props.username}</Text>
+          <View style={goodContainer}>
+            <Text style={goodLabel}>
+              Got a job?
+            </Text>
+            <RadioButton
+              labelText="I'm good!"
+              selected={false}
+              onPress={() => {}}
+              style={goodRadioButton}
+            />
           </View>
           <Button
             onPress={this.logOut}
@@ -129,19 +151,42 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 30,
-    marginBottom: 20
+    marginTop: 10,
+    height: 150
   },
   activityIndicator: {
     marginTop: 60,
     marginBottom: 54
+  },
+  username: {
+    fontSize: constants.BODY_FONT_SIZE,
+    color: constants.BLACK_COLOR,
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    padding: 15,
+    paddingBottom: 10
+  },
+  goodContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 30
+  },
+  goodLabel: {
+    color: constants.LIGHT_GRAY_COLOR,
+    fontSize: constants.BODY_FONT_SIZE
+  },
+  goodRadioButton: {
+    marginLeft: 20,
+    paddingTop: 20
   }
 });
 
 function mapStateToProps({ currentUser }) {
   return {
     profilePhotoUrl: currentUser.profilePhotoUrl,
-    uid: currentUser.uid
+    uid: currentUser.uid,
+    username: currentUser.username
   };
 }
 

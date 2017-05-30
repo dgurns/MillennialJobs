@@ -125,6 +125,7 @@ export const refreshUserState = () => async dispatch => {
 
   const userState = {
     uid: '',
+    username: '',
     profilePhotoUrl: '',
     interestName: '',
     hasOnboarded: false
@@ -136,6 +137,9 @@ export const refreshUserState = () => async dispatch => {
     const uid = currentUser.uid;
     userState.uid = uid;
 
+    const email = currentUser.email;
+    const username = email.slice(0, email.indexOf('@'));
+
     const databaseRef = firebase.database().ref(`users/${uid}`);
     await databaseRef.once('value').then(snapshot => {
       const profilePhotoUrl = snapshot.val().profilePhotoUrl;
@@ -144,6 +148,7 @@ export const refreshUserState = () => async dispatch => {
       userState.profilePhotoUrl = profilePhotoUrl;
       userState.interestName = interestName;
       userState.hasOnboarded = hasOnboarded;
+      userState.username = username;
     });
 
     dispatch({

@@ -6,7 +6,8 @@ class RadioButton extends Component {
   static defaultProps = {
     onPress: () => {},
     labelText: '',
-    selected: false
+    selected: false,
+    style: {}
   }
 
   render() {
@@ -14,7 +15,7 @@ class RadioButton extends Component {
 
     return (
       <TouchableWithoutFeedback onPress={this.props.onPress}>
-        <View style={radioButtonContainer}>
+        <View style={[radioButtonContainer, this.props.style]}>
           <View
             style={[radioButton, this.props.selected ? { backgroundColor: constants.GREEN_COLOR } : '']}
           />

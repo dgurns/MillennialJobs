@@ -3,6 +3,7 @@ import * as types from '../actions/types';
 const INITIAL_STATE = {
   interestName: '',
   uid: '',
+  username: '',
   profilePhotoUrl: '',
   hasOnboarded: false,
   authLoading: false,
@@ -71,18 +72,12 @@ export default function (state = INITIAL_STATE, action) {
       return {
         ...state,
         uid: action.payload.uid,
+        username: action.payload.username,
         profilePhotoUrl: action.payload.profilePhotoUrl,
         interestName: action.payload.interestName
       };
     case types.LOG_OUT_SUCCESSFUL:
-      return {
-        interestName: '',
-        uid: '',
-        profilePhotoUrl: '',
-        hasOnboarded: false,
-        authLoading: false,
-        photoUploading: false
-      };
+      return state;
     default:
       return state;
   }

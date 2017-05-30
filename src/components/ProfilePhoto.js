@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { View, Image, StyleSheet, ActivityIndicator } from 'react-native';
+import {
+  View,
+  Image,
+  StyleSheet,
+  ActivityIndicator
+} from 'react-native';
 import { connect } from 'react-redux';
 import Svg, { Path } from 'react-native-svg';
 import * as firebase from 'firebase';
