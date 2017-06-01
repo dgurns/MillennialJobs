@@ -19,6 +19,7 @@ import ProfileIcon from '../icons/ProfileIcon';
 import ScreenContainer from '../components/ScreenContainer';
 import ProfilePhoto from '../components/ProfilePhoto';
 import Course from '../components/Course';
+import AddCourse from '../components/AddCourse';
 
 class ProfileScreen extends Component {
   static navigationOptions = {
@@ -30,7 +31,8 @@ class ProfileScreen extends Component {
   }
 
   state = {
-    photoLoading: false
+    photoLoading: false,
+
   }
 
   logOut = () => {
@@ -122,8 +124,6 @@ class ProfileScreen extends Component {
       goodLabel,
       goodRadioButton,
       coursesContainer,
-      addCourse,
-      addLabel,
       coursesLabel
     } = styles;
 
@@ -161,12 +161,7 @@ class ProfileScreen extends Component {
             <Text style={coursesLabel}>
               Your courses:
             </Text>
-            <TouchableOpacity
-              style={addCourse}
-              onPress={() => {}}
-            >
-              <Text style={addLabel}>+</Text>
-            </TouchableOpacity>
+            <AddCourse />
             <Course id="1172996" />
           </View>
           <Button
@@ -197,14 +192,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     alignSelf: 'center',
     padding: 15,
-    paddingBottom: 10
+    paddingBottom: 20
   },
   goodContainer: {
     flexDirection: 'row',
     minWidth: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 10
+    marginBottom: 20
   },
   goodLabel: {
     color: constants.LIGHT_GRAY_COLOR,
@@ -217,22 +212,6 @@ const styles = StyleSheet.create({
   coursesContainer: {
     flex: 1,
     paddingBottom: 30
-  },
-  addCourse: {
-    flex: 1,
-    borderWidth: 1,
-    borderColor: constants.LIGHT_GRAY_COLOR,
-    backgroundColor: constants.VERY_LIGHT_GRAY_COLOR,
-    height: 70,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 20
-  },
-  addLabel: {
-    fontSize: 76,
-    color: constants.LIGHT_GRAY_COLOR,
-    backgroundColor: 'transparent',
-    lineHeight: 80
   },
   coursesLabel: {
     flex: 1,
