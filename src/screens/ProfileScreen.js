@@ -34,14 +34,6 @@ class ProfileScreen extends Component {
     photoLoading: false,
   }
 
-  componentWillMount() {
-    console.log(this.props.savedCourses);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps.savedCourses);
-  }
-
   logOut = () => {
     this.props.logOutUser();
   }
