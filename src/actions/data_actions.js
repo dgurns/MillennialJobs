@@ -2,19 +2,9 @@ import axios from 'axios';
 import qs from 'qs';
 
 import * as types from './types';
+import * as helpers from '../helpers';
 import * as constants from '../constants';
 import { udemyConfig } from '../udemy/udemy_config';
-
-const buildCoursesUrl = (subcategory, page) => {
-  const queryParams = {
-      page,
-      page_size: 20,
-      subcategory,
-      ordering: 'most_reviewed'
-  };
-  const query = qs.stringify(queryParams);
-  return `${constants.UDEMY_API_ROOT_URL}/?${query}`;
-};
 
 export const fetchCourses = (subcategory, page) => async dispatch => {
   // Fetch a page of 20 courses from Udemy API and add them to Redux state
@@ -23,7 +13,7 @@ export const fetchCourses = (subcategory, page) => async dispatch => {
   });
 
   try {
-    const url = buildCoursesUrl(subcategory, page);
+    const url = helpers.buildCoursesInSubcategoryQueryUrl(subcategory, page);
 
     let resultsObject = await axios({
       method: 'get',

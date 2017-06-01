@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 
 import * as constants from '../constants';
 import * as actions from '../actions';
+import * as helpers from '../helpers';
 import ModalView from './ModalView';
 import Course from './Course';
 
@@ -23,21 +24,22 @@ class AddCourse extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      modalVisible: false,
-      searchResults: [],
-    };
-
-    const ds = new ListView.DataSource({
+    this.ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
 
-    this.dataSource = ds.cloneWithRows(this.state.searchResults);
+    this.state = {
+      modalVisible: false,
+      searchResults: [],
+      searchResultsLoading: false
+    };
   }
 
   hideModal = () => {
     this.setState({
-      modalVisible: false
+      modalVisible: false,
+      searchResults: [],
+      searchResultsLoading: false
     });
   }
 
@@ -55,20 +57,53 @@ class AddCourse extends Component {
     this.props.selectInterest(rowId);
   }
 
-  renderRow(courseId) {
-    return (
-      <Course id={courseId} />
-    );
+  searchForCourses = async (searchTerm) => {
+    this.setState({
+      searchResultsLoading: true
+    });
+
+    try {
+      let searchResults = await helpers.searchForCourses(searchTerm);
+      const courses = searchResults.results;
+      let courseIds = [];
+      courses.map(course => courseIds.push(course.id));
+
+      this.setState({
+        searchResults: courseIds,
+        searchResultsLoading: false
+      });
+    } catch (error) {
+      console.log(error);
+
+      this.setState({
+        searchResultsLoading: false
+      });
+    }
   }
 
   renderSearchResults() {
+    if (this.state.searchResultsLoading) {
+      return <ActivityIndicator size="large" style={{ marginTop: 50 }} />;
+    }
+
     return (
       <ListView
         contentContainerStyle={styles.listView}
-        dataSource={this.dataSource}
+        dataSource={this.ds.cloneWithRows(this.state.searchResults)}
         renderRow={(rowData) =>
-          this.renderRow(rowData.courseId)
+          this.renderRow(rowData)
         }
+      />
+    );
+  }
+
+  renderRow(courseId) {
+    return (
+      <Course
+        id={courseId}
+        style={styles.course}
+        buttonText="Add"
+        onPress={() => {}}
       />
     );
   }
@@ -98,12 +133,11 @@ class AddCourse extends Component {
         >
           <TextInput
             style={inputField}
-            placeholder="Search for course name..."
+            placeholder="Search course name to add..."
             placeholderTextColor={constants.LIGHT_GRAY_COLOR}
             selectionColor={constants.GREEN_COLOR}
-            onChangeText={text => this.setState({ username: text })}
-            value={this.state.username}
-            returnKeyType="done"
+            onChangeText={text => this.searchForCourses(text)}
+            returnKeyType="search"
             autoCapitalize="none"
           />
           {this.renderSearchResults()}
@@ -154,11 +188,11 @@ const styles = StyleSheet.create({
     color: constants.GREEN_COLOR
   },
   listView: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
     marginBottom: 50
+  },
+  course: {
+    flex: 1,
+    marginBottom: 20
   }
 });
 
