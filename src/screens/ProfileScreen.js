@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import {
   View,
@@ -32,6 +33,10 @@ class ProfileScreen extends Component {
 
   state = {
     photoLoading: false,
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps.savedCourses);
   }
 
   logOut = () => {
@@ -116,7 +121,21 @@ class ProfileScreen extends Component {
   }
 
   renderSavedCourses() {
-    console.log(this.props.savedCourses);
+    const reversedArray = _.reverse(this.props.savedCourses);
+
+    return (
+      <View style={{ flex: 1 }}>
+        {reversedArray.map(courseId => {
+          return (
+            <Course
+              id={courseId}
+              style={{ marginBottom: 20 }}
+              key={courseId}
+            />
+          );
+        })}
+      </View>
+    );
   }
 
   render() {
@@ -160,12 +179,14 @@ class ProfileScreen extends Component {
               style={goodRadioButton}
             />
           </View>
-          <View style={coursesContainer}>
+          <View
+            style={coursesContainer}
+          >
             <Text style={coursesLabel}>
               Your courses:
             </Text>
             <AddCourse />
-            {this.renderSavedCourses(this.props.savedCourses)}
+            {this.renderSavedCourses()}
           </View>
           <Button
             onPress={this.logOut}

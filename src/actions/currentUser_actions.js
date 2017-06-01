@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { Alert } from 'react-native';
 import * as firebase from 'firebase';
 import * as types from './types';
@@ -242,9 +243,18 @@ export const addCourseToSavedCourses = (courseId) => async dispatch => {
         });
       });
 
+      // Break the function if courseId already exists in array
+      if (_.includes(localArray, courseId)) {
+        return;
+      }
+
+      localArray.push(courseId);
+
+      // Save new courseId to Firebase
       let newCourseRef = await databaseRef.push();
       await newCourseRef.set({ courseId });
 
+      // And dispatch updated local array to Redux state
       dispatch({
         type: types.COURSE_ADDED_TO_SAVED_COURSES,
         payload: localArray
