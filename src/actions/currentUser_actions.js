@@ -53,7 +53,8 @@ export const signUpUser = ({
     interestName,
     profilePhotoUrl: '',
     hasOnboarded: false,
-    isGood: false
+    isGood: false,
+    savedCourses: []
   }).catch(() => {
     firebase.auth().currentUser.delete().then(() => {
       Alert.alert(
@@ -130,7 +131,8 @@ export const refreshUserState = () => async dispatch => {
     profilePhotoUrl: '',
     interestName: '',
     hasOnboarded: false,
-    isGood: false
+    isGood: false,
+    savedCourses: []
   };
 
   let currentUser = await firebase.auth().currentUser;
@@ -148,11 +150,20 @@ export const refreshUserState = () => async dispatch => {
       const interestName = snapshot.val().interestName;
       const hasOnboarded = snapshot.val().hasOnboarded;
       const isGood = snapshot.val().isGood;
+
+      const savedCoursesArray = [];
+      snapshot.child('savedCourses').forEach(childSnapshot => {
+        const childData = childSnapshot.val();
+        const childCourseId = childData.courseId;
+        savedCoursesArray.push(childCourseId);
+      });
+
       userState.profilePhotoUrl = profilePhotoUrl;
       userState.interestName = interestName;
       userState.hasOnboarded = hasOnboarded;
       userState.username = username;
       userState.isGood = isGood;
+      userState.savedCourses = savedCoursesArray;
     });
 
     dispatch({
@@ -206,6 +217,37 @@ export const toggleGoodStatus = () => async dispatch => {
       dispatch({
         type: types.IS_GOOD_STATUS_UPDATED,
         payload: !isCurrentlyGood
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+};
+
+export const addCourseToSavedCourses = (courseId) => async dispatch => {
+  let currentUser = await firebase.auth().currentUser;
+
+  if (currentUser) {
+    const uid = currentUser.uid;
+    const databaseRef = firebase.database().ref(`users/${uid}/savedCourses`);
+
+    try {
+      const localArray = [];
+
+      await databaseRef.once('value').then(snapshot => {
+        snapshot.forEach(childSnapshot => {
+          const childData = childSnapshot.val();
+          const childCourseId = childData.courseId;
+          localArray.push(childCourseId);
+        });
+      });
+
+      let newCourseRef = await databaseRef.push();
+      await newCourseRef.set({ courseId });
+
+      dispatch({
+        type: types.COURSE_ADDED_TO_SAVED_COURSES,
+        payload: localArray
       });
     } catch (error) {
       console.log(error);

@@ -8,7 +8,8 @@ const INITIAL_STATE = {
   hasOnboarded: false,
   isGood: false,
   authLoading: false,
-  photoUploading: false
+  photoUploading: false,
+  savedCourses: []
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -76,12 +77,18 @@ export default function (state = INITIAL_STATE, action) {
         username: action.payload.username,
         profilePhotoUrl: action.payload.profilePhotoUrl,
         interestName: action.payload.interestName,
-        isGood: action.payload.isGood
+        isGood: action.payload.isGood,
+        savedCourses: action.payload.savedCourses
       };
     case types.IS_GOOD_STATUS_UPDATED:
       return {
         ...state,
         isGood: action.payload
+      };
+    case types.COURSE_ADDED_TO_SAVED_COURSES:
+      return {
+        ...state,
+        savedCourses: action.payload
       };
     case types.LOG_OUT_SUCCESSFUL:
       return state;

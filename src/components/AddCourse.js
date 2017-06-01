@@ -35,6 +35,11 @@ class AddCourse extends Component {
     };
   }
 
+  addCourseToSavedCourses = (courseId) => {
+    this.props.addCourseToSavedCourses(courseId);
+    this.hideModal();
+  }
+
   hideModal = () => {
     this.setState({
       modalVisible: false,
@@ -103,7 +108,7 @@ class AddCourse extends Component {
         id={courseId}
         style={styles.course}
         buttonText="Add"
-        onPress={() => {}}
+        onPress={() => this.addCourseToSavedCourses(courseId)}
       />
     );
   }
@@ -136,7 +141,7 @@ class AddCourse extends Component {
             placeholder="Search course name to add..."
             placeholderTextColor={constants.LIGHT_GRAY_COLOR}
             selectionColor={constants.GREEN_COLOR}
-            onChangeText={text => this.searchForCourses(text)}
+            onEndEditing={event => this.searchForCourses(event.nativeEvent.text)}
             returnKeyType="search"
             autoCapitalize="none"
           />

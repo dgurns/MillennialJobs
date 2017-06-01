@@ -32,7 +32,14 @@ class ProfileScreen extends Component {
 
   state = {
     photoLoading: false,
+  }
 
+  componentWillMount() {
+    console.log(this.props.savedCourses);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps.savedCourses);
   }
 
   logOut = () => {
@@ -116,6 +123,10 @@ class ProfileScreen extends Component {
     );
   }
 
+  renderSavedCourses() {
+    console.log(this.props.savedCourses);
+  }
+
   render() {
     const {
       profilePhoto,
@@ -162,7 +173,7 @@ class ProfileScreen extends Component {
               Your courses:
             </Text>
             <AddCourse />
-            <Course id="1172996" />
+            {this.renderSavedCourses(this.props.savedCourses)}
           </View>
           <Button
             onPress={this.logOut}
@@ -227,7 +238,8 @@ function mapStateToProps({ currentUser }) {
     profilePhotoUrl: currentUser.profilePhotoUrl,
     uid: currentUser.uid,
     username: currentUser.username,
-    isGood: currentUser.isGood
+    isGood: currentUser.isGood,
+    savedCourses: currentUser.savedCourses
   };
 }
 

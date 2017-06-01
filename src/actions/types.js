@@ -25,6 +25,8 @@ export const ONBOARDING_STATUS_RETRIEVED = 'onboarding_status_retrieved';
 
 export const IS_GOOD_STATUS_UPDATED = 'is_good_status_updated';
 
+export const COURSE_ADDED_TO_SAVED_COURSES = 'course_added_to_saved_courses';
+
 // data reducer
 export const FETCH_COURSES_ATTEMPTED = 'fetch_courses_attempted';
 export const FETCH_COURSES_SUCCESSFUL = 'fetch_courses_successful';
