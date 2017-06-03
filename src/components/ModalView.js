@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   Modal,
+  View,
   StyleSheet,
   TouchableOpacity,
   ScrollView
@@ -12,25 +13,30 @@ import CloseIcon from '../icons/CloseIcon';
 class ModalView extends Component {
   static defaultProps = {
     visible: false,
-    onClose: () => {}
+    onClose: () => {},
+    backgroundColor: constants.WHITE_COLOR,
+    closeIconColor: constants.LIGHT_GRAY_COLOR,
+    animationType: 'slide'
   }
 
   render() {
-    const { modal, closeIcon, modalScrollView } = styles;
+    const { modalBackground, closeIcon, modalScrollView } = styles;
 
     return (
       <Modal
-        animationType="slide"
-        transparent={false}
+        animationType={this.props.animationType}
+        transparent
         visible={this.props.visible}
-        style={modal}
       >
+        <View
+          style={[modalBackground, { backgroundColor: this.props.backgroundColor }]}
+        />
         <TouchableOpacity
           style={closeIcon}
           onPress={this.props.onClose}
         >
           <CloseIcon
-            color={constants.LIGHT_GRAY_COLOR}
+            color={this.props.closeIconColor}
             size="large"
           />
         </TouchableOpacity>
@@ -43,19 +49,26 @@ class ModalView extends Component {
 }
 
 const styles = StyleSheet.create({
-  modal: {
-    flex: 1,
+  modalBackground: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    zIndex: 10
   },
   closeIcon: {
     position: 'absolute',
     top: 25,
-    right: 5
+    right: 5,
+    zIndex: 100
   },
   modalScrollView: {
     flex: 1,
     marginTop: 70,
     paddingLeft: 25,
-    paddingRight: 25
+    paddingRight: 25,
+    zIndex: 100
   }
 });
 

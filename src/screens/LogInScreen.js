@@ -81,6 +81,7 @@ class LogInScreen extends Component {
             value={this.state.username}
             returnKeyType="done"
             autoCapitalize="none"
+            autoCorrect={false}
           />
           <TextInput
             style={inputField}
@@ -91,6 +92,7 @@ class LogInScreen extends Component {
             onChangeText={text => this.setState({ password: text })}
             value={this.state.password}
             returnKeyType="done"
+            autoCorrect={false}
             secureTextEntry
           />
         </View>
