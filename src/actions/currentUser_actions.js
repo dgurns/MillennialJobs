@@ -55,12 +55,12 @@ export const signUpUser = ({
       interestName,
       profilePhotoUrl: '',
       hasOnboarded: false,
-      isGood: {
-        isGood: false,
-        timesToggled: 0,
-        mostRecentTimestamp: null
-      },
       savedCourses: []
+    });
+    await firebase.database().ref(`isGood/${uid}`).set({
+      isGood: false,
+      timesToggled: 0,
+      mostRecentTimestamp: null
     });
   } catch (error) {
     firebase.auth().currentUser.delete().then(() => {
@@ -155,33 +155,40 @@ export const refreshUserState = () => async dispatch => {
     const email = currentUser.email;
     const username = email.slice(0, email.indexOf('@'));
 
-    const databaseRef = firebase.database().ref(`users/${uid}`);
-    await databaseRef.once('value').then(snapshot => {
-      const profilePhotoUrl = snapshot.val().profilePhotoUrl;
-      const interestName = snapshot.val().interestName;
-      const hasOnboarded = snapshot.val().hasOnboarded;
-      const isGood = snapshot.val().isGood;
-      console.log(isGood);
+    try {
+      const usersDatabaseRef = firebase.database().ref(`users/${uid}`);
+      await usersDatabaseRef.once('value').then(snapshot => {
+        const profilePhotoUrl = snapshot.val().profilePhotoUrl;
+        const interestName = snapshot.val().interestName;
+        const hasOnboarded = snapshot.val().hasOnboarded;
 
-      const savedCoursesArray = [];
-      snapshot.child('savedCourses').forEach(childSnapshot => {
-        const childData = childSnapshot.val();
-        const childCourseId = childData.courseId;
-        savedCoursesArray.push(childCourseId);
+        const savedCoursesArray = [];
+        snapshot.child('savedCourses').forEach(childSnapshot => {
+          const childData = childSnapshot.val();
+          const childCourseId = childData.courseId;
+          savedCoursesArray.push(childCourseId);
+        });
+
+        userState.profilePhotoUrl = profilePhotoUrl;
+        userState.interestName = interestName;
+        userState.hasOnboarded = hasOnboarded;
+        userState.username = username;
+        userState.savedCourses = savedCoursesArray;
       });
 
-      userState.profilePhotoUrl = profilePhotoUrl;
-      userState.interestName = interestName;
-      userState.hasOnboarded = hasOnboarded;
-      userState.username = username;
-      userState.isGood = isGood;
-      userState.savedCourses = savedCoursesArray;
-    });
+      const isGoodDatabaseRef = firebase.database().ref(`isGood/${uid}`);
+      await isGoodDatabaseRef.once('value').then(snapshot => {
+        const isGood = snapshot.val();
+        userState.isGood = isGood;
+      });
 
-    dispatch({
-      type: types.USER_STATE_REFRESHED,
-      payload: userState
-    });
+      dispatch({
+        type: types.USER_STATE_REFRESHED,
+        payload: userState
+      });
+    } catch (error) {
+      console.log(error);
+    }
   } else {
     dispatch({
       type: types.USER_STATE_REFRESHED,
@@ -215,7 +222,7 @@ export const toggleGoodStatus = () => async dispatch => {
   if (currentUser) {
     const uid = currentUser.uid;
 
-    const databaseRef = firebase.database().ref(`users/${uid}/isGood`);
+    const databaseRef = firebase.database().ref(`isGood/${uid}`);
 
     const isGood = {
       isGood: false,
@@ -224,7 +231,7 @@ export const toggleGoodStatus = () => async dispatch => {
     };
 
     try {
-      // Get and update current isGood values
+      // Fetch and update current isGood values
       await databaseRef.once('value').then(snapshot => {
         isGood.isGood = !snapshot.val().isGood;
         isGood.timesToggled = snapshot.val().timesToggled + 1;
