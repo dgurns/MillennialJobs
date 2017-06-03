@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
+  Alert,
   TouchableWithoutFeedback,
   ActivityIndicator,
   LayoutAnimation,
@@ -31,8 +32,15 @@ class CreatePost extends Component {
   }
 
   onSubmit = () => {
-    this.props.createPost(this.props.uid, this.state.postText);
-    this.setState({ modalVisible: false });
+    if (this.state.postText !== '') {
+      this.props.createPost(this.props.uid, this.state.postText);
+      this.setState({ modalVisible: false });
+    } else {
+      Alert.alert(
+        'Oops',
+        'You can\'t do an empty post!'
+      );
+    }
   }
 
   hideModal = () => {
