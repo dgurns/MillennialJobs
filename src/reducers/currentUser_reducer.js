@@ -6,7 +6,11 @@ const INITIAL_STATE = {
   username: '',
   profilePhotoUrl: '',
   hasOnboarded: false,
-  isGood: false,
+  isGood: {
+    isGood: false,
+    timesToggled: 0,
+    mostRecentTimestamp: null
+  },
   authLoading: false,
   photoUploading: false,
   savedCourses: []

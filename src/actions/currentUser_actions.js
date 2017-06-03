@@ -50,13 +50,19 @@ export const signUpUser = ({
   // Then save the user meta info to Firebase database
   const uid = signedUpUser.uid;
 
-  await firebase.database().ref(`users/${uid}`).set({
-    interestName,
-    profilePhotoUrl: '',
-    hasOnboarded: false,
-    isGood: false,
-    savedCourses: []
-  }).catch(() => {
+  try {
+    await firebase.database().ref(`users/${uid}`).set({
+      interestName,
+      profilePhotoUrl: '',
+      hasOnboarded: false,
+      isGood: {
+        isGood: false,
+        timesToggled: 0,
+        mostRecentTimestamp: null
+      },
+      savedCourses: []
+    });
+  } catch (error) {
     firebase.auth().currentUser.delete().then(() => {
       Alert.alert(
         'Oops',
@@ -66,7 +72,7 @@ export const signUpUser = ({
     dispatch({
       type: SIGN_UP_FAILED
     });
-  });
+  }
 
   // Upload profile image and then save the download URL to Firebase database
   dispatch({
@@ -132,7 +138,11 @@ export const refreshUserState = () => async dispatch => {
     profilePhotoUrl: '',
     interestName: '',
     hasOnboarded: false,
-    isGood: false,
+    isGood: {
+      isGood: false,
+      timesToggled: 0,
+      mostRecentTimestamp: null
+    },
     savedCourses: []
   };
 
@@ -151,6 +161,7 @@ export const refreshUserState = () => async dispatch => {
       const interestName = snapshot.val().interestName;
       const hasOnboarded = snapshot.val().hasOnboarded;
       const isGood = snapshot.val().isGood;
+      console.log(isGood);
 
       const savedCoursesArray = [];
       snapshot.child('savedCourses').forEach(childSnapshot => {
@@ -204,20 +215,30 @@ export const toggleGoodStatus = () => async dispatch => {
   if (currentUser) {
     const uid = currentUser.uid;
 
-    const databaseRef = firebase.database().ref(`users/${uid}`);
+    const databaseRef = firebase.database().ref(`users/${uid}/isGood`);
+
+    const isGood = {
+      isGood: false,
+      timesToggled: 0,
+      mostRecentTimestamp: null
+    };
 
     try {
-      let isCurrentlyGood = await databaseRef.once('value').then(snapshot => {
-        return snapshot.val().isGood;
+      // Get and update current isGood values
+      await databaseRef.once('value').then(snapshot => {
+        isGood.isGood = !snapshot.val().isGood;
+        isGood.timesToggled = snapshot.val().timesToggled + 1;
+        isGood.mostRecentTimestamp = firebase.database.ServerValue.TIMESTAMP;
       });
-      console.log(`currently isGood: ${isCurrentlyGood}`);
       await databaseRef.update({
-        isGood: !isCurrentlyGood
+        isGood: isGood.isGood,
+        timesToggled: isGood.timesToggled,
+        mostRecentTimestamp: isGood.mostRecentTimestamp
       });
 
       dispatch({
         type: types.IS_GOOD_STATUS_UPDATED,
-        payload: !isCurrentlyGood
+        payload: isGood
       });
     } catch (error) {
       console.log(error);
