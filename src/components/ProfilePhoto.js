@@ -27,13 +27,13 @@ class ProfilePhoto extends Component {
   }
 
   setProfilePhotoUrl() {
-    if (this.props.photoUid === this.props.uid) {
+    if (this.props.uid === this.props.currentUserUid) {
       this.setState({
-        photoUrl: this.props.profilePhotoUrl,
+        photoUrl: this.props.currentUserProfilePhotoUrl,
         photoLoading: true
       });
     } else {
-      const databaseRef = firebase.database().ref(`users/${this.props.photoUid}`);
+      const databaseRef = firebase.database().ref(`users/${this.props.uid}`);
       databaseRef.once('value').then(snapshot => {
         this.setState({
           photoUrl: snapshot.val().profilePhotoUrl,
@@ -155,8 +155,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps({ currentUser }) {
   return {
-    profilePhotoUrl: currentUser.profilePhotoUrl,
-    uid: currentUser.uid
+    currentUserProfilePhotoUrl: currentUser.profilePhotoUrl,
+    currentUserUid: currentUser.uid
   };
 }
 

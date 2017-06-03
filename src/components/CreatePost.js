@@ -7,9 +7,11 @@ import {
   TextInput,
   StyleSheet
 } from 'react-native';
+import { connect } from 'react-redux';
 
 import * as constants from '../constants';
 import ModalView from '../components/ModalView';
+import PostMeta from '../components/PostMeta';
 
 class CreatePost extends Component {
   state = {
@@ -17,7 +19,7 @@ class CreatePost extends Component {
     createPostContainerHeight: 56
   }
 
-  animate = () => {
+  onLayout = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     this.setState({
       createPostContainerHeight: 'auto'
@@ -70,12 +72,13 @@ class CreatePost extends Component {
               placeholder="Post an update..."
               placeholderTextColor={constants.LIGHT_GRAY_COLOR}
               selectionColor={constants.GREEN_COLOR}
-              onLayout={this.animate}
+              onLayout={this.onLayout}
               autoCapitalize="none"
               autoFocus
               multiline
               returnKeyType="done"
             />
+            <PostMeta uid={this.props.uid} />
           </View>
         </ModalView>
       </View>
@@ -110,4 +113,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default CreatePost;
+function mapStateToProps({ currentUser }) {
+  return {
+    uid: currentUser.uid
+  };
+}
+
+export default connect(mapStateToProps)(CreatePost);

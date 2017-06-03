@@ -115,7 +115,7 @@ class ProfileScreen extends Component {
     return (
       <ProfilePhoto
         size="large"
-        photoUid={this.props.uid}
+        uid={this.props.uid}
       />
     );
   }
