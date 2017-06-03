@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { connect } from 'react-redux';
+import * as firebase from 'firebase';
 
 import * as constants from '../constants';
 import * as helpers from '../helpers';
@@ -25,7 +27,13 @@ class PostMeta extends Component {
   loadData = async () => {
     try {
       let userInformation = await helpers.fetchUserInformation(this.props.uid);
-      let userSavedCourses = await helpers.fetchUserSavedCourses(this.props.uid);
+
+      let userSavedCourses = [];
+      if (this.props.uid !== this.props.currentUserUid) {
+        userSavedCourses = await helpers.fetchUserSavedCourses(this.props.uid);
+      } else {
+        userSavedCourses = this.props.currentUserSavedCourses;
+      }
 
       let courseName = userInformation.interestName;
 
@@ -122,4 +130,11 @@ const styles = StyleSheet.create({
   }
 });
 
-export default PostMeta;
+function mapStateToProps({ currentUser }) {
+  return {
+    currentUserSavedCourses: currentUser.savedCourses,
+    currentUserUid: currentUser.uid
+  };
+}
+
+export default connect(mapStateToProps)(PostMeta);
