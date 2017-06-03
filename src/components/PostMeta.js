@@ -23,19 +23,29 @@ class PostMeta extends Component {
   }
 
   loadData = async () => {
-    let userInformation =  await helpers.fetchUserInformation(this.props.uid);
+    try {
+      let userInformation = await helpers.fetchUserInformation(this.props.uid);
+      let userSavedCourses = await helpers.fetchUserSavedCourses(this.props.uid);
 
-    let userSavedCourses = await helpers.fetchUserSavedCourses(this.props.uid);
-    const latestCourseId = userSavedCourses[userSavedCourses.length - 1];
-    let courseDetails = await helpers.fetchCourseDetails(latestCourseId);
-    const courseName = courseDetails.title;
+      let courseName = userInformation.interestName;
 
-    this.setState({
-      username: userInformation.username,
-      interestName: userInformation.interestName,
-      courseName,
-      isLoading: false
-    });
+      if (userSavedCourses.length > 0) {
+        const latestCourseId = userSavedCourses[userSavedCourses.length - 1];
+        let courseDetails = await helpers.fetchCourseDetails(latestCourseId);
+        courseName = courseDetails.title;
+      }
+
+      this.setState({
+        username: userInformation.username,
+        interestName: userInformation.interestName,
+        courseName,
+        isLoading: false
+      });
+    } catch (error) {
+      this.setState({
+        isLoading: false
+      });
+    }
   }
 
   renderContent() {
