@@ -27,8 +27,6 @@ class TitleScreen extends Component {
         } else {
           helpers.checkIfOnboarded(user.uid)
             .then((hasOnboarded) => {
-              this.props.updateOnboardingStatus(user.uid, hasOnboarded);
-
               if (!hasOnboarded) {
                 this.props.navigation.navigate('howTo');
               } else {
