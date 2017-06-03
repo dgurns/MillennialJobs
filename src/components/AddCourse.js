@@ -159,27 +159,27 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: constants.LIGHT_GRAY_COLOR,
     backgroundColor: constants.VERY_LIGHT_GRAY_COLOR,
-    height: 70,
+    height: 56,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20
   },
   addContents: {
-    paddingBottom: 12,
+    paddingBottom: 9,
     flexDirection: 'row',
     justifyContent: 'flex-start'
   },
   addIcon: {
-    fontSize: 76,
+    fontSize: 50,
     color: constants.LIGHT_GRAY_COLOR,
     backgroundColor: 'transparent',
-    marginRight: 10
+    marginRight: 7
   },
   addText: {
     fontSize: constants.BODY_FONT_SIZE,
     color: constants.LIGHT_GRAY_COLOR,
     backgroundColor: 'transparent',
-    paddingTop: 40
+    paddingTop: 22
   },
   inputField: {
     borderColor: constants.LIGHT_GRAY_COLOR,
