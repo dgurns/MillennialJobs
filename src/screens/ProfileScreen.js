@@ -35,11 +35,6 @@ class ProfileScreen extends Component {
     photoLoading: false,
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log('component will receive props:');
-    console.log(nextProps.isGood);
-  }
-
   logOut = () => {
     this.props.logOutUser();
   }

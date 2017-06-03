@@ -55,7 +55,6 @@ export const signUpUser = ({
       interestName,
       profilePhotoUrl: '',
       hasOnboarded: false,
-      savedCourses: []
     });
     await firebase.database().ref(`isGood/${uid}`).set({
       isGood: false,
@@ -156,6 +155,7 @@ export const refreshUserState = () => async dispatch => {
     const username = email.slice(0, email.indexOf('@'));
 
     try {
+      // Get primary user information
       const usersDatabaseRef = firebase.database().ref(`users/${uid}`);
       await usersDatabaseRef.once('value').then(snapshot => {
         const profilePhotoUrl = snapshot.val().profilePhotoUrl;
@@ -176,10 +176,27 @@ export const refreshUserState = () => async dispatch => {
         userState.savedCourses = savedCoursesArray;
       });
 
+      // Get isGood status
       const isGoodDatabaseRef = firebase.database().ref(`isGood/${uid}`);
       await isGoodDatabaseRef.once('value').then(snapshot => {
         const isGood = snapshot.val();
         userState.isGood = isGood;
+      });
+
+      // Get saved courses
+      const savedCoursesDatabaseRef = firebase.database().ref(`savedCourses/${uid}`);
+      await savedCoursesDatabaseRef.once('value').then(snapshot => {
+        const savedCoursesArray = [];
+
+        if (snapshot.exists()) {
+          snapshot.forEach(childSnapshot => {
+            const childData = childSnapshot.val();
+            const childCourseId = childData.courseId;
+            savedCoursesArray.push(childCourseId);
+          });
+        }
+
+        userState.savedCourses = savedCoursesArray;
       });
 
       dispatch({
@@ -258,17 +275,19 @@ export const addCourseToSavedCourses = (courseId) => async dispatch => {
 
   if (currentUser) {
     const uid = currentUser.uid;
-    const databaseRef = firebase.database().ref(`users/${uid}/savedCourses`);
+    const databaseRef = firebase.database().ref(`savedCourses/${uid}`);
 
     try {
       const localArray = [];
 
       await databaseRef.once('value').then(snapshot => {
-        snapshot.forEach(childSnapshot => {
-          const childData = childSnapshot.val();
-          const childCourseId = childData.courseId;
-          localArray.push(childCourseId);
-        });
+        if (snapshot.exists()) {
+          snapshot.forEach(childSnapshot => {
+            const childData = childSnapshot.val();
+            const childCourseId = childData.courseId;
+            localArray.push(childCourseId);
+          });
+        }
       });
 
       // Break the function if courseId already exists in array
