@@ -144,6 +144,7 @@ class AddCourse extends Component {
             onEndEditing={event => this.searchForCourses(event.nativeEvent.text)}
             returnKeyType="search"
             autoCapitalize="none"
+            autoFocus
           />
           {this.renderSearchResults()}
         </ModalView>
