@@ -311,3 +311,28 @@ export const addCourseToSavedCourses = (courseId) => async dispatch => {
     }
   }
 };
+
+export const createPost = (uid, text) => async dispatch => {
+  dispatch({
+    type: types.CREATE_POST_ATTEMPTED
+  });
+
+  try {
+    const databaseRef = firebase.database().ref('posts');
+    let newPostRef = await databaseRef.push();
+    await newPostRef.set({
+      userId: uid,
+      text,
+      timestamp: firebase.database.ServerValue.TIMESTAMP
+    });
+
+    dispatch({
+      type: types.CREATE_POST_SUCCESSFUL
+    });
+  } catch (error) {
+    console.log(error);
+    dispatch({
+      type: types.CREATE_POST_FAILED
+    });
+  }
+};

@@ -3,6 +3,7 @@ import {
   View,
   Text,
   TouchableWithoutFeedback,
+  ActivityIndicator,
   LayoutAnimation,
   TextInput,
   StyleSheet
@@ -10,26 +11,34 @@ import {
 import { connect } from 'react-redux';
 
 import * as constants from '../constants';
+import * as actions from '../actions';
 import ModalView from '../components/ModalView';
 import PostMeta from '../components/PostMeta';
+import Button from '../components/Button';
 
 class CreatePost extends Component {
   state = {
     modalVisible: false,
-    createPostContainerHeight: 56
+    containerHeight: 56,
+    postText: ''
   }
 
   onLayout = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     this.setState({
-      createPostContainerHeight: 'auto'
+      containerHeight: 'auto'
     });
+  }
+
+  onSubmit = () => {
+    this.props.createPost(this.props.uid, this.state.postText);
+    this.setState({ modalVisible: false });
   }
 
   hideModal = () => {
     this.setState({
       modalVisible: false,
-      createPostContainerHeight: 56
+      containerHeight: 56
     });
   }
 
@@ -39,11 +48,31 @@ class CreatePost extends Component {
     });
   }
 
+  renderSubmitButton() {
+    if (this.props.postUploading) {
+      return (
+        <ActivityIndicator
+          size="large"
+          color={constants.WHITE_COLOR}
+          style={{ marginTop: 20 }}
+        />
+      );
+    }
+
+    return (
+      <Button
+        buttonText="Post"
+        onPress={this.onSubmit}
+      />
+    );
+  }
+
   render() {
     const {
       createPostTouchable,
       createPostContainer,
-      createPostTextInput
+      createPostTextInput,
+      submitButton
     } = styles;
 
     return (
@@ -65,7 +94,7 @@ class CreatePost extends Component {
           animationType="fade"
         >
           <View
-            style={[createPostContainer, { height: this.state.createPostContainerHeight }]}
+            style={[createPostContainer, { height: this.state.containerHeight }]}
           >
             <TextInput
               style={createPostTextInput}
@@ -73,12 +102,17 @@ class CreatePost extends Component {
               placeholderTextColor={constants.LIGHT_GRAY_COLOR}
               selectionColor={constants.GREEN_COLOR}
               onLayout={this.onLayout}
+              onChangeText={text => this.setState({ postText: text })}
               autoCapitalize="none"
+              autoCorrect={false}
               autoFocus
               multiline
-              returnKeyType="done"
+              returnKeyType="next"
             />
             <PostMeta uid={this.props.uid} />
+          </View>
+          <View style={submitButton}>
+            {this.renderSubmitButton()}
           </View>
         </ModalView>
       </View>
@@ -110,13 +144,18 @@ const styles = StyleSheet.create({
     height: 100,
     borderBottomWidth: 1,
     borderBottomColor: '#D8D8D8'
+  },
+  submitButton: {
+    flex: 1,
+    marginTop: 20
   }
 });
 
 function mapStateToProps({ currentUser }) {
   return {
-    uid: currentUser.uid
+    uid: currentUser.uid,
+    postUploading: currentUser.postUploading
   };
 }
 
-export default connect(mapStateToProps)(CreatePost);
+export default connect(mapStateToProps, actions)(CreatePost);

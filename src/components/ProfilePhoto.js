@@ -115,6 +115,7 @@ class ProfilePhoto extends Component {
           size={this.props.size === 'large' ? 'large' : 'small'}
           style={[styles.activityIndicator, this.customizeActivityIndicatorOffset()]}
           animating={this.state.photoLoading}
+          color={constants.LIGHT_GRAY_COLOR}
         />
       </Svg>
     );

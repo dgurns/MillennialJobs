@@ -1,10 +1,9 @@
 // device reducer
 export const DEVICE_DIMENSIONS_SET = 'device_dimensions_set';
 
-// interests reducer
+// currentUser reducer
 export const INTEREST_SELECTED = 'interest_selected';
 
-// currentUser reducer
 export const SIGN_UP_ATTEMPTED = 'sign_up_attempted';
 export const SIGN_UP_SUCCESSFUL = 'sign_up_successful';
 export const SIGN_UP_FAILED = 'sign_up_failed';
@@ -26,6 +25,10 @@ export const ONBOARDING_STATUS_RETRIEVED = 'onboarding_status_retrieved';
 export const IS_GOOD_STATUS_UPDATED = 'is_good_status_updated';
 
 export const COURSE_ADDED_TO_SAVED_COURSES = 'course_added_to_saved_courses';
+
+export const CREATE_POST_ATTEMPTED = 'create_post_attempted';
+export const CREATE_POST_FAILED = 'create_post_failed';
+export const CREATE_POST_SUCCESSFUL = 'create_post_successful';
 
 // data reducer
 export const FETCH_COURSES_ATTEMPTED = 'fetch_courses_attempted';

@@ -13,6 +13,7 @@ const INITIAL_STATE = {
   },
   authLoading: false,
   photoUploading: false,
+  postUploading: false,
   savedCourses: []
 };
 
@@ -93,6 +94,21 @@ export default function (state = INITIAL_STATE, action) {
       return {
         ...state,
         savedCourses: action.payload
+      };
+    case types.CREATE_POST_ATTEMPTED:
+      return {
+        ...state,
+        postUploading: true
+      };
+    case types.CREATE_POST_FAILED:
+      return {
+        ...state,
+        postUploading: false
+      };
+    case types.CREATE_POST_SUCCESSFUL:
+      return {
+        ...state,
+        postUploading: false
       };
     case types.LOG_OUT_SUCCESSFUL:
       return state;
