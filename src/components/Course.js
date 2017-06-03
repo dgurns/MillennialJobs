@@ -35,7 +35,6 @@ class Course extends Component {
   }
 
   onPress = () => {
-    console.log('pressed!');
     Linking.openURL(this.state.courseUrl);
   }
 

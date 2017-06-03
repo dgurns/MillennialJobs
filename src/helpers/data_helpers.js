@@ -13,12 +13,19 @@ export const checkIfOnboarded = async (uid) => {
   });
 };
 
-export const fetchUserInformation = async (uid) => {
-  return new Promise((resolve, reject) => {
-    const databaseRef = firebase.database().ref(`users/${uid}`);
+export const fetchUserInformation = (uid) => {
+  return new Promise(async (resolve, reject) => {
+    // First get username
+    let currentUser = await firebase.auth().currentUser;
+    const email = currentUser.email;
+    const username = email.slice(0, email.indexOf('@'));
 
+    // Then get rest of user information
+    const databaseRef = firebase.database().ref(`users/${uid}`);
     databaseRef.once('value').then(snapshot => {
       const userObject = snapshot.val();
+      userObject.username = username;
+
       resolve(userObject);
     }).catch(error => {
       reject(error);
