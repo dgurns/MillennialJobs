@@ -12,6 +12,16 @@ import CheckmarkIcon from '../icons/CheckmarkIcon';
 import ThumbsUpIcon from '../icons/ThumbsUpIcon';
 
 class HowToScreen extends Component {
+  componentWillMount() {
+    console.log('howTo will mount');
+    console.log(this.props.uid);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('howTo will receive props');
+    console.log(nextProps.uid);
+  }
+
   onSubmitPressed = () => {
     this.props.updateOnboardingStatus(this.props.uid, true);
     this.props.navigation.navigate('main');
@@ -29,7 +39,7 @@ class HowToScreen extends Component {
     } = styles;
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1 }} key={this.props.uid}>
         <Header
           mode='onboarding'
         />

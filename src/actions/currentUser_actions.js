@@ -138,11 +138,7 @@ export const refreshUserState = () => async dispatch => {
     profilePhotoUrl: '',
     interestName: '',
     hasOnboarded: false,
-    isGood: {
-      isGood: false,
-      timesToggled: 0,
-      mostRecentTimestamp: null
-    },
+    isGood: false,
     savedCourses: []
   };
 
@@ -180,7 +176,10 @@ export const refreshUserState = () => async dispatch => {
       // Get isGood status
       const isGoodDatabaseRef = firebase.database().ref(`isGood/${uid}`);
       await isGoodDatabaseRef.once('value').then(snapshot => {
-        const isGood = snapshot.val();
+        let isGood = false;
+        if (snapshot.exists()) {
+          isGood = snapshot.val().isGood;
+        }
         userState.isGood = isGood;
       });
 
@@ -215,15 +214,15 @@ export const refreshUserState = () => async dispatch => {
   }
 };
 
-export const updateOnboardingStatus = (uid, hasOnboarded) => {
+export const updateOnboardingStatus = (uid, hasOnboardedBool) => async dispatch => {
   const databaseRef = firebase.database().ref(`users/${uid}`);
-  databaseRef.update({
-    hasOnboarded
+  await databaseRef.update({
+    hasOnboarded: hasOnboardedBool
   });
-  return {
+  dispatch({
     type: types.ONBOARDING_STATUS_RETRIEVED,
-    payload: hasOnboarded
-  };
+    payload: hasOnboardedBool
+  });
 };
 
 export const logOutUser = () => {
@@ -263,7 +262,7 @@ export const toggleGoodStatus = () => async dispatch => {
 
       dispatch({
         type: types.IS_GOOD_STATUS_UPDATED,
-        payload: isGood
+        payload: isGood.isGood
       });
     } catch (error) {
       console.log(error);

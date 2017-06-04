@@ -84,7 +84,7 @@ class ProfileScreen extends Component {
 
   toggleGoodStatus = () => {
     let alertMessage = 'Crap... out of a job and ready to learn something new?';
-    if (!this.props.isGood.isGood) {
+    if (!this.props.isGood) {
       alertMessage = 'If you\'ve got a job and are ready to be a success story, click Yes.';
     }
     // Alert will have to be customized for Android
@@ -146,6 +146,7 @@ class ProfileScreen extends Component {
     return (
       <ScreenContainer
         navigation={this.props.navigation}
+        key={this.props.uid}
       >
         <View
           style={{ flex: 1 }}
@@ -168,7 +169,7 @@ class ProfileScreen extends Component {
             </Text>
             <RadioButton
               labelText="I'm good!"
-              selected={this.props.isGood.isGood}
+              selected={this.props.isGood ? this.props.isGood : false}
               onPress={this.toggleGoodStatus}
               style={goodRadioButton}
             />
