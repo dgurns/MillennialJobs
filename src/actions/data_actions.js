@@ -115,3 +115,8 @@ export const fetchFeed = () => async dispatch => {
     });
   }
 };
+
+export const fetchMillennialsSaved = () => async dispatch => {
+  // Get the current number of millennials saved and update Redux state
+  // Then, set a firebase listener for isGood child_modified in TitleScreen component
+};

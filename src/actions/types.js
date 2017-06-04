@@ -45,3 +45,5 @@ export const FETCH_FEED_ATTEMPTED = 'fetch_feed_attempted';
 export const FETCH_FEED_FAILED = 'fetch_feed_failed';
 export const FETCH_FEED_SUCCESSFUL = 'fetch_feed_successful';
 export const FEED_CLEARED = 'feed_cleared';
+
+export const MILLENNIALS_SAVED_FETCHED = 'millennials_saved_fetched';
