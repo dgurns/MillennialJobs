@@ -95,6 +95,11 @@ export default function (state = INITIAL_STATE, action) {
         ...state,
         savedCourses: action.payload
       };
+    case types.COURSE_REMOVED_FROM_SAVED_COURSES:
+      return {
+        ...state,
+        savedCourses: action.payload
+      };
     case types.CREATE_POST_ATTEMPTED:
       return {
         ...state,

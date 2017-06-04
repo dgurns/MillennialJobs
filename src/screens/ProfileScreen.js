@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
 import {
   View,
@@ -125,6 +124,7 @@ class ProfileScreen extends Component {
               id={courseId}
               style={{ marginBottom: 20 }}
               key={courseId}
+              onRemove={() => this.props.removeCourseFromSavedCourses(courseId)}
             />
           );
         })}

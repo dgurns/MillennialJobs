@@ -6,6 +6,7 @@ import {
   Image,
   StyleSheet,
   Linking,
+  TouchableOpacity,
   TouchableWithoutFeedback
 } from 'react-native';
 
@@ -18,7 +19,8 @@ class Course extends Component {
     id: null,
     style: {},
     buttonText: 'Go',
-    onPress: null
+    onPress: null,
+    onRemove: null
   }
 
   state = {
@@ -75,7 +77,6 @@ class Course extends Component {
       title,
       description,
       ratingButtonContainer,
-      rating,
       button
     } = styles;
 
@@ -83,7 +84,6 @@ class Course extends Component {
       courseName,
       imageUri,
       courseDescription,
-      courseRating
     } = this.state;
 
     if (this.state.loading) {
@@ -97,7 +97,7 @@ class Course extends Component {
     return (
       <View>
         <TouchableWithoutFeedback
-          onPress={this.props.onPress ? this.props.onPress : this.onPress}
+          onPress={this.onPress}
         >
           <View style={imageTitleContainer}>
             <Image
@@ -114,9 +114,7 @@ class Course extends Component {
           {courseDescription}
         </Text>
         <View style={ratingButtonContainer}>
-          <Text style={rating}>
-            {courseRating} stars
-          </Text>
+          {this.renderRatingOrRemove()}
           <View style={button}>
             <Button
               size="small"
@@ -126,6 +124,23 @@ class Course extends Component {
           </View>
         </View>
       </View>
+    );
+  }
+
+  renderRatingOrRemove() {
+    if (this.props.onRemove) {
+      return (
+        <TouchableOpacity onPress={this.props.onRemove}>
+          <Text style={styles.rating}>
+            Remove
+          </Text>
+        </TouchableOpacity>
+      );
+    }
+    return (
+      <Text style={styles.rating}>
+        {this.state.courseRating} stars
+      </Text>
     );
   }
 

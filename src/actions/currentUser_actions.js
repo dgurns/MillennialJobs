@@ -316,6 +316,44 @@ export const addCourseToSavedCourses = (courseId) => async dispatch => {
   }
 };
 
+export const removeCourseFromSavedCourses = (courseId) => async dispatch => {
+  let currentUser = await firebase.auth().currentUser;
+
+  if (currentUser) {
+    const uid = currentUser.uid;
+    const databaseRef = firebase.database().ref(`savedCourses/${uid}`);
+
+    try {
+      const localArray = [];
+
+      await databaseRef.once('value').then(snapshot => {
+        if (snapshot.exists()) {
+          snapshot.forEach(childSnapshot => {
+            const childData = childSnapshot.val();
+            const childCourseId = childData.courseId;
+            if (childCourseId === courseId) {
+              childSnapshot.ref.remove();
+            } else {
+              localArray.push(childCourseId);
+            }
+          });
+        }
+      });
+
+      // Reverse the array so it gets saved locally with newest first
+      const reversedArray = _.reverse(localArray);
+
+      // And dispatch updated local array to Redux state
+      dispatch({
+        type: types.COURSE_REMOVED_FROM_SAVED_COURSES,
+        payload: reversedArray
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+};
+
 export const createPost = (uid, text) => async dispatch => {
   dispatch({
     type: types.CREATE_POST_ATTEMPTED

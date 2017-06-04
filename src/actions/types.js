@@ -25,6 +25,7 @@ export const ONBOARDING_STATUS_RETRIEVED = 'onboarding_status_retrieved';
 export const IS_GOOD_STATUS_UPDATED = 'is_good_status_updated';
 
 export const COURSE_ADDED_TO_SAVED_COURSES = 'course_added_to_saved_courses';
+export const COURSE_REMOVED_FROM_SAVED_COURSES = 'course_removed_from_saved_courses';
 
 export const CREATE_POST_ATTEMPTED = 'create_post_attempted';
 export const CREATE_POST_FAILED = 'create_post_failed';
