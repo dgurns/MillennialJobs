@@ -37,7 +37,7 @@ class PostMeta extends Component {
       let courseName = userInformation.interestName;
 
       if (userSavedCourses.length > 0) {
-        const latestCourseId = userSavedCourses[userSavedCourses.length - 1];
+        const latestCourseId = userSavedCourses[0];
         let courseDetails = await helpers.fetchCourseDetails(latestCourseId);
         courseName = courseDetails.title;
       }
