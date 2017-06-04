@@ -71,6 +71,7 @@ export const fetchFeed = () => async dispatch => {
     await isGoodQuery.once('value').then(snapshot => {
       snapshot.forEach(childSnapshot => {
         const isGoodObject = childSnapshot.val();
+        isGoodObject.userId = childSnapshot.key;
         if (isGoodObject.timesToggled === 1) {
           isGoodArray.splice(0, 0, isGoodObject);
         }
