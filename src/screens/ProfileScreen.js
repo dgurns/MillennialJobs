@@ -117,11 +117,9 @@ class ProfileScreen extends Component {
   }
 
   renderSavedCourses() {
-    const reversedArray = _.reverse(this.props.savedCourses);
-
     return (
       <View style={{ flex: 1 }}>
-        {reversedArray.map(courseId => {
+        {this.props.savedCourses.map(courseId => {
           return (
             <Course
               id={courseId}

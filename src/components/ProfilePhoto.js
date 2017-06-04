@@ -18,7 +18,7 @@ class ProfilePhoto extends Component {
   }
 
   state = {
-    photoUrl: '',
+    photoUrl: 'https://static.swappa.com/static/icons/no_profile_50.png',
     photoLoading: false
   }
 

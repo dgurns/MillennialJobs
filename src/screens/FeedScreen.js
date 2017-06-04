@@ -34,6 +34,14 @@ class FeedScreen extends Component {
     postsDatabaseRef.on('child_added', () => {
       this.props.fetchFeed();
     });
+
+    const isGoodDatabaseRef = firebase.database().ref('isGood');
+    isGoodDatabaseRef.on('child_changed', snapshot => {
+      const isGoodObject = snapshot.val();
+      if (isGoodObject.isGood && isGoodObject.timesToggled === 1) {
+        this.props.fetchFeed();
+      }
+    });
   }
 
   renderFeed() {

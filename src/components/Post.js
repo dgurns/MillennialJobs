@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     flex: 1,
     minWidth: 0,
     padding: 15,
+    paddingBottom: 3,
     color: constants.BLACK_COLOR,
     fontSize: constants.BODY_FONT_SIZE
   }
