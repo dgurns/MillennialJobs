@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ListView, ActivityIndicator, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
+import * as firebase from 'firebase';
 
 import * as actions from '../actions';
 import FeedIcon from '../icons/FeedIcon';
@@ -28,10 +29,11 @@ class FeedScreen extends Component {
 
   componentDidMount() {
     this.props.fetchFeed();
-  }
 
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
+    const postsDatabaseRef = firebase.database().ref('posts');
+    postsDatabaseRef.on('child_added', () => {
+      this.props.fetchFeed();
+    });
   }
 
   renderFeed() {

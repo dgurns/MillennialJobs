@@ -35,10 +35,6 @@ class ProfileScreen extends Component {
     photoLoading: false,
   }
 
-  componentWillMount() {
-    console.log(this.props);
-  }
-
   logOut = () => {
     this.props.logOutUser();
   }
