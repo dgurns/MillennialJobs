@@ -84,7 +84,7 @@ class CreatePost extends Component {
     } = styles;
 
     return (
-      <View style={{ flex: 1 }}>
+      <View>
         <TouchableWithoutFeedback
           onPress={this.showModal}
         >
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     paddingTop: 9,
     borderColor: constants.LIGHT_GRAY_COLOR,
     borderWidth: 1,
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   createPostTextInput: {
     fontSize: constants.BODY_FONT_SIZE,

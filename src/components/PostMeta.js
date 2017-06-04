@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
-import * as firebase from 'firebase';
 
 import * as constants from '../constants';
 import * as helpers from '../helpers';

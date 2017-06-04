@@ -7,12 +7,13 @@ import PostMeta from '../components/PostMeta';
 class Post extends Component {
   static defaultProps = {
     text: '',
-    uid: ''
+    uid: '',
+    style: {}
   }
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, this.props.style]}>
         <Text style={styles.postText}>{this.props.text}</Text>
         <PostMeta uid={this.props.uid} />
       </View>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ActivityIndicator } from 'react-native';
+import { ListView, ActivityIndicator, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 
 import * as actions from '../actions';
@@ -18,8 +18,20 @@ class FeedScreen extends Component {
     )
   }
 
+  constructor(props) {
+    super(props);
+
+    this.ds = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1 !== r2
+    });
+  }
+
   componentDidMount() {
     this.props.fetchFeed();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
   }
 
   renderFeed() {
@@ -28,11 +40,24 @@ class FeedScreen extends Component {
     }
 
     return (
-      <View>
-        <Post text="hi" uid="Sy8gMw261HXOYvn2wVUKJvUgoao1" />
-        <IsGood uid="Sy8gMw261HXOYvn2wVUKJvUgoao1" />
-      </View>
+      <ListView
+        contentContainerStyle={styles.listView}
+        dataSource={this.ds.cloneWithRows(this.props.feedItems)}
+        renderRow={(rowData) =>
+          this.renderRow(rowData)
+        }
+      />
     );
+  }
+
+  renderRow(rowData) {
+    if ('isGood' in rowData) {
+      return <IsGood uid={rowData.userId} />;
+    } else if ('text' in rowData) {
+      return (
+        <Post text={rowData.text} uid={rowData.userId} style={styles.post} />
+      );
+    }
   }
 
   render() {
@@ -46,6 +71,15 @@ class FeedScreen extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  listView: {
+    height: 'auto'
+  },
+  post: {
+    marginBottom: 20
+  }
+});
 
 function mapStateToProps({ data }) {
   return {

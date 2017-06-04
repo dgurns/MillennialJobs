@@ -55,6 +55,7 @@ export const signUpUser = ({
       interestName,
       profilePhotoUrl: '',
       hasOnboarded: false,
+      username
     });
     await firebase.database().ref(`isGood/${uid}`).set({
       isGood: false,
