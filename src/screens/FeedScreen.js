@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 
 import * as actions from '../actions';
@@ -7,6 +7,7 @@ import FeedIcon from '../icons/FeedIcon';
 import ScreenContainer from '../components/ScreenContainer';
 import CreatePost from '../components/CreatePost';
 import Post from '../components/Post';
+import IsGood from '../components/IsGood';
 
 class FeedScreen extends Component {
   static navigationOptions = {
@@ -27,7 +28,10 @@ class FeedScreen extends Component {
     }
 
     return (
-      <Post text="hi" uid="Sy8gMw261HXOYvn2wVUKJvUgoao1" />
+      <View>
+        <Post text="hi" uid="Sy8gMw261HXOYvn2wVUKJvUgoao1" />
+        <IsGood uid="Sy8gMw261HXOYvn2wVUKJvUgoao1" />
+      </View>
     );
   }
 
