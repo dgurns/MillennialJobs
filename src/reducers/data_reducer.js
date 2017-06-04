@@ -1,12 +1,17 @@
 import * as types from '../actions/types';
-import { primarySubcategories, secondarySubcategories } from './subcategories_list';
+import {
+  primarySubcategories,
+  secondarySubcategories
+} from './subcategories_list';
 
 const INITIAL_STATE = {
   primarySubcategories,
   secondarySubcategories,
   courses: [],
   coursesLoading: false,
-  courseDetails: []
+  courseDetails: [],
+  feedItems: [],
+  feedItemsLoading: false
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -31,6 +36,22 @@ export default function (state = INITIAL_STATE, action) {
       return {
         ...state,
         courses: []
+      };
+    case types.FETCH_FEED_ATTEMPTED:
+      return {
+        ...state,
+        feedItemsLoading: true
+      };
+    case types.FETCH_FEED_FAILED:
+      return {
+        ...state,
+        feedItemsLoading: false
+      };
+    case types.FETCH_FEED_SUCCESSFUL:
+      return {
+        ...state,
+        feedItemsLoading: false,
+        feedItems: action.payload
       };
     default:
       return state;

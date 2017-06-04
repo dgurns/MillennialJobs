@@ -39,3 +39,8 @@ export const COURSES_CLEARED = 'courses_cleared';
 export const FETCH_COURSE_DETAILS_ATTEMPTED = 'fetch_course_details_attempted';
 export const FETCH_COURSE_DETAILS_SUCCESSFUL = 'fetch_course_details_successful';
 export const FETCH_COURSE_DETAILS_FAILED = 'fetch_course_details_failed';
+
+export const FETCH_FEED_ATTEMPTED = 'fetch_feed_attempted';
+export const FETCH_FEED_FAILED = 'fetch_feed_failed';
+export const FETCH_FEED_SUCCESSFUL = 'fetch_feed_successful';
+export const FEED_CLEARED = 'feed_cleared';

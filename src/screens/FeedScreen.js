@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
+import * as actions from '../actions';
 import FeedIcon from '../icons/FeedIcon';
 import ScreenContainer from '../components/ScreenContainer';
 import CreatePost from '../components/CreatePost';
@@ -13,6 +15,10 @@ class FeedScreen extends Component {
     )
   }
 
+  componentDidMount() {
+    this.props.fetchFeed();
+  }
+
   render() {
     return (
       <ScreenContainer
@@ -24,4 +30,4 @@ class FeedScreen extends Component {
   }
 }
 
-export default FeedScreen;
+export default connect(null, actions)(FeedScreen);
