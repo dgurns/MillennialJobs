@@ -48,8 +48,6 @@ class Header extends Component {
   renderMillennialsSaved() {
     const {
       millennialsSavedContainer,
-      counterBox,
-      counterText,
       counterLabelText
     } = styles;
     if (this.props.mode === 'onboarding') {
@@ -57,15 +55,31 @@ class Header extends Component {
     }
     return (
       <View style={millennialsSavedContainer}>
-        <View style={counterBox}>
-          <Text style={counterText}>2</Text>
-        </View>
-        <View style={counterBox}>
-          <Text style={counterText}>1</Text>
-        </View>
-        <Text style={counterLabelText}>{this.props.millennialsSaved} millennials saved</Text>
+        {this.renderMillennialsSavedCounter(this.props.millennialsSaved)}
+        <Text style={counterLabelText}>millennials saved</Text>
       </View>
     );
+  }
+
+  renderMillennialsSavedCounter(millennialsSaved) {
+    const {
+      counterBox,
+      counterText
+    } = styles;
+
+    const millennialsString = millennialsSaved.toString();
+    const jsxToAdd = [];
+
+    for (let i = 0; i < millennialsString.length; i++) {
+      const digit = millennialsString[i];
+      jsxToAdd.push(
+        <View style={counterBox}>
+          <Text style={counterText}>{digit}</Text>
+        </View>
+      );
+    }
+
+    return jsxToAdd;
   }
 
   render() {
