@@ -55,7 +55,12 @@ class Feed extends Component {
       return <IsGood uid={rowData.userId} />;
     } else if ('text' in rowData) {
       return (
-        <Post text={rowData.text} uid={rowData.userId} style={styles.post} />
+        <Post
+          text={rowData.text}
+          uid={rowData.userId}
+          style={styles.post}
+          navigation={this.props.navigation ? this.props.navigation : null}
+        />
       );
     }
   }

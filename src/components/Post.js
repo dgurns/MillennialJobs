@@ -14,8 +14,13 @@ class Post extends Component {
   render() {
     return (
       <View style={[styles.container, this.props.style]}>
-        <Text style={styles.postText}>{this.props.text}</Text>
-        <PostMeta uid={this.props.uid} />
+        <Text style={styles.postText}>
+          {this.props.text}
+        </Text>
+        <PostMeta
+          uid={this.props.uid}
+          navigation={this.props.navigation ? this.props.navigation : null}
+        />
       </View>
     );
   }

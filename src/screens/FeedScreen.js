@@ -22,7 +22,10 @@ class FeedScreen extends Component {
         navigation={this.props.navigation}
       >
         <CreatePost />
-        <Feed key={this.props.currentUserUid} />
+        <Feed
+          key={this.props.currentUserUid}
+          navigation={this.props.navigation}
+        />
       </ScreenContainer>
     );
   }

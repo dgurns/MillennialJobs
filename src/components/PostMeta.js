@@ -1,8 +1,17 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Linking,
+  ActivityIndicator,
+  TouchableWithoutFeedback
+} from 'react-native';
 import { connect } from 'react-redux';
+import SafariView from 'react-native-safari-view';
 
 import * as constants from '../constants';
+import * as actions from '../actions';
 import * as helpers from '../helpers';
 import CoursesIcon from '../icons/CoursesIcon';
 import ProfilePhoto from '../components/ProfilePhoto';
@@ -16,7 +25,8 @@ class PostMeta extends Component {
     username: '',
     interestName: '',
     courseName: '',
-    isLoading: true
+    isLoading: true,
+    courseUrl: ''
   }
 
   componentWillMount() {
@@ -34,24 +44,39 @@ class PostMeta extends Component {
         userSavedCourses = this.props.currentUserSavedCourses;
       }
 
-      let courseName = userInformation.interestName;
+      let courseName = '';
+      let courseUrl = '';
 
       if (userSavedCourses.length > 0) {
         const latestCourseId = userSavedCourses[0];
         let courseDetails = await helpers.fetchCourseDetails(latestCourseId);
         courseName = courseDetails.title;
+        courseUrl = `${constants.UDEMY_ROOT_URL}${courseDetails.url}`;
       }
 
       this.setState({
         username: userInformation.username,
         interestName: userInformation.interestName,
         courseName,
-        isLoading: false
+        isLoading: false,
+        courseUrl
       });
     } catch (error) {
       this.setState({
         isLoading: false
       });
+    }
+  }
+
+  openCourseOrInterest = () => {
+    if (this.state.courseName !== '') {
+      SafariView.isAvailable()
+        .then(SafariView.show({ url: this.state.courseUrl }))
+        .catch(() => Linking.openURL(this.state.courseUrl));
+    }
+    if (this.state.courseName === '' && this.props.navigation) {
+      this.props.selectInterest(this.state.interestName);
+      this.props.navigation.navigate('courses');
     }
   }
 
@@ -82,9 +107,16 @@ class PostMeta extends Component {
           <View style={photoOrIcon}>
             <CoursesIcon size="small" />
           </View>
-          <Text style={label}>
-            {this.state.courseName !== '' ? this.state.courseName : this.state.interestName}
-          </Text>
+          <TouchableWithoutFeedback
+            onPress={this.openCourseOrInterest}
+            style={{ flex: 1 }}
+          >
+            <View style={{ flex: 1 }}>
+              <Text style={label}>
+                {this.state.courseName !== '' ? this.state.courseName : this.state.interestName}
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
         </View>
       </View>
     );
@@ -136,4 +168,4 @@ function mapStateToProps({ currentUser }) {
   };
 }
 
-export default connect(mapStateToProps)(PostMeta);
+export default connect(mapStateToProps, actions)(PostMeta);

@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback
 } from 'react-native';
+import SafariView from 'react-native-safari-view';
 
 import * as constants from '../constants';
 import * as helpers from '../helpers';
@@ -37,7 +38,9 @@ class Course extends Component {
   }
 
   onPress = () => {
-    Linking.openURL(this.state.courseUrl);
+    SafariView.isAvailable()
+      .then(SafariView.show({ url: this.state.courseUrl }))
+      .catch(() => Linking.openURL(this.state.courseUrl));
   }
 
   loadCourseDetails = async () => {

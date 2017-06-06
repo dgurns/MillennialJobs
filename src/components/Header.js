@@ -73,7 +73,7 @@ class Header extends Component {
     for (let i = 0; i < millennialsString.length; i++) {
       const digit = millennialsString[i];
       jsxToAdd.push(
-        <View style={counterBox}>
+        <View style={counterBox} key={i}>
           <Text style={counterText}>{digit}</Text>
         </View>
       );
