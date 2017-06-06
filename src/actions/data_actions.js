@@ -118,5 +118,19 @@ export const fetchFeed = () => async dispatch => {
 
 export const fetchMillennialsSaved = () => async dispatch => {
   // Get the current number of millennials saved and update Redux state
-  // Then, set a firebase listener for isGood child_modified in TitleScreen component
+  const isGoodDatabaseRef = firebase.database().ref('isGood');
+  const isGoodQuery = isGoodDatabaseRef.orderByChild('isGood').equalTo(true);
+
+  await isGoodQuery.once('value').then(snapshot => {
+    let millennialsSaved = 0;
+
+    snapshot.forEach(() => {
+      millennialsSaved += 1;
+    });
+
+    dispatch({
+      type: types.MILLENNIALS_SAVED_FETCHED,
+      payload: millennialsSaved
+    });
+  });
 };

@@ -6,13 +6,26 @@ import {
   StatusBar,
   TouchableOpacity
 } from 'react-native';
+import { connect } from 'react-redux';
+import * as firebase from 'firebase';
+
 import * as constants from '../constants';
+import * as actions from '../actions';
 
 class Header extends Component {
   static defaultProps = {
     mode: 'onboarding', // 'onboarding', 'main'
     onPressLogo: () => {},
     style: {}
+  }
+
+  componentDidMount() {
+    this.props.fetchMillennialsSaved();
+
+    const isGoodDatabaseRef = firebase.database().ref('isGood');
+    isGoodDatabaseRef.on('child_changed', () => {
+      this.props.fetchMillennialsSaved();
+    });
   }
 
   renderLogo() {
@@ -50,7 +63,7 @@ class Header extends Component {
         <View style={counterBox}>
           <Text style={counterText}>1</Text>
         </View>
-        <Text style={counterLabelText}>millennials saved</Text>
+        <Text style={counterLabelText}>{this.props.millennialsSaved} millennials saved</Text>
       </View>
     );
   }
@@ -132,4 +145,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Header;
+function mapStateToProps({ data }) {
+  return {
+    millennialsSaved: data.millennialsSaved
+  };
+}
+
+export default connect(mapStateToProps, actions)(Header);

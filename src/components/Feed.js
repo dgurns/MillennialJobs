@@ -22,7 +22,6 @@ class Feed extends Component {
 
     const postsDatabaseRef = firebase.database().ref('posts');
     postsDatabaseRef.on('child_added', () => {
-      console.log('child added. fetching feed');
       this.props.fetchFeed();
     });
 
@@ -39,7 +38,6 @@ class Feed extends Component {
     if (this.props.feedItemsLoading) {
       return <ActivityIndicator size="large" style={{ marginTop: 20 }} />;
     }
-    console.log('rendering feed');
 
     return (
       <ListView

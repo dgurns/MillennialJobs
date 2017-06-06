@@ -11,7 +11,8 @@ const INITIAL_STATE = {
   coursesLoading: false,
   courseDetails: [],
   feedItems: [],
-  feedItemsLoading: false
+  feedItemsLoading: false,
+  millennialsSaved: 0
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -52,6 +53,11 @@ export default function (state = INITIAL_STATE, action) {
         ...state,
         feedItemsLoading: false,
         feedItems: action.payload
+      };
+    case types.MILLENNIALS_SAVED_FETCHED:
+      return {
+        ...state,
+        millennialsSaved: action.payload
       };
     default:
       return state;
