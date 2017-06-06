@@ -5,6 +5,7 @@ export const LIGHT_GRAY_COLOR = '#9F9F9F'; // For text
 export const LIGHT_GRAY_COLOR_TRANSPARENT = 'rgba(159, 159, 159, 0.94)';
 export const VERY_LIGHT_GRAY_COLOR = '#F6F6F6'; // For nav bar and default profile photo
 export const DARK_GRAY_COLOR = '#606060'; // For borders
+export const DARK_GRAY_COLOR_TRANSPARENT = 'rgba(50, 50, 50, 0.94)';
 export const WHITE_COLOR = '#FFF';
 
 // Fonts

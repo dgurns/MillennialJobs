@@ -97,8 +97,8 @@ class CreatePost extends Component {
         <ModalView
           visible={this.state.modalVisible}
           onClose={this.hideModal}
-          backgroundColor={constants.LIGHT_GRAY_COLOR_TRANSPARENT}
-          closeIconColor={constants.BLACK_COLOR}
+          backgroundColor={constants.DARK_GRAY_COLOR_TRANSPARENT}
+          closeIconColor={constants.WHITE_COLOR}
           animationType="fade"
         >
           <View
