@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import * as firebase from 'firebase';
 import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
 
 import * as actions from '../actions';
 import * as helpers from '../helpers';
