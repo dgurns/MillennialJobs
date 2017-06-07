@@ -6,8 +6,7 @@ import {
   Image,
   StyleSheet,
   Linking,
-  TouchableOpacity,
-  TouchableWithoutFeedback
+  TouchableOpacity
 } from 'react-native';
 import SafariView from 'react-native-safari-view';
 
@@ -99,7 +98,7 @@ class Course extends Component {
     }
     return (
       <View>
-        <TouchableWithoutFeedback
+        <TouchableOpacity
           onPress={this.onPress}
         >
           <View style={imageTitleContainer}>
@@ -112,7 +111,7 @@ class Course extends Component {
               {courseName}
             </Text>
           </View>
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
         <Text style={description}>
           {courseDescription}
         </Text>

@@ -8,7 +8,6 @@ import Post from '../components/Post';
 import IsGood from '../components/IsGood';
 
 class Feed extends Component {
-
   constructor(props) {
     super(props);
 

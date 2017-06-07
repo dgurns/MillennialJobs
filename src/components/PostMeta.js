@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Linking,
   ActivityIndicator,
-  TouchableWithoutFeedback
+  TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
 import SafariView from 'react-native-safari-view';
@@ -15,6 +15,7 @@ import * as actions from '../actions';
 import * as helpers from '../helpers';
 import CoursesIcon from '../icons/CoursesIcon';
 import ProfilePhoto from '../components/ProfilePhoto';
+import ModalView from '../components/ModalView';
 
 class PostMeta extends Component {
   static defaultProps = {
@@ -26,7 +27,8 @@ class PostMeta extends Component {
     interestName: '',
     courseName: '',
     isLoading: true,
-    courseUrl: ''
+    courseUrl: '',
+    modalVisible: false
   }
 
   componentWillMount() {
@@ -80,6 +82,26 @@ class PostMeta extends Component {
     }
   }
 
+  openUserProfile = () => {
+    if (this.props.uid === this.props.currentUserUid) {
+      this.props.navigation.navigate('profile');
+    } else {
+      this.showModal();
+    }
+  }
+
+  hideModal = () => {
+    this.setState({
+      modalVisible: false
+    });
+  }
+
+  showModal = () => {
+    this.setState({
+      modalVisible: true
+    });
+  }
+
   renderContent() {
     const {
       container,
@@ -95,37 +117,50 @@ class PostMeta extends Component {
 
     return (
       <View style={container}>
-        <View style={contentRow}>
+        <TouchableOpacity
+          style={contentRow}
+          onPress={this.openUserProfile}
+        >
           <View style={photoOrIcon}>
             <ProfilePhoto uid={this.props.uid} size="small" />
           </View>
           <Text style={label}>
             {this.state.username}
           </Text>
-        </View>
-        <View style={contentRow}>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={contentRow}
+          onPress={this.openCourseOrInterest}
+        >
           <View style={photoOrIcon}>
             <CoursesIcon size="small" />
           </View>
-          <TouchableWithoutFeedback
-            onPress={this.openCourseOrInterest}
-            style={{ flex: 1 }}
-          >
-            <View style={{ flex: 1 }}>
-              <Text style={label}>
-                {this.state.courseName !== '' ? this.state.courseName : this.state.interestName}
-              </Text>
-            </View>
-          </TouchableWithoutFeedback>
-        </View>
+          <View style={{ flex: 1 }}>
+            <Text style={label}>
+              {this.state.courseName !== '' ? this.state.courseName : this.state.interestName}
+            </Text>
+          </View>
+        </TouchableOpacity>
       </View>
     );
+  }
+
+  renderUserProfile() {
+    return <Text>hi</Text>;
   }
 
   render() {
     return (
       <View style={{ flex: 1 }}>
         {this.renderContent()}
+
+        <ModalView
+          visible={this.state.modalVisible}
+          onClose={this.hideModal}
+        >
+            {this.renderUserProfile()}
+        </ModalView>
       </View>
     );
   }
