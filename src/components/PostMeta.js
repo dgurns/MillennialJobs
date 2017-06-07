@@ -14,8 +14,9 @@ import * as constants from '../constants';
 import * as actions from '../actions';
 import * as helpers from '../helpers';
 import CoursesIcon from '../icons/CoursesIcon';
-import ProfilePhoto from '../components/ProfilePhoto';
-import ModalView from '../components/ModalView';
+import ProfilePhoto from './ProfilePhoto';
+import ModalView from './ModalView';
+import UserProfile from './UserProfile';
 
 class PostMeta extends Component {
   static defaultProps = {
@@ -146,10 +147,6 @@ class PostMeta extends Component {
     );
   }
 
-  renderUserProfile() {
-    return <Text>hi</Text>;
-  }
-
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -159,7 +156,10 @@ class PostMeta extends Component {
           visible={this.state.modalVisible}
           onClose={this.hideModal}
         >
-            {this.renderUserProfile()}
+          <UserProfile
+            uid={this.props.uid}
+            username={this.state.username}
+          />
         </ModalView>
       </View>
     );

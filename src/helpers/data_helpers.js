@@ -46,3 +46,19 @@ export const fetchUserSavedCourses = (uid) => {
     });
   });
 };
+
+export const fetchIsGoodStatus = (uid) => {
+  return new Promise(async (resolve, reject) => {
+    const isGoodDatabaseRef = firebase.database().ref(`isGood/${uid}`);
+    await isGoodDatabaseRef.once('value').then(snapshot => {
+      let isGood = null;
+
+      if (snapshot.exists()) {
+        isGood = snapshot.val().isGood;
+      }
+      resolve(isGood);
+    }).catch(error => {
+      reject(error);
+    });
+  });
+};

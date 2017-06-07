@@ -38,8 +38,12 @@ class Course extends Component {
 
   onPress = () => {
     SafariView.isAvailable()
-      .then(() => SafariView.show({ url: this.state.courseUrl }))
-      .catch(() => Linking.openURL(this.state.courseUrl));
+      .then(() => {
+        SafariView.show({ url: this.state.courseUrl });
+      })
+      .catch(() => {
+        Linking.openURL(this.state.courseUrl);
+      });
   }
 
   loadCourseDetails = async () => {
