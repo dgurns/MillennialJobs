@@ -20,7 +20,8 @@ class Course extends Component {
     style: {},
     buttonText: 'Go',
     onPress: null,
-    onRemove: null
+    onRemove: null,
+    inModal: false // to account for bug in react-native-safari-view in modals
   }
 
   state = {
@@ -37,6 +38,12 @@ class Course extends Component {
   }
 
   onPress = () => {
+    // Since react-native-safari-view doesn't work in modals
+    if (this.props.inModal) {
+      Linking.openURL(this.state.courseUrl);
+      return;
+    }
+
     SafariView.isAvailable()
       .then(() => {
         SafariView.show({ url: this.state.courseUrl });

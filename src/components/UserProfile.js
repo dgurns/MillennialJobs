@@ -177,6 +177,7 @@ class UserProfile extends Component {
               id={courseId}
               style={{ marginBottom: 20 }}
               key={courseId}
+              inModal
             />
           );
         })}
