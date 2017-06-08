@@ -25,13 +25,16 @@ class TitleScreen extends Component {
       if (user) {
         if (this.props.currentUserhasOnboarded) {
           this.props.navigation.navigate('feed');
+          SplashScreen.hide();
         } else {
           helpers.checkIfOnboarded(user.uid)
             .then((hasOnboarded) => {
               if (!hasOnboarded) {
                 this.props.navigation.navigate('howTo');
+                SplashScreen.hide();
               } else {
                 this.props.navigation.navigate('feed');
+                SplashScreen.hide();
               }
             }).catch(error => {
               console.log(error);
