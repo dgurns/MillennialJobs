@@ -38,18 +38,20 @@ class Course extends Component {
   }
 
   onPress = () => {
-    // Since react-native-safari-view doesn't work in modals
+    const affiliateUrl = helpers.createAffiliateUrl(this.state.courseUrl);
+
+    // Since react-native-safari-view doesn't work in modals, use regular Linking
     if (this.props.inModal) {
-      Linking.openURL(this.state.courseUrl);
+      Linking.openURL(affiliateUrl);
       return;
     }
 
     SafariView.isAvailable()
       .then(() => {
-        SafariView.show({ url: this.state.courseUrl });
+        SafariView.show({ url: affiliateUrl });
       })
       .catch(() => {
-        Linking.openURL(this.state.courseUrl);
+        Linking.openURL(affiliateUrl);
       });
   }
 

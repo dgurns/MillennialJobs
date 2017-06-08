@@ -78,3 +78,11 @@ export const searchForCourses = (searchTerm) => {
     }
   });
 };
+
+export const createAffiliateUrl = (url) => {
+  const affiliateRootUrl = constants.AFFILIATE_ROOT_URL;
+  const processedUrl = url.replace(new RegExp('/', 'g'), '%2F').replace(new RegExp(':', 'g'), '%3A');
+  const finalUrl = affiliateRootUrl + processedUrl;
+
+  return finalUrl;
+};
