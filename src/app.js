@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
 import { TabNavigator } from 'react-navigation';
 import * as firebase from 'firebase';
+import codePush from 'react-native-code-push';
 
 import store from './store';
 import { firebaseConfig } from './firebase/firebase_config';
@@ -76,5 +77,7 @@ const styles = StyleSheet.create({
     height: 60
   }
 });
+
+App = codePush(App);
 
 export default App;

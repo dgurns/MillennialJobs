@@ -4,8 +4,8 @@ import * as firebase from 'firebase';
 
 const Blob = RNFetchBlob.polyfill.Blob;
 const fs = RNFetchBlob.fs;
-window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
-window.Blob = Blob
+window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
+window.Blob = Blob;
 
 // User-related helper functions
 export const uploadImage = (imageUri, uid, mime = 'application/octet-stream') => {
