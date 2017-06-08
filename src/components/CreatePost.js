@@ -117,7 +117,10 @@ class CreatePost extends Component {
               multiline
               returnKeyType="next"
             />
-            <PostMeta uid={this.props.uid} />
+            <PostMeta
+              uid={this.props.uid}
+              isInteractive={false}
+            />
           </View>
           <View style={submitButton}>
             {this.renderSubmitButton()}

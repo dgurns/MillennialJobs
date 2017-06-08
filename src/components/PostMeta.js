@@ -20,7 +20,8 @@ import UserProfile from './UserProfile';
 
 class PostMeta extends Component {
   static defaultProps = {
-    uid: ''
+    uid: '',
+    isInteractive: true
   }
 
   state = {
@@ -120,7 +121,7 @@ class PostMeta extends Component {
       <View style={container}>
         <TouchableOpacity
           style={contentRow}
-          onPress={this.openUserProfile}
+          onPress={this.props.isInteractive ? this.openUserProfile : null}
         >
           <View style={photoOrIcon}>
             <ProfilePhoto uid={this.props.uid} size="small" />
@@ -132,7 +133,7 @@ class PostMeta extends Component {
 
         <TouchableOpacity
           style={contentRow}
-          onPress={this.openCourseOrInterest}
+          onPress={this.props.isInteractive ? this.openCourseOrInterest : null}
         >
           <View style={photoOrIcon}>
             <CoursesIcon size="small" />

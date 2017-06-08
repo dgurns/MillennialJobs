@@ -45,7 +45,6 @@ class UserProfile extends Component {
 
   fetchSavedCourses = async () => {
     let savedCourses = await helpers.fetchUserSavedCourses(this.props.uid);
-    console.log(savedCourses);
     this.setState({
       savedCourses
     });
