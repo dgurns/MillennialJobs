@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity
+} from 'react-native';
+import { connect } from 'react-redux';
 
 import * as constants from '../constants';
 import * as helpers from '../helpers';
-import ProfilePhoto from '../components/ProfilePhoto';
+import ProfilePhoto from './ProfilePhoto';
+import UserProfile from './UserProfile';
+import ModalView from './ModalView';
 
 class IsGood extends Component {
   static defaultProps = {
@@ -11,7 +19,8 @@ class IsGood extends Component {
   }
 
   state = {
-    username: ''
+    username: '',
+    modalVisible: false
   }
 
   componentDidMount() {
@@ -22,19 +31,55 @@ class IsGood extends Component {
     });
   }
 
+  openUserProfile = () => {
+    if (this.props.uid === this.props.currentUserUid) {
+      this.props.navigation.navigate('profile');
+    } else {
+      this.showModal();
+    }
+  }
+
+  hideModal = () => {
+    this.setState({
+      modalVisible: false
+    });
+  }
+
+  showModal = () => {
+    this.setState({
+      modalVisible: true
+    });
+  }
+
   render() {
     const { container, photo, text, boldText, greenText } = styles;
 
     return (
-      <View style={container}>
-        <View style={photo}>
-          <ProfilePhoto size="small" uid={this.props.uid} />
-        </View>
-        <Text style={text}>
-          <Text style={boldText}>{this.state.username} </Text>
-          is
-          <Text style={greenText}> good!</Text>
-        </Text>
+      <View>
+        <TouchableOpacity
+          style={container}
+          onPress={this.openUserProfile}
+        >
+          <View style={photo}>
+            <ProfilePhoto size="small" uid={this.props.uid} />
+          </View>
+
+          <Text style={text}>
+            <Text style={boldText}>{this.state.username} </Text>
+            is
+            <Text style={greenText}> good!</Text>
+          </Text>
+        </TouchableOpacity>
+
+        <ModalView
+          visible={this.state.modalVisible}
+          onClose={this.hideModal}
+        >
+          <UserProfile
+            uid={this.props.uid}
+            username={this.state.username}
+          />
+        </ModalView>
       </View>
     );
   }
@@ -69,4 +114,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default IsGood;
+function mapStateToProps({ currentUser }) {
+  return {
+    currentUserUid: currentUser.uid
+  };
+}
+
+export default connect(mapStateToProps)(IsGood);
