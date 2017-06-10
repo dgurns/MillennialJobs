@@ -7,7 +7,6 @@ import com.microsoft.codepush.react.CodePush;
 import com.cboy.rn.splashscreen.SplashScreenReactPackage;
 import com.horcrux.svg.SvgPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
-import fr.bamlab.rnimageresizer.ImageResizerPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -39,7 +38,6 @@ public class MainApplication extends Application implements ReactApplication {
             new SplashScreenReactPackage(),
             new SvgPackage(),
             new RNFetchBlobPackage(),
-            new ImageResizerPackage(),
             new ImagePickerPackage()
       );
     }

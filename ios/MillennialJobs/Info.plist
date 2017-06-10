@@ -52,7 +52,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>To take a profile picture.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>To pick a profile picture.</string>
 	<key>UIAppFonts</key>
