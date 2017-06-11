@@ -52,7 +52,8 @@ class App extends Component {
         navigationOptions: {
           tabBarVisible: false,
         },
-        //animationEnabled: true,
+        animationEnabled: false,
+        swipeEnabled: false,
         lazy: true,
       });
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Platform } from 'react-native';
 import { connect } from 'react-redux';
 
 import * as constants from '../constants';
@@ -92,19 +92,19 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingLeft: 20,
     paddingRight: 20,
-    marginTop: 30
+    marginTop: Platform.OS === 'ios' ? 30 : 10
   },
   howToContainer: {
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     padding: 40,
-    paddingTop: 30
+    paddingTop: Platform.OS === 'ios' ? 30 : 25
   },
   howToBlock: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    marginBottom: 30
+    marginBottom: Platform.OS === 'ios' ? 30 : 20
   },
   howToIcon: {
     width: 50,
@@ -126,7 +126,8 @@ const styles = StyleSheet.create({
     flex: 1,
     left: 0,
     right: 0,
-    bottom: 110
+    bottom: 30,
+    height: 80
   }
 });
 

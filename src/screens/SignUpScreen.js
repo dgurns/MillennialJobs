@@ -7,7 +7,8 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
-  ActivityIndicator
+  ActivityIndicator,
+  Platform
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import { connect } from 'react-redux';
@@ -106,7 +107,10 @@ class SignUpScreen extends Component {
   renderSubmitButton() {
     if (this.props.authLoading) {
       return (
-        <ActivityIndicator size="large" style={{ top: 55 }} />
+        <ActivityIndicator
+          size="large"
+          style={{ top: Platform.OS === 'ios' ? 55 : 20 }} 
+        />
       );
     }
     return (
@@ -147,6 +151,7 @@ class SignUpScreen extends Component {
             returnKeyType="done"
             autoCapitalize="none"
             autoCorrect={false}
+            underlineColorAndroid="transparent"
           />
           <TextInput
             style={inputField}
@@ -158,6 +163,7 @@ class SignUpScreen extends Component {
             value={this.state.password}
             returnKeyType="done"
             autoCorrect={false}
+            underlineColorAndroid="transparent"
             secureTextEntry
           />
         </View>
@@ -188,7 +194,7 @@ const styles = StyleSheet.create({
   signUpFormContainer: {
     padding: 50,
     paddingTop: 30,
-    paddingBottom: 30
+    paddingBottom: Platform.OS === 'ios' ? 30 : 5
   },
   inputField: {
     borderColor: constants.LIGHT_GRAY_COLOR,
@@ -226,7 +232,7 @@ const styles = StyleSheet.create({
     fontSize: 76,
     color: constants.LIGHT_GRAY_COLOR,
     backgroundColor: 'transparent',
-    lineHeight: 80
+    lineHeight: Platform.OS === 'ios' ? 80 : 90
   },
   profilePhoto: {
     width: 65,
@@ -241,11 +247,13 @@ const styles = StyleSheet.create({
   },
   button: {
     zIndex: 50,
-    position: 'absolute',
+    position: Platform.OS === 'ios' ? 'absolute' : 'relative',
     flex: 1,
     left: 0,
     right: 0,
-    bottom: 110
+    bottom: 30,
+    marginTop: Platform.OS === 'ios' ? 0 : 60,
+    height: 80
   }
 });
 

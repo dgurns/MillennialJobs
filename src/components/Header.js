@@ -4,7 +4,8 @@ import {
   Text,
   StyleSheet,
   StatusBar,
-  TouchableOpacity
+  TouchableOpacity,
+  Platform
 } from 'react-native';
 import { connect } from 'react-redux';
 import * as firebase from 'firebase';
@@ -130,7 +131,9 @@ const styles = StyleSheet.create({
     fontSize: 37,
     flex: 1,
     padding: 5,
-    marginLeft: 2
+    marginLeft: 2,
+    marginTop: Platform.OS === 'ios' ? 0 : -28,
+    width: 90
   },
   millennialsSavedContainer: {
     flexDirection: 'row',

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { View, Text, StyleSheet, Alert, Platform } from 'react-native';
 import { connect } from 'react-redux';
 
 import * as constants from '../constants';
@@ -82,7 +82,8 @@ const styles = StyleSheet.create({
     flex: 1,
     left: 0,
     right: 0,
-    bottom: 110
+    bottom: 30,
+    height: 80
   }
 });
 

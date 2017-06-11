@@ -5,6 +5,7 @@ import {
   Image,
   Text,
   StatusBar,
+  Platform,
   TouchableOpacity
 } from 'react-native';
 import * as firebase from 'firebase';
@@ -106,14 +107,14 @@ const styles = StyleSheet.create({
     fontSize: 144,
     textAlign: 'center',
     backgroundColor: 'transparent',
-    marginTop: 80
+    marginTop: Platform.OS === 'ios' ? 80 : 40
   },
   subtitle: {
     fontSize: constants.TITLE_FONT_SIZE,
     color: constants.WHITE_COLOR,
     flex: 1,
     position: 'absolute',
-    bottom: 200,
+    bottom: Platform.OS === 'ios' ? 200 : 180,
     left: 0,
     right: 0,
     textAlign: 'center',
@@ -135,7 +136,8 @@ const styles = StyleSheet.create({
     flex: 1,
     left: 0,
     right: 0,
-    bottom: 170
+    bottom: 80,
+    height: 80
   },
   loginContainer: {
     position: 'absolute',
