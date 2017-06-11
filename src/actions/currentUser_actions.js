@@ -196,7 +196,10 @@ export const refreshUserState = () => async dispatch => {
           });
         }
 
-        userState.savedCourses = savedCoursesArray;
+        // Reverse the array so it gets saved locally with newest first
+        const reversedArray = _.reverse(savedCoursesArray);
+
+        userState.savedCourses = reversedArray;
       });
 
       dispatch({

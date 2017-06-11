@@ -109,6 +109,7 @@ class AddCourse extends Component {
         style={styles.course}
         buttonText="Add"
         onPress={() => this.addCourseToSavedCourses(courseId)}
+        inModal
       />
     );
   }
