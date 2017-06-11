@@ -5,7 +5,8 @@ import {
   Text,
   TextInput,
   Alert,
-  ActivityIndicator
+  ActivityIndicator,
+  Platform
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -43,7 +44,10 @@ class LogInScreen extends Component {
   renderSubmitButton() {
     if (this.props.authLoading) {
       return (
-        <ActivityIndicator size="large" style={{ top: 55 }} />
+        <ActivityIndicator
+          size="large"
+          style={{ top: Platform.OS === 'ios' ? 55 : 20 }} 
+        />
       );
     }
     return (
@@ -130,11 +134,13 @@ const styles = StyleSheet.create({
   },
   button: {
     zIndex: 50,
-    position: 'absolute',
+    position: Platform.OS === 'ios' ? 'absolute' : 'relative',
     flex: 1,
     left: 0,
     right: 0,
-    bottom: 110
+    bottom: 30,
+    marginTop: Platform.OS === 'ios' ? 0 : 50,
+    height: 80
   }
 });
 
