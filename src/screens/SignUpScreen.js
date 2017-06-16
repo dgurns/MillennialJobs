@@ -109,7 +109,7 @@ class SignUpScreen extends Component {
       return (
         <ActivityIndicator
           size="large"
-          style={{ top: Platform.OS === 'ios' ? 55 : 20 }} 
+          style={{ top: 20 }} 
         />
       );
     }
