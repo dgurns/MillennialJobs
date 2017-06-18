@@ -6,7 +6,8 @@ import {
   Image,
   StyleSheet,
   Linking,
-  TouchableOpacity
+  TouchableOpacity,
+  Platform
 } from 'react-native';
 import SafariView from 'react-native-safari-view';
 
@@ -46,13 +47,13 @@ class Course extends Component {
       return;
     }
 
-    SafariView.isAvailable()
-      .then(() => {
-        SafariView.show({ url: affiliateUrl });
-      })
-      .catch(() => {
-        Linking.openURL(affiliateUrl);
-      });
+    if (Platform.OS === 'ios') {
+      SafariView.isAvailable()
+        .then(() => SafariView.show({ url: affiliateUrl }))
+        .catch(() => Linking.openURL(affiliateUrl));
+    } else {
+      Linking.openURL(affiliateUrl);
+    }
   }
 
   loadCourseDetails = async () => {

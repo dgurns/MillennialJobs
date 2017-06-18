@@ -5,7 +5,8 @@ import {
   StyleSheet,
   Linking,
   ActivityIndicator,
-  TouchableOpacity
+  TouchableOpacity,
+  Platform
 } from 'react-native';
 import { connect } from 'react-redux';
 import SafariView from 'react-native-safari-view';
@@ -57,8 +58,6 @@ class PostMeta extends Component {
         userSavedCourses = this.props.currentUserSavedCourses;
       }
 
-      console.log(this.props.currentUserSavedCourses);
-
       let courseName = '';
       let courseUrl = '';
 
@@ -84,9 +83,13 @@ class PostMeta extends Component {
 
   openCourseOrInterest = () => {
     if (this.state.courseName !== '') {
-      SafariView.isAvailable()
-        .then(SafariView.show({ url: this.state.courseUrl }))
-        .catch(() => Linking.openURL(this.state.courseUrl));
+      if (Platform.OS === 'ios') {
+        SafariView.isAvailable()
+          .then(SafariView.show({ url: this.state.courseUrl }))
+          .catch(() => Linking.openURL(this.state.courseUrl));
+      } else {
+        Linking.openURL(this.state.courseUrl);
+      }
     }
     if (this.state.courseName === '' && this.props.navigation) {
       this.props.selectInterest(this.state.interestName);
