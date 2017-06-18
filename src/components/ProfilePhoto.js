@@ -125,12 +125,14 @@ class ProfilePhoto extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <Image
-          style={[styles.profilePhoto, this.customizePhotoDimensions()]}
-          source={{ uri: this.state.photoUrl }}
-          onLoadEnd={() => this.setState({ photoLoading: false })}
-          key={this.state.photoUrl}
-        />
+        <View style={{ elevation: 5, backgroundColor: 'transparent' }}>
+          <Image
+            style={[styles.profilePhoto, this.customizePhotoDimensions()]}
+            source={{ uri: this.state.photoUrl }}
+            onLoadEnd={() => this.setState({ photoLoading: false })}
+            key={this.state.photoUrl}
+          />
+        </View>
         {this.renderDefaultProfilePhoto()}
       </View>
     );
@@ -142,7 +144,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: constants.DARK_GRAY_COLOR,
     zIndex: Platform.OS === 'ios' ? 100 : null,
-    elevation: 5,
     justifyContent: 'center',
     alignItems: 'center'
   },

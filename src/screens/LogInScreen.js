@@ -46,7 +46,7 @@ class LogInScreen extends Component {
       return (
         <ActivityIndicator
           size="large"
-          style={{ top: 20 }} 
+          style={{ top: 20 }}
         />
       );
     }
@@ -86,6 +86,7 @@ class LogInScreen extends Component {
             returnKeyType="done"
             autoCapitalize="none"
             autoCorrect={false}
+            underlineColorAndroid="transparent"
           />
           <TextInput
             style={inputField}
@@ -98,6 +99,7 @@ class LogInScreen extends Component {
             returnKeyType="done"
             autoCorrect={false}
             secureTextEntry
+            underlineColorAndroid="transparent"
           />
         </View>
         <View style={button}>

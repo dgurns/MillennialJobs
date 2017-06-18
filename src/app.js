@@ -42,7 +42,11 @@ class App extends Component {
               showIcon: true,
               activeTintColor: constants.GREEN_COLOR,
               inactiveTintColor: constants.BLACK_COLOR,
-              style: styles.tabBar
+              style: styles.tabBar,
+              iconStyle: {
+                width: constants.PRIMARY_ICON_SIZE,
+                height: constants.PRIMARY_ICON_SIZE
+              }
             },
             lazy: false,
             swipeEnabled: true
