@@ -19,6 +19,8 @@ import Button from '../components/Button';
 
 class TitleScreen extends Component {
   componentWillMount() {
+    this.props.setDeviceDimensions();
+
     // Eventually, do this check within a splash screen, and then proceed
     firebase.auth().onAuthStateChanged((user) => {
       this.props.refreshUserState();
@@ -48,8 +50,14 @@ class TitleScreen extends Component {
     });
   }
 
-  componentDidMount() {
-    //SplashScreen.hide();
+  addImageDimensions() {
+    const { screenHeight, screenWidth } = this.props;
+    console.log(screenWidth);
+
+    return {
+      width: screenWidth,
+      height: screenHeight
+    };
   }
 
   render() {
@@ -70,6 +78,8 @@ class TitleScreen extends Component {
         <View style={backgroundImageContainer}>
           <Image
             source={require('../images/money.jpg')}
+            resizeMode="cover"
+            style={this.addImageDimensions()}
           />
         </View>
         <Text style={title}>F{'\''}ed</Text>
@@ -128,7 +138,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     left: 0,
-    opacity: 0.41
+    opacity: 0.21
   },
   button: {
     zIndex: 50,
@@ -160,10 +170,12 @@ const styles = StyleSheet.create({
   }
 });
 
-function mapStateToProps({ currentUser }) {
+function mapStateToProps({ currentUser, device }) {
   return {
     uid: currentUser.uid,
-    currentUserhasOnboarded: currentUser.hasOnboarded
+    currentUserhasOnboarded: currentUser.hasOnboarded,
+    screenHeight: device.screenHeight,
+    screenWidth: device.screenWidth
   };
 }
 
