@@ -3,7 +3,8 @@ import {
   View,
   Image,
   StyleSheet,
-  ActivityIndicator
+  ActivityIndicator,
+  Platform
 } from 'react-native';
 import { connect } from 'react-redux';
 import Svg, { Path } from 'react-native-svg';
@@ -140,17 +141,18 @@ const styles = StyleSheet.create({
   profilePhoto: {
     borderWidth: 1,
     borderColor: constants.DARK_GRAY_COLOR,
-    zIndex: 100,
+    zIndex: Platform.OS === 'ios' ? 100 : null,
+    elevation: 5,
     justifyContent: 'center',
     alignItems: 'center'
   },
   defaultProfilePhoto: {
     position: 'absolute',
-    zIndex: 50
+    zIndex: Platform.OS === 'ios' ? 50 : null
   },
   activityIndicator: {
     position: 'absolute',
-    zIndex: 60
+    zIndex: Platform.OS === 'ios' ? 60 : null
   }
 });
 

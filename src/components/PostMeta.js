@@ -24,22 +24,31 @@ class PostMeta extends Component {
     isInteractive: true
   }
 
-  state = {
-    username: '',
-    interestName: '',
-    courseName: '',
-    isLoading: true,
-    courseUrl: '',
-    modalVisible: false
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      username: '',
+      interestName: '',
+      courseName: '',
+      isLoading: true,
+      courseUrl: '',
+      modalVisible: false
+    };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.loadData();
   }
 
-  loadData = async () => {
+  async loadData() {
     try {
       let userInformation = await helpers.fetchUserInformation(this.props.uid);
+
+      this.setState({
+        username: userInformation.username,
+        interestName: userInformation.interestName
+      });
 
       let userSavedCourses = [];
       if (this.props.uid !== this.props.currentUserUid) {
@@ -59,8 +68,6 @@ class PostMeta extends Component {
       }
 
       this.setState({
-        username: userInformation.username,
-        interestName: userInformation.interestName,
         courseName,
         isLoading: false,
         courseUrl

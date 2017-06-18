@@ -27,6 +27,7 @@ class ModalView extends Component {
         animationType={this.props.animationType}
         transparent
         visible={this.props.visible}
+        onRequestClose={this.props.onClose}
       >
         <View
           style={[modalBackground, { backgroundColor: this.props.backgroundColor }]}
