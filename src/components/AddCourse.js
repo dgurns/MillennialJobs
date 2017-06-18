@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   ListView,
   TextInput,
-  ActivityIndicator
+  ActivityIndicator,
+  Platform
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -176,13 +177,14 @@ const styles = StyleSheet.create({
     fontSize: 50,
     color: constants.LIGHT_GRAY_COLOR,
     backgroundColor: 'transparent',
-    marginRight: 7
+    marginRight: 7,
+    paddingTop: Platform.OS === 'ios' ? 0 : 2
   },
   addText: {
     fontSize: constants.BODY_FONT_SIZE,
     color: constants.LIGHT_GRAY_COLOR,
     backgroundColor: 'transparent',
-    paddingTop: 22
+    paddingTop: Platform.OS === 'ios' ? 22 : 25
   },
   inputField: {
     borderColor: constants.LIGHT_GRAY_COLOR,

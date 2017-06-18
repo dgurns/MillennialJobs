@@ -6,7 +6,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
-  Alert
+  Alert,
+  Platform
 } from 'react-native';
 import { connect } from 'react-redux';
 import ImagePicker from 'react-native-image-picker';
@@ -63,9 +64,9 @@ class UserProfile extends Component {
         path: 'images'
       },
       allowsEditing: true,
-      maxWidth: 200,
-      maxHeight: 200,
-      quality: 0.8
+      maxWidth: Platform.OS === 'ios' ? 200 : 400,
+      maxHeight: Platform.OS === 'ios' ? 200 : 400,
+      quality: Platform.OS === 'ios' ? 0.8 : 0.8
     };
 
     this.setState({
