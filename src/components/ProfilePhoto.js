@@ -125,7 +125,7 @@ class ProfilePhoto extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <View style={{ elevation: 5, backgroundColor: 'transparent' }}>
+        <View style={styles.profilePhotoContainer}>
           <Image
             style={[styles.profilePhoto, this.customizePhotoDimensions()]}
             source={{ uri: this.state.photoUrl }}
@@ -140,10 +140,14 @@ class ProfilePhoto extends Component {
 }
 
 const styles = StyleSheet.create({
+  profilePhotoContainer: {
+    elevation: Platform.OS === 'ios' ? null : 5,
+    zIndex: Platform.OS === 'ios' ? 100 : null, 
+    backgroundColor: 'transparent'
+  },
   profilePhoto: {
     borderWidth: 1,
     borderColor: constants.DARK_GRAY_COLOR,
-    zIndex: Platform.OS === 'ios' ? 100 : null,
     justifyContent: 'center',
     alignItems: 'center'
   },

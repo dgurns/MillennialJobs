@@ -159,18 +159,10 @@ export const refreshUserState = () => async dispatch => {
         const interestName = snapshot.val().interestName;
         const hasOnboarded = snapshot.val().hasOnboarded;
 
-        const savedCoursesArray = [];
-        snapshot.child('savedCourses').forEach(childSnapshot => {
-          const childData = childSnapshot.val();
-          const childCourseId = childData.courseId;
-          savedCoursesArray.push(childCourseId);
-        });
-
         userState.profilePhotoUrl = profilePhotoUrl;
         userState.interestName = interestName;
         userState.hasOnboarded = hasOnboarded;
         userState.username = username;
-        userState.savedCourses = savedCoursesArray;
       });
 
       // Get isGood status
