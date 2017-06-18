@@ -196,10 +196,7 @@ export const refreshUserState = () => async dispatch => {
           });
         }
 
-        // Reverse the array so it gets saved locally with newest first
-        const reversedArray = _.reverse(savedCoursesArray);
-
-        userState.savedCourses = reversedArray;
+        userState.savedCourses = savedCoursesArray;
       });
 
       dispatch({
@@ -304,13 +301,10 @@ export const addCourseToSavedCourses = (courseId) => async dispatch => {
       let newCourseRef = await databaseRef.push();
       await newCourseRef.set({ courseId });
 
-      // Reverse the array so it gets saved locally with newest first
-      const reversedArray = _.reverse(localArray);
-
       // And dispatch updated local array to Redux state
       dispatch({
         type: types.COURSE_ADDED_TO_SAVED_COURSES,
-        payload: reversedArray
+        payload: localArray
       });
     } catch (error) {
       console.log(error);
@@ -342,13 +336,10 @@ export const removeCourseFromSavedCourses = (courseId) => async dispatch => {
         }
       });
 
-      // Reverse the array so it gets saved locally with newest first
-      const reversedArray = _.reverse(localArray);
-
       // And dispatch updated local array to Redux state
       dispatch({
         type: types.COURSE_REMOVED_FROM_SAVED_COURSES,
-        payload: reversedArray
+        payload: localArray
       });
     } catch (error) {
       console.log(error);

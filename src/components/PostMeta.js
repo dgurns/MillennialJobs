@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import {
   View,
@@ -61,7 +62,8 @@ class PostMeta extends Component {
       let courseUrl = '';
 
       if (userSavedCourses.length > 0) {
-        const latestCourseId = userSavedCourses[0];
+        const latestCourseIndex = userSavedCourses.length - 1;
+        const latestCourseId = userSavedCourses[latestCourseIndex];
         let courseDetails = await helpers.fetchCourseDetails(latestCourseId);
         courseName = courseDetails.title;
         courseUrl = `${constants.UDEMY_ROOT_URL}${courseDetails.url}`;

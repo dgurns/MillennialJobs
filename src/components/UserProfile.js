@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import {
   View,
@@ -148,13 +149,15 @@ class UserProfile extends Component {
 
   renderSavedCourses() {
     if (this.props.uid === this.props.currentUserUid) {
+      const reversedCoursesArray = _.reverse(this.props.currentUserSavedCourses);
+
       return (
         <View style={{ flex: 1 }}>
           <Text style={styles.coursesLabel}>
             Your courses:
           </Text>
           <AddCourse />
-          {this.props.currentUserSavedCourses.map(courseId => {
+          {reversedCoursesArray.map(courseId => {
             return (
               <Course
                 id={courseId}
@@ -168,9 +171,12 @@ class UserProfile extends Component {
       );
     }
 
+    // If not current user, use the savedCourses array on this.state.
+    const reversedCoursesArray = _.reverse(this.state.savedCourses);
+
     return (
       <View style={{ flex: 1, marginTop: 20 }}>
-        {this.state.savedCourses.map(courseId => {
+        {reversedCoursesArray.map(courseId => {
           return (
             <Course
               id={courseId}
