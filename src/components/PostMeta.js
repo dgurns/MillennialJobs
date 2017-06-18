@@ -57,6 +57,8 @@ class PostMeta extends Component {
         userSavedCourses = this.props.currentUserSavedCourses;
       }
 
+      console.log(this.props.currentUserSavedCourses);
+
       let courseName = '';
       let courseUrl = '';
 

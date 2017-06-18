@@ -149,7 +149,12 @@ class UserProfile extends Component {
 
   renderSavedCourses() {
     if (this.props.uid === this.props.currentUserUid) {
-      const reversedCoursesArray = _.reverse(this.props.currentUserSavedCourses);
+      const savedCoursesArray = [];
+      this.props.currentUserSavedCourses.map(savedCourse => {
+        return savedCoursesArray.push(savedCourse);
+      });
+      const reversedCoursesArray = _.reverse(savedCoursesArray);
+
 
       return (
         <View style={{ flex: 1 }}>
