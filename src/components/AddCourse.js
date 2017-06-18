@@ -146,6 +146,7 @@ class AddCourse extends Component {
             returnKeyType="search"
             autoCapitalize="none"
             autoFocus
+            underlineColorAndroid="transparent"
           />
           {this.renderSearchResults()}
         </ModalView>

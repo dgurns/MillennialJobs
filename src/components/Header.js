@@ -108,8 +108,9 @@ class Header extends Component {
 const styles = StyleSheet.create({
   header: {
     height: 60,
-    paddingTop: 15,
+    paddingTop: Platform.OS === 'ios' ? 15 : 0,
     overflow: 'hidden',
+    backgroundColor: 'transparent'
   },
   backgroundImage: {
     position: 'absolute',
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 5,
     marginLeft: 2,
-    marginTop: Platform.OS === 'ios' ? 0 : -28,
+    marginTop: Platform.OS === 'ios' ? 0 : -11,
     width: 90
   },
   millennialsSavedContainer: {
