@@ -46,6 +46,9 @@ class App extends Component {
               iconStyle: {
                 width: constants.PRIMARY_ICON_SIZE,
                 height: constants.PRIMARY_ICON_SIZE
+              },
+              indicatorStyle: {
+                backgroundColor: 'transparent'
               }
             },
             lazy: false,
