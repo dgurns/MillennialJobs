@@ -5,6 +5,7 @@
 # React Native project
 /src/firebase/firebase_config.js
 /src/udemy/udemy_config.js
+my-release-key.keystore
 
 # Xcode
 #
