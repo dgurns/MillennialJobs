@@ -59,6 +59,8 @@ export default function (state = INITIAL_STATE, action) {
         ...state,
         millennialsSaved: action.payload
       };
+    case types.LOG_OUT_SUCCESSFUL:
+      return state;
     default:
       return state;
   }
