@@ -73,7 +73,10 @@ class TitleScreen extends Component {
     } = styles;
 
     return (
-      <View style={viewContainer}>
+      <View
+        style={viewContainer}
+        onLayout={() => this.props.setDeviceDimensions()}
+      >
         <StatusBar barStyle="light-content" />
         <View style={backgroundImageContainer}>
           <Image
