@@ -45,7 +45,7 @@ class CoursesScreen extends Component {
       return (
         <Text style={styles.noCoursesText}>
           No courses in that category! Guess nobody is getting saved through
-          {' '}{this.props.interestName} - it{'\''}s probably for the best.
+          {' '}{this.props.interestName}.
         </Text>
       );
     }

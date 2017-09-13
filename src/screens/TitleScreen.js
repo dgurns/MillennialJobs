@@ -21,7 +21,6 @@ class TitleScreen extends Component {
   componentWillMount() {
     this.props.setDeviceDimensions();
 
-    // Eventually, do this check within a splash screen, and then proceed
     firebase.auth().onAuthStateChanged((user) => {
       this.props.refreshUserState();
 
@@ -52,7 +51,6 @@ class TitleScreen extends Component {
 
   addImageDimensions() {
     const { screenHeight, screenWidth } = this.props;
-    console.log(screenWidth);
 
     return {
       width: screenWidth,

@@ -66,7 +66,7 @@ class UserProfile extends Component {
       allowsEditing: true,
       maxWidth: Platform.OS === 'ios' ? 200 : 400,
       maxHeight: Platform.OS === 'ios' ? 200 : 400,
-      quality: Platform.OS === 'ios' ? 0.8 : 0.8
+      quality: 0.8
     };
 
     this.setState({

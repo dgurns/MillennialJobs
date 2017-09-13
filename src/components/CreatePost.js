@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     fontSize: constants.BODY_FONT_SIZE,
     color: constants.GREEN_COLOR,
     padding: 14,
-    paddingTop: Platform.OS === 'ios' ? 14 : 5,
+    paddingTop: 5,
     height: 100,
     borderBottomWidth: 1,
     borderBottomColor: '#D8D8D8'
